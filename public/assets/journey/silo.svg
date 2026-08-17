@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" width="320" height="200" role="img" aria-label="silo">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FBF6EC"/><stop offset="1" stop-color="#EFE3C8"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="200" fill="url(#bg)"/>
+  <rect x="0" y="150" width="320" height="50" fill="#D6C298"/>
+  <g fill="#EFE6D2" stroke="#C9B896" stroke-width="2">
+    <rect x="34" y="72" width="52" height="80"/><rect x="100" y="72" width="52" height="80"/>
+    <rect x="166" y="72" width="52" height="80"/><rect x="232" y="72" width="52" height="80"/>
+  </g>
+  <g fill="#B9A87F">
+    <path d="M30 74 L60 46 L90 74 Z"/><path d="M96 74 L126 46 L156 74 Z"/>
+    <path d="M162 74 L192 46 L222 74 Z"/><path d="M228 74 L258 46 L288 74 Z"/>
+  </g>
+  <g fill="#C9A44C" fill-opacity="0.5">
+    <rect x="34" y="104" width="52" height="4"/><rect x="100" y="104" width="52" height="4"/>
+    <rect x="166" y="104" width="52" height="4"/><rect x="232" y="104" width="52" height="4"/>
+  </g>
+</svg>
