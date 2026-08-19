@@ -4,6 +4,7 @@ import { CartProvider } from "./hooks/useCart.jsx";
 import ProductsPage from "./pages/ProductsPage.jsx";
 import AboutPage from "./pages/AboutPage.jsx";
 import CartPage from "./pages/CartPage.jsx";
+import OrderDeliveredPage from "./pages/OrderDeliveredPage.jsx";
 
 // Client routing keeps the scroll position between pages; the old multi-page
 // site always opened at the top, so restore that.
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="/" element={<ProductsPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/order-delivered" element={<OrderDeliveredPage />} />
         {/* Old .html deep links keep working */}
         <Route path="/index.html" element={<Navigate to="/" replace />} />
         <Route path="/about.html" element={<Navigate to="/about" replace />} />

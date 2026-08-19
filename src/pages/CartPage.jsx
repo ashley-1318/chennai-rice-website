@@ -1,20 +1,33 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import SiteLayout from "../layouts/SiteLayout.jsx";
 import CartRow from "../components/CartRow.jsx";
 import { useCart } from "../hooks/useCart.jsx";
 import { formatRupees } from "../utils/format.js";
 import usePageMeta from "../hooks/usePageMeta.js";
 
-const CHECKOUT_NOTE = "Checkout is not connected yet — this is a design draft.";
-
 export default function CartPage() {
-  const { items, count, subtotal } = useCart();
-  const [note, setNote] = useState(CHECKOUT_NOTE);
+  const { items, count, subtotal, clear } = useCart();
+  const navigate = useNavigate();
 
   usePageMeta("Your Cart — Chennai Rice", "Your cart — Chennai Rice Industries.");
 
   const isEmpty = items.length === 0;
+
+  // No payment gateway behind this yet, so "checkout" simulates straight
+  // through to a delivered order. The snapshot travels with the navigation
+  // because the cart is about to be emptied.
+  const handleCheckout = () => {
+    const order = {
+      id: `CRI-${Date.now().toString(36).toUpperCase()}`,
+      items,
+      count,
+      subtotal,
+      placedAt: Date.now()
+    };
+    clear();
+    navigate("/order-delivered", { state: { order } });
+  };
 
   return (
     <SiteLayout skipTo="cart-heading" skipLabel="Skip to cart" cartIsCurrent>
@@ -62,20 +75,10 @@ export default function CartPage() {
                 </div>
               </dl>
 
-              <button
-                className="checkout-btn"
-                type="button"
-                onClick={() =>
-                  setNote(
-                    "Checkout is not connected yet — this is a design draft. Wire this button to your payment flow."
-                  )
-                }
-              >
+              <button className="checkout-btn" type="button" onClick={handleCheckout}>
                 Proceed to checkout
               </button>
-              <p className="summary-note" role="status">
-                {note}
-              </p>
+              <p className="summary-note">This order will be simulated — no payment is taken.</p>
             </aside>
           </div>
         )}

@@ -14,7 +14,10 @@ export default function CartRow({ item }) {
       <div className="cart-item-body">
         <p className="cart-item-tag">{item.tag}</p>
         <h2 className="cart-item-name">{item.name}</h2>
-        <p className="cart-item-unit">{formatRupees(item.price)} / 10 kg</p>
+        <p className="cart-item-unit">
+          {formatRupees(item.price)}
+          {item.sizeKg ? ` / ${item.sizeKg} kg` : ""}
+        </p>
       </div>
 
       <div className="cart-item-actions">

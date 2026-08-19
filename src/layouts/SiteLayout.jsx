@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../components/Header.jsx";
 import Footer from "../components/Footer.jsx";
+import CheckoutBar from "../components/CheckoutBar.jsx";
 
 /**
  * Page shell: skip link, header, <main>, footer. Each page passes its own skip
@@ -22,6 +23,7 @@ export default function SiteLayout({
       <Header search={search} onSearchChange={onSearchChange} cartIsCurrent={cartIsCurrent} />
       <main>{children}</main>
       <Footer />
+      <CheckoutBar />
     </>
   );
 }

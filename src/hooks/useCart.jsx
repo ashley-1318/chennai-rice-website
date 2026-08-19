@@ -45,21 +45,25 @@ export function CartProvider({ children }) {
     return () => window.removeEventListener("storage", onStorage);
   }, []);
 
-  const add = useCallback((product) => {
+  // Each pack size is its own line — a 5 kg and a 10 kg bag of the same
+  // product carry different prices, so they can't share a cart row.
+  const add = useCallback((product, size) => {
+    const lineId = `${product.id}::${size.kg}`;
     setItems((current) => {
-      const existing = current.find((item) => item.id === product.id);
+      const existing = current.find((item) => item.id === lineId);
       if (existing) {
         return current.map((item) =>
-          item.id === product.id ? { ...item, qty: item.qty + 1 } : item
+          item.id === lineId ? { ...item, qty: item.qty + 1 } : item
         );
       }
       return [
         ...current,
         {
-          id: product.id,
+          id: lineId,
           name: product.name,
           tag: product.tag,
-          price: product.price,
+          price: size.price,
+          sizeKg: size.kg,
           image: product.image,
           qty: 1
         }
@@ -79,11 +83,16 @@ export function CartProvider({ children }) {
     setItems((current) => current.filter((item) => item.id !== id));
   }, []);
 
+  // Empties the cart once an order is placed.
+  const clear = useCallback(() => {
+    setItems([]);
+  }, []);
+
   const value = useMemo(() => {
     const count = items.reduce((total, item) => total + item.qty, 0);
     const subtotal = items.reduce((total, item) => total + item.price * item.qty, 0);
-    return { items, count, subtotal, add, setQty, remove };
-  }, [items, add, setQty, remove]);
+    return { items, count, subtotal, add, setQty, remove, clear };
+  }, [items, add, setQty, remove, clear]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
