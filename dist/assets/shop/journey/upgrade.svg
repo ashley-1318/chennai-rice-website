@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" width="320" height="200" role="img" aria-label="upgrade">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FBF6EC"/><stop offset="1" stop-color="#EFE3C8"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="200" fill="url(#bg)"/>
+  <rect x="0" y="150" width="320" height="50" fill="#D6C298"/>
+  <rect x="30" y="112" width="260" height="16" rx="8" fill="#4A403C"/>
+  <g fill="#C9A44C"><circle cx="60" cy="120" r="14"/><circle cx="120" cy="120" r="14"/><circle cx="180" cy="120" r="14"/><circle cx="240" cy="120" r="14"/></g>
+  <g fill="#6E1B22">
+    <circle cx="120" cy="66" r="30"/><circle cx="120" cy="66" r="12" fill="#FBF6EC"/>
+    <rect x="114" y="26" width="12" height="16"/><rect x="114" y="90" width="12" height="16"/>
+    <rect x="80" y="60" width="16" height="12"/><rect x="144" y="60" width="16" height="12"/>
+  </g>
+  <g fill="#A87A22">
+    <circle cx="196" cy="82" r="20"/><circle cx="196" cy="82" r="8" fill="#FBF6EC"/>
+    <rect x="191" y="54" width="10" height="12"/><rect x="191" y="98" width="10" height="12"/>
+  </g>
+</svg>

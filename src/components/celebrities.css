@@ -1,0 +1,128 @@
+.celeb {
+  position: relative;
+  background: linear-gradient(180deg, #f2e3c2 0%, #e9d3a4 60%, #e3ca98 100%);
+  padding-top: 40px;
+  overflow: hidden;
+}
+
+.celeb-head {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 16px;
+}
+
+.celeb::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(45% 60% at 25% 55%, rgba(255, 244, 214, 0.9), transparent 70%),
+    radial-gradient(45% 60% at 75% 55%, rgba(255, 244, 214, 0.9), transparent 70%);
+  pointer-events: none;
+}
+
+/* wheat stalks flanking both edges of the band */
+.celeb-decor {
+  position: absolute;
+  bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.9;
+}
+.celeb-decor-left {
+  left: -34px;
+  width: 250px;
+  /* mirrored so the stalks lean away from Kushboo */
+  transform: scaleX(-1);
+}
+.celeb-decor-right {
+  right: -30px;
+  width: 165px;
+}
+
+.celeb-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: end;
+  column-gap: 8px;
+}
+
+.celeb-pair {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.celeb-figure {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.celeb-figure img {
+  /* scale lifts the width cap too — a near-square portrait is limited by
+     the column width, not by max-height, so height alone does nothing */
+  max-height: calc(400px * var(--fig-scale, 1));
+  max-width: calc(100% * var(--fig-scale, 1));
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 30px rgba(90, 50, 20, 0.25));
+}
+
+.celeb-text {
+  text-align: left;
+}
+
+.celeb-name {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 25px;
+  letter-spacing: 0.14em;
+  color: #5a3b16;
+}
+
+.celeb-rule {
+  width: 40px;
+  height: 2px;
+  background: var(--gold-deep);
+  margin-block: 12px;
+}
+
+.celeb-quote {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #6a5433;
+  max-width: 300px;
+}
+
+.celeb-sign {
+  font-family: var(--script);
+  font-size: 30px;
+  color: #8a6a25;
+  margin-top: 14px;
+}
+
+@media (max-width: 1100px) {
+  .celeb-decor {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .celeb-grid {
+    grid-template-columns: 1fr;
+    row-gap: 30px;
+    min-height: 0;
+  }
+  .celeb-figure img {
+    max-height: calc(300px * var(--fig-scale, 1));
+  }
+  .celeb-text {
+    padding-bottom: 30px;
+  }
+  .celeb-name {
+    font-size: 20px;
+  }
+}

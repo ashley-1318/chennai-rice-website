@@ -1,0 +1,170 @@
+.home-hero {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  isolation: isolate;
+}
+@media (min-height: 0px) {
+  .home-hero {
+    min-height: max(100vh, 640px);
+  }
+}
+
+.hero-video,
+.hero-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.hero-fallback {
+  background: radial-gradient(120% 90% at 60% 20%, #3a2c14 0%, #1c1409 55%, #0e0a05 100%);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(18, 10, 4, 0.35) 0%,
+    rgba(18, 10, 4, 0.15) 40%,
+    rgba(24, 12, 6, 0.55) 100%
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 21vh 6vw 0;
+}
+
+.hero-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(48px, 6.5vw, 84px);
+  line-height: 1.12;
+  color: #f8f2e3;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.45);
+}
+.hero-title span {
+  display: block;
+}
+
+.home-hero-sub {
+  margin-top: 26px;
+  font-size: 15px;
+  font-weight: 300;
+  color: #e6dac0;
+}
+
+.hero-scroll {
+  margin-top: 54px;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+}
+.hero-scroll span {
+  font-size: 10px;
+  letter-spacing: 0.45em;
+  text-indent: 0.45em;
+  text-transform: uppercase;
+  color: #cdb37c;
+}
+.hero-scroll-dot {
+  animation: hero-scroll-dot 1.8s ease-in-out infinite;
+}
+@keyframes hero-scroll-dot {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  70% {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+}
+
+/* --- ESTD 1975 badge --- */
+.hero-estd {
+  position: absolute;
+  right: 7vw;
+  bottom: 26vh;
+  z-index: 2;
+  animation: hero-float 8s ease-in-out infinite;
+}
+@keyframes hero-float {
+  0%,
+  100% {
+    transform: translateY(-6px);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+.hero-estd-ring {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(201, 162, 75, 0.9);
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 2px;
+  position: relative;
+}
+.hero-estd-ring::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  border: 1px dashed rgba(201, 162, 75, 0.65);
+}
+.hero-estd-label {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+}
+.hero-estd-year {
+  font-family: var(--serif);
+  font-size: 26px;
+  color: var(--gold-soft);
+  line-height: 1;
+}
+
+/* --- bottom cream wave with gold rim --- */
+.hero-curve {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 150px;
+  z-index: 3;
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .hero-content {
+    padding-top: 24vh;
+  }
+  .hero-estd {
+    right: 6vw;
+    bottom: 30vh;
+    transform: scale(0.8);
+  }
+  .hero-curve {
+    height: 90px;
+  }
+}

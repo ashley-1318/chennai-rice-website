@@ -1,0 +1,179 @@
+/* Shared shell for interior routes (coming soon, contact).
+   Padding-top clears the fixed navbar, which the home page sits under. */
+.page {
+  position: relative;
+  background: var(--cream);
+  padding: 150px 0 90px;
+  overflow: hidden;
+  min-height: 72vh;
+}
+.page-center {
+  display: grid;
+  place-items: center;
+  min-height: 82vh;
+}
+
+.page-decor {
+  position: absolute;
+  bottom: 0;
+  width: 190px;
+  opacity: 0.55;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+}
+.page-decor-left {
+  left: -40px;
+  transform: scaleX(-1);
+}
+.page-decor-right {
+  right: -30px;
+}
+
+.page-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  text-align: center;
+  max-width: 660px;
+}
+.page-inner--wide {
+  max-width: 1080px;
+}
+
+.page-title {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(32px, 4vw, 46px);
+  line-height: 1.2;
+  color: var(--heading);
+}
+.page-text {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #6b5b4b;
+  max-width: 520px;
+}
+
+/* ---------- contact ---------- */
+.contact-grid {
+  margin-top: 26px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 30px;
+  text-align: left;
+}
+
+.contact-form {
+  display: grid;
+  gap: 18px;
+  background: #fffdf6;
+  border: 1px solid rgba(198, 154, 63, 0.18);
+  border-radius: 12px;
+  padding: 30px 28px;
+  box-shadow: 0 14px 32px rgba(90, 60, 30, 0.09);
+}
+
+.field {
+  display: grid;
+  gap: 7px;
+}
+.field-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
+  text-transform: uppercase;
+  color: var(--heading);
+}
+.field input,
+.field textarea {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--cream-soft);
+  border: 1px solid rgba(74, 44, 34, 0.18);
+  border-radius: 6px;
+  padding: 12px 14px;
+  width: 100%;
+  resize: vertical;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #b3a488;
+}
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(198, 154, 63, 0.18);
+}
+.field input[aria-invalid='true'],
+.field textarea[aria-invalid='true'] {
+  border-color: #a84230;
+}
+.field-error {
+  font-size: 12px;
+  color: #a84230;
+}
+.field-sent {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--green-deep);
+  background: rgba(30, 77, 58, 0.08);
+  border-radius: 6px;
+  padding: 12px 14px;
+}
+
+.contact-form .btn-maroon {
+  justify-self: start;
+  border: none;
+}
+
+.contact-aside {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  padding: 30px 26px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #f7efdd 0%, #f1e4c8 100%);
+  border: 1px solid rgba(198, 154, 63, 0.22);
+}
+.contact-aside-title {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--heading);
+}
+.contact-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: #5f4c3c;
+}
+.contact-row svg {
+  flex: 0 0 auto;
+  margin-top: 4px;
+  color: var(--gold-deep);
+}
+.contact-addr {
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .page {
+    padding: 120px 0 70px;
+  }
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+  .page-decor {
+    display: none;
+  }
+}

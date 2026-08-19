@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" width="320" height="200" role="img" aria-label="mill">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FBF6EC"/><stop offset="1" stop-color="#EFE3C8"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="200" fill="url(#bg)"/>
+  <rect x="0" y="150" width="320" height="50" fill="#D6C298"/>
+  <rect x="42" y="86" width="128" height="66" fill="#FDFBF5" stroke="#C9B896" stroke-width="2"/>
+  <path d="M34 88 L106 52 L178 88 Z" fill="#6E1B22"/>
+  <rect x="62" y="108" width="20" height="26" fill="#E3D3B0"/>
+  <rect x="96" y="108" width="20" height="26" fill="#E3D3B0"/>
+  <rect x="130" y="108" width="20" height="26" fill="#E3D3B0"/>
+  <rect x="196" y="70" width="26" height="82" fill="#C9A44C"/>
+  <rect x="236" y="96" width="56" height="56" fill="#FDFBF5" stroke="#C9B896" stroke-width="2"/>
+  <path d="M230 98 L264 74 L298 98 Z" fill="#8A2A31"/>
+</svg>

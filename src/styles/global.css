@@ -1,0 +1,177 @@
+/* ============================================================
+   Chennai Rice — global design system
+   Palette + typography extracted from the reference design.
+   ============================================================ */
+:root {
+  /* Maroons (nav button, arrows, feature band, footer) */
+  --maroon: #7a1f2b;
+  --maroon-deep: #5f141f;
+  --maroon-ink: #4a1016;
+  --footer-bg: #3d0d13;
+
+  /* Shared "red core, black edges" palette — the feature band, the solid
+     navbar and the footer are all built from these five stops. */
+  --band-edge: rgba(10, 2, 4, 0.62);
+  --band-glow: rgba(163, 34, 51, 0.8);
+  --band-top: #6b1722;
+  --band-mid: #530f19;
+  --band-bottom: #3a080f;
+
+  /* horizontal darkening applied to every band-coloured surface */
+  --band-sides: linear-gradient(
+    90deg,
+    var(--band-edge) 0%,
+    rgba(10, 2, 4, 0) 22%,
+    rgba(10, 2, 4, 0) 78%,
+    var(--band-edge) 100%
+  );
+
+  /* Creams (page background) */
+  --cream: #f6efdc;
+  --cream-soft: #faf5e9;
+  --white: #ffffff;
+
+  /* Golds (labels, stars, badge, ornaments) */
+  --gold: #c69a3f;
+  --gold-deep: #a8842e;
+  --gold-soft: #d9b96a;
+  --gold-pale: #ecdfb6;
+
+  /* Accents */
+  --green-deep: #1e4d3a;
+  --ink: #33241f;
+  --heading: #4a2c22;
+  --muted: #7d6a5b;
+
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'Poppins', 'Segoe UI', sans-serif;
+  --script: 'Great Vibes', cursive;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--cream);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.container {
+  width: min(1220px, 92vw);
+  margin-inline: auto;
+}
+
+/* ---- Shared: gold small-caps section label ---- */
+.section-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: var(--gold-deep);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  text-indent: 0.35em;
+}
+
+/* ---- Shared: serif section heading ---- */
+.section-title {
+  font-family: var(--serif);
+  font-weight: 600;
+  color: var(--heading);
+  text-align: center;
+  font-size: clamp(30px, 3.4vw, 44px);
+  line-height: 1.2;
+}
+
+/* ---- Shared: maroon CTA button ---- */
+.btn-maroon {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--maroon);
+  color: #f4e6cd;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 14px 26px;
+  border-radius: 4px;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.btn-maroon:hover {
+  background: var(--maroon-deep);
+  transform: translateY(-2px);
+}
+
+/* ---- Shared: round maroon carousel arrow ---- */
+.circle-arrow {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--maroon-ink);
+  color: #e9cf9e;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  box-shadow: 0 8px 18px rgba(60, 12, 18, 0.32);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.circle-arrow:hover {
+  background: var(--maroon);
+  transform: scale(1.07);
+}
+.circle-arrow svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---- Shared: outline pill button (VIEW ALL BLOGS) ---- */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(74, 44, 34, 0.45);
+  color: var(--heading);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 12px 22px;
+  border-radius: 4px;
+  background: transparent;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+.btn-outline:hover {
+  background: var(--maroon);
+  border-color: var(--maroon);
+  color: #f4e6cd;
+}

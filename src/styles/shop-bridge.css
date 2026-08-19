@@ -1,0 +1,33 @@
+/* ============================================================
+   Bridges the merged product pages into this app's shell.
+   Kept separate from the scoped upstream file so regenerating
+   styles.scoped.css never clobbers these.
+   ============================================================ */
+
+/* the navbar is fixed; only the home hero sits underneath it */
+.shop-scope {
+  padding-top: 84px;
+}
+
+/* search lifted out of the upstream header */
+.shop-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 4px 24px 10px;
+}
+
+@media (max-width: 900px) {
+  .shop-scope {
+    padding-top: 70px;
+  }
+}
+
+/* cart button riding beside the "Showing N products" note, above the grid it counts */
+.products-head-note-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

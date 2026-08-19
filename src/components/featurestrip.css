@@ -1,0 +1,132 @@
+.feat {
+  position: relative;
+  background: transparent;
+}
+
+.feat-band {
+  position: relative;
+  /* deep red core with black falling away at the edges */
+  background:
+    var(--band-sides),
+    radial-gradient(72% 150% at 50% 42%, var(--band-glow) 0%, rgba(163, 34, 51, 0) 68%),
+    radial-gradient(110% 130% at 50% 118%, rgba(14, 2, 5, 0.9) 0%, rgba(14, 2, 5, 0) 62%),
+    linear-gradient(180deg, var(--band-top) 0%, var(--band-mid) 55%, var(--band-bottom) 100%);
+  padding-block: 54px;
+  overflow: hidden;
+}
+
+.feat-cut {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 46px;
+  display: block;
+  z-index: 3;
+  pointer-events: none;
+}
+.feat-cut-top {
+  top: -1px;
+}
+.feat-cut-bottom {
+  bottom: -1px;
+}
+
+.feat-bowl {
+  position: absolute;
+  left: -40px;
+  bottom: -30px;
+  width: 240px;
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* loose paddy grains spilling from under the bowl, kept low so they
+   never run into the first feature label */
+.feat-grains {
+  position: absolute;
+  left: 172px;
+  bottom: -42px;
+  width: 152px;
+  z-index: 2;
+  opacity: 0.9;
+  transform: rotate(-6deg);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* paddy stalks tucked into the right edge, behind the last label */
+.feat-wheat {
+  position: absolute;
+  right: -38px;
+  bottom: -30px;
+  width: 132px;
+  z-index: 1;
+  opacity: 0.62;
+  pointer-events: none;
+  user-select: none;
+}
+
+.feat-row {
+  position: relative;
+  z-index: 1;
+  display: flex;
+}
+
+.feat-cell {
+  flex: 1;
+  text-align: center;
+  padding-inline: 18px;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+}
+.feat-cell + .feat-cell {
+  border-left: 1px solid rgba(230, 200, 140, 0.25);
+}
+
+.feat-icon {
+  display: block;
+}
+
+.feat-label {
+  display: grid;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #f0dfc0;
+}
+
+@media (max-width: 1100px) {
+  .feat-bowl,
+  .feat-grains,
+  .feat-wheat {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .feat-row {
+    flex-wrap: wrap;
+    row-gap: 30px;
+  }
+  .feat-cell {
+    flex: 0 0 33.333%;
+  }
+  .feat-cell:nth-child(3n + 1) {
+    border-left: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .feat-cell {
+    flex: 0 0 50%;
+  }
+  .feat-cell:nth-child(3n + 1) {
+    border-left: 1px solid rgba(230, 200, 140, 0.25);
+  }
+  .feat-cell:nth-child(odd) {
+    border-left: none;
+  }
+}

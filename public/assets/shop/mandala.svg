@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 600 600" width="600" height="600" aria-hidden="true">
+  <title>Decorative mandala</title>
+  <defs>
+    <path id="petal-o" d="M300 34 C334 66 334 108 300 132 C266 108 266 66 300 34 Z"/>
+    <path id="petal-m" d="M300 150 C326 172 326 194 300 210 C274 194 274 172 300 150 Z"/>
+    <path id="petal-i" d="M300 218 C316 234 316 254 300 268 C284 254 284 234 300 218 Z"/>
+    <path id="diamond" d="M300 42 L307 56 L300 70 L293 56 Z"/>
+    <circle id="dot" cx="300" cy="104" r="3.2"/>
+    <path id="tick" d="M300 138 L300 146"/>
+
+    <!-- Dissolves the medallion outward so it has no hard edge -->
+    <radialGradient id="fade" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0.62" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <mask id="vignette">
+      <rect x="0" y="0" width="600" height="600" fill="url(#fade)"/>
+    </mask>
+  </defs>
+
+  <!-- Opacity is baked in: this is consumed as a CSS background-image,
+       which cannot be dimmed from the stylesheet. -->
+  <g mask="url(#vignette)" opacity="0.45">
+  <g fill="none" stroke="#A87A22" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="300" cy="300" r="288" stroke-width="1"/>
+    <circle cx="300" cy="300" r="281" stroke-width="2"/>
+    <circle cx="300" cy="300" r="170" stroke-width="1.6"/>
+    <circle cx="300" cy="300" r="163" stroke-width="1"/>
+    <circle cx="300" cy="300" r="93" stroke-width="1.6"/>
+    <circle cx="300" cy="300" r="58" stroke-width="1"/>
+    <circle cx="300" cy="300" r="26" stroke-width="1.6"/>
+
+    <g stroke-width="1.5">
+      <use href="#petal-o" xlink:href="#petal-o" transform="rotate(0 300 300)"/>
+      <use href="#petal-o" xlink:href="#petal-o" transform="rotate(22.5 300 300)"/>
+      <use href="#petal-o" xlink:href="#petal-o" transform="rotate(45 300 300)"/>
+      <use href="#petal-o" xlink:href="#petal-o" transform="rotate(67.5 300 300)"/>
+      <use href="#petal-o" xlink:href="#petal-o" transform="rotate(90 300 300)"/>
+      <use href="#petal-o" xlink:href="#petal-o" transform="rotate(112.5 300 300)"/>
+      <use href="#petal-o" xlink:href="#petal-o" transform="rotate(135 300 300)"/>
+      <use href="#petal-o" xlink:href="#petal-o" transform="rotate(157.5 300 300)"/>
+      <use href="#petal-o" xlink:href="#petal-o" transform="rotate(180 300 300)"/>
+      <use href="#petal-o" xlink:href="#petal-o" transform="rotate(202.5 300 300)"/>
+      <use href="#petal-o" xlink:href="#petal-o" transform="rotate(225 300 300)"/>
+      <use href="#petal-o" xlink:href="#petal-o" transform="rotate(247.5 300 300)"/>
+      <use href="#petal-o" xlink:href="#petal-o" transform="rotate(270 300 300)"/>
+      <use href="#petal-o" xlink:href="#petal-o" transform="rotate(292.5 300 300)"/>
+      <use href="#petal-o" xlink:href="#petal-o" transform="rotate(315 300 300)"/>
+      <use href="#petal-o" xlink:href="#petal-o" transform="rotate(337.5 300 300)"/>
+    </g>
+
+    <g stroke-width="1.3">
+      <use href="#petal-m" xlink:href="#petal-m" transform="rotate(15 300 300)"/>
+      <use href="#petal-m" xlink:href="#petal-m" transform="rotate(45 300 300)"/>
+      <use href="#petal-m" xlink:href="#petal-m" transform="rotate(75 300 300)"/>
+      <use href="#petal-m" xlink:href="#petal-m" transform="rotate(105 300 300)"/>
+      <use href="#petal-m" xlink:href="#petal-m" transform="rotate(135 300 300)"/>
+      <use href="#petal-m" xlink:href="#petal-m" transform="rotate(165 300 300)"/>
+      <use href="#petal-m" xlink:href="#petal-m" transform="rotate(195 300 300)"/>
+      <use href="#petal-m" xlink:href="#petal-m" transform="rotate(225 300 300)"/>
+      <use href="#petal-m" xlink:href="#petal-m" transform="rotate(255 300 300)"/>
+      <use href="#petal-m" xlink:href="#petal-m" transform="rotate(285 300 300)"/>
+      <use href="#petal-m" xlink:href="#petal-m" transform="rotate(315 300 300)"/>
+      <use href="#petal-m" xlink:href="#petal-m" transform="rotate(345 300 300)"/>
+    </g>
+
+    <g stroke-width="1.5">
+      <use href="#petal-i" xlink:href="#petal-i" transform="rotate(0 300 300)"/>
+      <use href="#petal-i" xlink:href="#petal-i" transform="rotate(45 300 300)"/>
+      <use href="#petal-i" xlink:href="#petal-i" transform="rotate(90 300 300)"/>
+      <use href="#petal-i" xlink:href="#petal-i" transform="rotate(135 300 300)"/>
+      <use href="#petal-i" xlink:href="#petal-i" transform="rotate(180 300 300)"/>
+      <use href="#petal-i" xlink:href="#petal-i" transform="rotate(225 300 300)"/>
+      <use href="#petal-i" xlink:href="#petal-i" transform="rotate(270 300 300)"/>
+      <use href="#petal-i" xlink:href="#petal-i" transform="rotate(315 300 300)"/>
+    </g>
+
+    <g stroke-width="1.1">
+      <use href="#tick" xlink:href="#tick" transform="rotate(5.62 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(16.88 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(28.12 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(39.38 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(50.62 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(61.88 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(73.12 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(84.38 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(95.62 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(106.88 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(118.12 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(129.38 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(140.62 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(151.88 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(163.12 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(174.38 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(185.62 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(196.88 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(208.12 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(219.38 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(230.62 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(241.88 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(253.12 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(264.38 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(275.62 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(286.88 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(298.12 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(309.38 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(320.62 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(331.88 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(343.12 300 300)"/>
+      <use href="#tick" xlink:href="#tick" transform="rotate(354.38 300 300)"/>
+    </g>
+
+    <g stroke-width="1.1">
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(0 300 300)"/>
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(15 300 300)"/>
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(30 300 300)"/>
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(45 300 300)"/>
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(60 300 300)"/>
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(75 300 300)"/>
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(90 300 300)"/>
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(105 300 300)"/>
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(120 300 300)"/>
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(135 300 300)"/>
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(150 300 300)"/>
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(165 300 300)"/>
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(180 300 300)"/>
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(195 300 300)"/>
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(210 300 300)"/>
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(225 300 300)"/>
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(240 300 300)"/>
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(255 300 300)"/>
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(270 300 300)"/>
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(285 300 300)"/>
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(300 300 300)"/>
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(315 300 300)"/>
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(330 300 300)"/>
+      <use href="#diamond" xlink:href="#diamond" transform="rotate(345 300 300)"/>
+    </g>
+  </g>
+
+  <g fill="#A87A22" stroke="none">
+    <use href="#dot" xlink:href="#dot" transform="rotate(7.5 300 300)"/>
+    <use href="#dot" xlink:href="#dot" transform="rotate(22.5 300 300)"/>
+    <use href="#dot" xlink:href="#dot" transform="rotate(37.5 300 300)"/>
+    <use href="#dot" xlink:href="#dot" transform="rotate(52.5 300 300)"/>
+    <use href="#dot" xlink:href="#dot" transform="rotate(67.5 300 300)"/>
+    <use href="#dot" xlink:href="#dot" transform="rotate(82.5 300 300)"/>
+    <use href="#dot" xlink:href="#dot" transform="rotate(97.5 300 300)"/>
+    <use href="#dot" xlink:href="#dot" transform="rotate(112.5 300 300)"/>
+    <use href="#dot" xlink:href="#dot" transform="rotate(127.5 300 300)"/>
+    <use href="#dot" xlink:href="#dot" transform="rotate(142.5 300 300)"/>
+    <use href="#dot" xlink:href="#dot" transform="rotate(157.5 300 300)"/>
+    <use href="#dot" xlink:href="#dot" transform="rotate(172.5 300 300)"/>
+    <use href="#dot" xlink:href="#dot" transform="rotate(187.5 300 300)"/>
+    <use href="#dot" xlink:href="#dot" transform="rotate(202.5 300 300)"/>
+    <use href="#dot" xlink:href="#dot" transform="rotate(217.5 300 300)"/>
+    <use href="#dot" xlink:href="#dot" transform="rotate(232.5 300 300)"/>
+    <use href="#dot" xlink:href="#dot" transform="rotate(247.5 300 300)"/>
+    <use href="#dot" xlink:href="#dot" transform="rotate(262.5 300 300)"/>
+    <use href="#dot" xlink:href="#dot" transform="rotate(277.5 300 300)"/>
+    <use href="#dot" xlink:href="#dot" transform="rotate(292.5 300 300)"/>
+    <use href="#dot" xlink:href="#dot" transform="rotate(307.5 300 300)"/>
+    <use href="#dot" xlink:href="#dot" transform="rotate(322.5 300 300)"/>
+    <use href="#dot" xlink:href="#dot" transform="rotate(337.5 300 300)"/>
+    <use href="#dot" xlink:href="#dot" transform="rotate(352.5 300 300)"/>
+  </g>
+  </g>
+</svg>
