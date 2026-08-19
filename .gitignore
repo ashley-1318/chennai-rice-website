@@ -1,0 +1,11 @@
+# Environment variables (contains API keys — never commit)
+.env
+.env.local
+.env.*.local
+server/.env
+
+# Vercel CLI project link metadata
+.vercel
+
+# Local dev proxy dependencies (server/) — reinstall with `npm install`
+server/node_modules

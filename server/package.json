@@ -1,0 +1,16 @@
+{
+  "name": "chennai-rice-chat-proxy",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Minimal local dev proxy that holds the Groq API key server-side for the Soru Kutty chatbot. Not the production backend — see .env.example.",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  }
+}

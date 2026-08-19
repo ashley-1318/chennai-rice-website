@@ -1,0 +1,983 @@
+/* ============================================================
+   Infrastructure page
+   Scoped design tokens (brief palette) — does not touch global.css
+   or any other page's styles.
+   ============================================================ */
+.infra {
+  --infra-cream: #f7f0e2;
+  --infra-cream-soft: #fbf7ee;
+  --infra-burgundy: #641522;
+  --infra-burgundy-deep: #4a101a;
+  --infra-gold: #c49a3a;
+  --infra-green: #173f32;
+  --infra-ink: #2a1a16;
+  --infra-muted: #6b5b4e;
+
+  background: var(--infra-cream);
+  color: var(--infra-ink);
+  overflow-x: hidden;
+  font-family: var(--sans);
+}
+
+.infra section {
+  position: relative;
+}
+
+.infra img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.infra-wrap {
+  width: min(1280px, 92vw);
+  margin-inline: auto;
+}
+
+.infra-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-indent: 0.32em;
+  text-transform: uppercase;
+  color: var(--infra-gold);
+}
+.infra-eyebrow::before {
+  content: '';
+  width: 30px;
+  height: 1px;
+  background: var(--infra-gold);
+}
+.infra-eyebrow.on-dark {
+  color: #e7c67c;
+}
+
+.infra-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(196, 154, 58, 0.55);
+  color: var(--infra-gold);
+  background: rgba(196, 154, 58, 0.08);
+}
+.infra-tag.is-planned {
+  border-color: rgba(196, 154, 58, 0.85);
+  background: rgba(196, 154, 58, 0.14);
+}
+
+.infra-title {
+  font-family: var(--serif);
+  font-weight: 600;
+  line-height: 1.14;
+  color: var(--infra-ink);
+}
+.infra-title.on-dark {
+  color: var(--infra-cream);
+}
+
+.infra-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--infra-burgundy);
+  color: var(--infra-cream);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 15px 28px;
+  border-radius: 4px;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.infra-btn:hover {
+  background: var(--infra-burgundy-deep);
+  transform: translateY(-2px);
+}
+
+/* ---------------------------------------------------------
+   HERO
+   --------------------------------------------------------- */
+.infra-hero {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  align-items: flex-end;
+  isolation: isolate;
+  background: linear-gradient(180deg, #1c0a0d 0%, #3a1219 55%, var(--infra-burgundy-deep) 100%);
+  padding-bottom: 64px;
+}
+.infra-hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.infra-hero-media img {
+  opacity: 0.5;
+  mix-blend-mode: luminosity;
+}
+.infra-hero-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(20, 8, 10, 0.25) 0%, rgba(20, 8, 10, 0.15) 35%, rgba(20, 8, 10, 0.55) 65%, rgba(20, 8, 10, 0.78) 100%),
+    linear-gradient(180deg, rgba(20, 8, 10, 0.45) 0%, rgba(20, 8, 10, 0.3) 45%, var(--infra-burgundy-deep) 100%);
+}
+.infra-hero-inner {
+  position: relative;
+  z-index: 1;
+  padding-top: 130px;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  max-width: 900px;
+  margin-left: auto;
+}
+.infra-hero-inner::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -40px -60px;
+  background: radial-gradient(60% 90% at 80% 50%, rgba(15, 5, 7, 0.6) 0%, rgba(15, 5, 7, 0) 100%);
+}
+.infra-hero-inner .infra-eyebrow {
+  margin-bottom: 26px;
+  flex-direction: row-reverse;
+}
+.infra-hero-inner .infra-eyebrow::before {
+  content: none;
+}
+.infra-hero-inner .infra-eyebrow::after {
+  content: '';
+  width: 30px;
+  height: 1px;
+  background: var(--infra-gold);
+}
+.infra-hero-title {
+  font-size: clamp(44px, 7.4vw, 108px);
+  color: var(--infra-cream);
+  text-shadow: 0 4px 40px rgba(0, 0, 0, 0.4);
+}
+.infra-hero-title span {
+  display: block;
+}
+.infra-hero-sub {
+  margin-top: 30px;
+  max-width: 620px;
+  font-size: 16px;
+  line-height: 1.8;
+  color: rgba(247, 240, 226, 0.82);
+  font-weight: 300;
+  margin-left: auto;
+}
+.infra-hero-cta {
+  margin-top: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--infra-cream);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(247, 240, 226, 0.4);
+  transition: border-color 0.3s ease, gap 0.3s ease;
+}
+.infra-hero-cta:hover {
+  border-color: var(--infra-gold);
+  gap: 16px;
+}
+.infra-hero-cta svg {
+  animation: infra-bob 1.8s ease-in-out infinite;
+}
+@keyframes infra-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+
+/* ---------------------------------------------------------
+   SECTION 01 — FACILITY OVERVIEW
+   --------------------------------------------------------- */
+.infra-overview {
+  padding: 120px 0;
+  background: var(--infra-cream);
+}
+.infra-overview-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(74, 16, 26, 0.22);
+}
+.infra-overview-frame img {
+  transform: scale(1.06);
+  will-change: transform;
+}
+.infra-overview-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(20, 8, 10, 0.05) 0%, rgba(20, 8, 10, 0.55) 100%);
+}
+.infra-overview-label {
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  z-index: 2;
+  color: #f2e5cb;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+.infra-overview-stats {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  padding: 36px 40px;
+}
+.infra-stat-block .infra-stat-value {
+  font-family: var(--serif);
+  font-size: clamp(28px, 3.4vw, 48px);
+  font-weight: 600;
+  color: var(--infra-cream);
+  line-height: 1;
+}
+.infra-stat-block .infra-stat-unit {
+  display: block;
+  margin-top: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--infra-gold);
+}
+.infra-stat-block .infra-stat-label {
+  margin-top: 6px;
+  font-size: 13px;
+  color: rgba(247, 240, 226, 0.75);
+}
+
+/* ---------------------------------------------------------
+   SECTION 02 — PADDY TO PROCESSING
+   --------------------------------------------------------- */
+.infra-sourcing {
+  padding: 130px 0;
+  background: var(--infra-cream-soft);
+}
+.infra-section-head {
+  max-width: 720px;
+  margin-bottom: 70px;
+}
+.infra-section-head .infra-title {
+  margin-top: 18px;
+  font-size: clamp(32px, 4.2vw, 52px);
+}
+.infra-section-head .infra-lede {
+  margin-top: 20px;
+  font-size: 15.5px;
+  line-height: 1.85;
+  color: var(--infra-muted);
+  max-width: 560px;
+}
+
+.infra-steps {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 60px;
+  align-items: start;
+}
+.infra-steps-list {
+  display: grid;
+  gap: 4px;
+}
+.infra-step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 22px;
+  padding: 26px 6px;
+  border-top: 1px solid rgba(74, 16, 26, 0.14);
+  cursor: pointer;
+  transition: opacity 0.35s ease;
+}
+.infra-steps-list .infra-step:last-child {
+  border-bottom: 1px solid rgba(74, 16, 26, 0.14);
+}
+.infra-step-num {
+  font-family: var(--serif);
+  font-size: 22px;
+  color: rgba(100, 21, 34, 0.35);
+  transition: color 0.35s ease;
+}
+.infra-step-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--infra-ink);
+  transition: color 0.35s ease;
+}
+.infra-step-text {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--infra-muted);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.35s ease, margin-top 0.35s ease;
+}
+.infra-step.is-active {
+  opacity: 1;
+}
+.infra-step.is-active .infra-step-num,
+.infra-step.is-active .infra-step-title {
+  color: var(--infra-burgundy);
+}
+.infra-step.is-active .infra-step-text {
+  max-height: 120px;
+  opacity: 1;
+}
+.infra-step:not(.is-active) {
+  opacity: 0.62;
+}
+
+.infra-step-frame {
+  position: sticky;
+  top: 120px;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--infra-burgundy-deep);
+  box-shadow: 0 24px 48px rgba(74, 16, 26, 0.2);
+}
+.infra-step-frame img {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.infra-step-frame img.is-active {
+  opacity: 1;
+}
+
+/* ---------------------------------------------------------
+   SECTION 03 — QUALITY
+   --------------------------------------------------------- */
+.infra-quality {
+  padding: 130px 0;
+  background: var(--infra-cream);
+}
+.infra-quality-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+  align-items: center;
+}
+.infra-quality-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1.05;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 26px 50px rgba(74, 16, 26, 0.18);
+}
+.infra-quality-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: rgba(74, 16, 26, 0.14);
+  border: 1px solid rgba(74, 16, 26, 0.14);
+}
+.infra-quality-card {
+  background: var(--infra-cream);
+  padding: 34px 28px;
+}
+.infra-quality-card-title {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--infra-burgundy);
+}
+.infra-quality-card-text {
+  margin-top: 12px;
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--infra-muted);
+}
+
+/* ---------------------------------------------------------
+   SECTION 04 — PROCESSING SEQUENCE
+   --------------------------------------------------------- */
+.infra-processing {
+  background: var(--infra-burgundy-deep);
+  padding: 120px 0 100px;
+  color: var(--infra-cream);
+}
+.infra-processing .infra-title {
+  font-size: clamp(32px, 4.2vw, 52px);
+}
+.infra-processing-head {
+  max-width: 640px;
+  margin-bottom: 70px;
+}
+.infra-process-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.infra-process-media {
+  position: sticky;
+  top: 110px;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #2a0a10;
+}
+.infra-process-media img {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.infra-process-media img.is-active {
+  opacity: 1;
+}
+.infra-process-media-num {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 2;
+  font-family: var(--serif);
+  font-size: 15px;
+  letter-spacing: 0.1em;
+  color: var(--infra-cream);
+  background: rgba(20, 6, 8, 0.55);
+  padding: 8px 14px;
+  border-radius: 999px;
+}
+
+.infra-process-list {
+  display: grid;
+  gap: 0;
+}
+.infra-process-stage {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 18px;
+  padding: 20px 4px;
+  border-left: 2px solid rgba(247, 240, 226, 0.14);
+  padding-left: 22px;
+  transition: border-color 0.35s ease, opacity 0.35s ease;
+  opacity: 0.5;
+}
+.infra-process-stage.is-active {
+  opacity: 1;
+  border-left-color: var(--infra-gold);
+}
+.infra-process-stage-num {
+  font-family: var(--serif);
+  font-size: 14px;
+  color: var(--infra-gold);
+}
+.infra-process-stage-title {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--infra-cream);
+}
+.infra-process-stage-text {
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgba(247, 240, 226, 0.62);
+  max-width: 420px;
+}
+
+/* ---------------------------------------------------------
+   SECTION 05 — CAPACITY
+   --------------------------------------------------------- */
+.infra-capacity {
+  padding: 130px 0;
+  background: var(--infra-cream);
+}
+.infra-capacity-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: rgba(74, 16, 26, 0.14);
+  border: 1px solid rgba(74, 16, 26, 0.14);
+  margin-top: 50px;
+}
+.infra-capacity-cell {
+  background: var(--infra-cream);
+  padding: 52px 34px;
+  text-align: center;
+}
+.infra-capacity-value {
+  font-family: var(--serif);
+  font-size: clamp(38px, 4.6vw, 64px);
+  font-weight: 600;
+  color: var(--infra-burgundy);
+  line-height: 1;
+}
+.infra-capacity-unit {
+  display: block;
+  margin-top: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--infra-gold);
+}
+
+.infra-expansion {
+  margin-top: 60px;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 50px;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(196, 154, 58, 0.1), rgba(100, 21, 34, 0.06));
+  border: 1px solid rgba(196, 154, 58, 0.3);
+  border-radius: 8px;
+  padding: 50px;
+}
+.infra-expansion-label {
+  font-family: var(--serif);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--infra-burgundy);
+}
+.infra-expansion-title {
+  margin-top: 16px;
+  font-family: var(--serif);
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 600;
+  color: var(--infra-ink);
+}
+.infra-expansion-text {
+  margin-top: 18px;
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--infra-muted);
+  max-width: 480px;
+}
+.infra-expansion-figure {
+  text-align: center;
+}
+.infra-expansion-figure .infra-capacity-value {
+  font-size: clamp(42px, 5.2vw, 72px);
+}
+
+/* ---------------------------------------------------------
+   SECTION 06 — SILO STORAGE (dark burgundy, parallax)
+   --------------------------------------------------------- */
+.infra-silos {
+  background: var(--infra-burgundy-deep);
+  padding: 130px 0;
+  color: var(--infra-cream);
+  overflow: hidden;
+}
+.infra-silos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+  align-items: center;
+}
+.infra-silos-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 5 / 4;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.infra-silos-media img {
+  transform: scale(1.15);
+  will-change: transform;
+}
+.infra-silos-copy .infra-title {
+  font-size: clamp(30px, 3.8vw, 46px);
+}
+.infra-silos-text {
+  margin-top: 20px;
+  font-size: 15px;
+  line-height: 1.85;
+  color: rgba(247, 240, 226, 0.72);
+  max-width: 460px;
+}
+.infra-silo-numbers {
+  margin-top: 44px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+.infra-silo-num-value {
+  font-family: var(--serif);
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 600;
+  color: var(--infra-gold);
+}
+.infra-silo-num-unit {
+  margin-top: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(247, 240, 226, 0.55);
+}
+.infra-silo-num-location {
+  margin-top: 3px;
+  font-size: 13px;
+  color: rgba(247, 240, 226, 0.85);
+}
+
+/* ---------------------------------------------------------
+   SECTION 07 — PACKAGING
+   --------------------------------------------------------- */
+.infra-packaging {
+  padding: 130px 0 100px;
+  background: var(--infra-cream-soft);
+}
+.infra-pack-track {
+  margin-top: 60px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(240px, 1fr);
+  gap: 40px;
+  overflow-x: auto;
+  padding-bottom: 20px;
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.infra-pack-track::-webkit-scrollbar {
+  display: none;
+}
+.infra-pack-card {
+  scroll-snap-align: start;
+  text-align: center;
+}
+.infra-pack-frame {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #fff 0%, #f1e6cf 100%);
+  display: grid;
+  place-items: center;
+  padding: 30px;
+  box-shadow: 0 22px 44px rgba(74, 16, 26, 0.14);
+  transition: transform 0.5s ease;
+}
+.infra-pack-frame img {
+  width: auto;
+  height: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.infra-pack-card:hover .infra-pack-frame {
+  transform: translateY(-8px);
+}
+.infra-pack-name {
+  margin-top: 22px;
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--infra-ink);
+}
+
+/* ---------------------------------------------------------
+   SECTION 08 — WAREHOUSE & LOGISTICS
+   --------------------------------------------------------- */
+.infra-logistics {
+  padding: 130px 0;
+  background: var(--infra-cream);
+}
+.infra-warehouse-frame {
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 26px 52px rgba(74, 16, 26, 0.18);
+  margin-top: 50px;
+}
+.infra-flow {
+  margin-top: 70px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+  gap: 8px;
+}
+.infra-flow-node {
+  text-align: center;
+  padding: 22px 10px;
+}
+.infra-flow-node-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--infra-burgundy);
+}
+.infra-flow-arrow {
+  display: grid;
+  place-items: center;
+  color: var(--infra-gold);
+}
+.infra-truck-strip {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: var(--infra-burgundy);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------
+   SECTION 09 — QUALITY CONTROL (dark burgundy)
+   --------------------------------------------------------- */
+.infra-qc {
+  background: var(--infra-burgundy-deep);
+  padding: 130px 0;
+  color: var(--infra-cream);
+}
+.infra-qc .infra-title {
+  font-size: clamp(34px, 4.4vw, 56px);
+}
+.infra-qc-grid {
+  margin-top: 70px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  background: rgba(247, 240, 226, 0.12);
+  border: 1px solid rgba(247, 240, 226, 0.12);
+}
+.infra-qc-card {
+  background: var(--infra-burgundy-deep);
+  padding: 40px 26px;
+}
+.infra-qc-num {
+  font-family: var(--serif);
+  font-size: 13px;
+  color: var(--infra-gold);
+  letter-spacing: 0.1em;
+}
+.infra-qc-icon {
+  margin: 22px 0 20px;
+  color: var(--infra-gold);
+}
+.infra-qc-title {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--infra-cream);
+}
+.infra-qc-text {
+  margin-top: 12px;
+  font-size: 13px;
+  line-height: 1.75;
+  color: rgba(247, 240, 226, 0.6);
+}
+
+/* ---------------------------------------------------------
+   SECTION 10 — INFRASTRUCTURE NUMBERS
+   --------------------------------------------------------- */
+.infra-numbers {
+  padding: 140px 0;
+  background: var(--infra-cream);
+  text-align: center;
+}
+.infra-numbers-grid {
+  margin-top: 70px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+.infra-number-value {
+  font-family: var(--serif);
+  font-size: clamp(30px, 3.6vw, 50px);
+  font-weight: 600;
+  color: var(--infra-burgundy);
+  line-height: 1;
+}
+.infra-number-unit {
+  margin-top: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--infra-gold);
+  min-height: 14px;
+}
+.infra-number-label {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--infra-muted);
+}
+.infra-number-status {
+  margin-top: 10px;
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--infra-green);
+}
+.infra-number-status.is-planned {
+  color: var(--infra-burgundy);
+}
+
+/* ---------------------------------------------------------
+   SECTION 11 — FINAL CTA
+   --------------------------------------------------------- */
+.infra-final {
+  position: relative;
+  min-height: 88vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  isolation: isolate;
+  background: linear-gradient(180deg, #170a0b 0%, var(--infra-burgundy-deep) 100%);
+  padding: 120px 24px;
+}
+.infra-final-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.infra-final-media img {
+  opacity: 0.4;
+}
+.infra-final-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(20, 8, 10, 0.5) 0%, rgba(20, 8, 10, 0.75) 100%);
+}
+.infra-final-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+}
+.infra-final-title {
+  font-size: clamp(34px, 5vw, 60px);
+  color: var(--infra-cream);
+}
+.infra-final-text {
+  margin-top: 24px;
+  font-size: 16px;
+  line-height: 1.85;
+  color: rgba(247, 240, 226, 0.78);
+}
+.infra-final-cta {
+  margin-top: 40px;
+}
+
+/* ---------------------------------------------------------
+   Reveal-on-scroll utility (fallback for non-GSAP fades)
+   --------------------------------------------------------- */
+.infra-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+}
+.infra-reveal.is-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1100px) {
+  .infra-overview-stats {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 28px 24px;
+  }
+  .infra-steps,
+  .infra-quality-grid,
+  .infra-process-layout,
+  .infra-silos-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .infra-step-frame,
+  .infra-process-media {
+    position: relative;
+    top: 0;
+    aspect-ratio: 16 / 10;
+  }
+  .infra-expansion {
+    grid-template-columns: 1fr;
+    padding: 34px;
+  }
+  .infra-qc-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .infra-numbers-grid {
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 40px;
+  }
+  .infra-flow {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .infra-hero { min-height: 92vh; padding-bottom: 48px; }
+  .infra-hero-inner { padding-top: 110px; }
+  .infra-overview,
+  .infra-sourcing,
+  .infra-quality,
+  .infra-capacity,
+  .infra-silos,
+  .infra-packaging,
+  .infra-logistics,
+  .infra-qc,
+  .infra-numbers {
+    padding-top: 90px;
+    padding-bottom: 90px;
+  }
+  .infra-processing { padding: 90px 0 70px; }
+  .infra-capacity-stats { grid-template-columns: 1fr; }
+  .infra-quality-cards { grid-template-columns: 1fr; }
+  .infra-silo-numbers { grid-template-columns: 1fr; gap: 20px; text-align: left; }
+  .infra-flow {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .infra-flow-arrow { transform: rotate(90deg); padding: 6px 0; }
+  .infra-numbers-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .infra-qc-grid { grid-template-columns: 1fr; }
+  .infra-pack-track { grid-auto-columns: minmax(70vw, 1fr); }
+  .infra-overview-frame { aspect-ratio: 4 / 5; }
+  .infra-numbers-grid { grid-template-columns: 1fr 1fr; }
+}

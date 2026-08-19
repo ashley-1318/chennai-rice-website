@@ -7,6 +7,7 @@ import './styles/shop-bridge.css'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 import RiceCursor from './components/RiceCursor.jsx'
+import SoruKutty from './components/chatbot/SoruKutty.jsx'
 
 import HomePage from './pages/HomePage.jsx'
 import ComingSoonPage from './pages/ComingSoonPage.jsx'
@@ -14,11 +15,11 @@ import ContactPage from './pages/ContactPage.jsx'
 import ProductsPage from './shop/pages/ProductsPage.jsx'
 import AboutPage from './shop/pages/AboutPage.jsx'
 import CartPage from './shop/pages/CartPage.jsx'
+import InfrastructurePage from './pages/infrastructure/InfrastructurePage.jsx'
 
 /* Routes that exist in the navigation and footer but whose copy is still
    being written. Listed here so no link in the footer ever 404s. */
 const PLACEHOLDER_PAGES = [
-  { path: '/infrastructure', title: 'Infrastructure', blurb: 'A closer look at our mills, silos and storage is on its way. We are putting together the plant tour, the machinery and the capacity behind every pack.' },
   { path: '/our-team', title: 'Our Team', blurb: 'Profiles of the people who run the mill are being put together and will appear here shortly.' },
   { path: '/careers', title: 'Careers', blurb: 'Open roles across our mills, logistics and sales will be listed here. Write to us in the meantime and we will keep your details on file.' },
   { path: '/quality', title: 'Quality', blurb: 'Our sorting, grading and testing process is being documented and will be published here shortly.' },
@@ -54,6 +55,7 @@ export default function App() {
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/infrastructure" element={<InfrastructurePage />} />
         {PLACEHOLDER_PAGES.map(page => (
           <Route
             key={page.path}
@@ -70,6 +72,7 @@ export default function App() {
       </Routes>
       <Footer />
       <RiceCursor />
+      <SoruKutty />
     </CartProvider>
   )
 }
