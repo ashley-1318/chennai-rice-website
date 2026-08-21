@@ -9,3 +9,9 @@ server/.env
 
 # Local dev proxy dependencies (server/) — reinstall with `npm install`
 server/node_modules
+
+# Root dependencies and build output — reinstall/rebuild instead of tracking
+node_modules
+dist
+
+.vercel

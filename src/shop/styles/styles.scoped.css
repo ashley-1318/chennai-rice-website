@@ -602,6 +602,32 @@
   color: var(--ink-500);
 }
 
+.shop-scope .pack-size-group {
+  display: flex;
+  gap: var(--s-2);
+  margin-top: var(--s-3);
+}
+.shop-scope .pack-size-pill {
+  flex: 1;
+  padding: var(--s-2) var(--s-1);
+  font: inherit;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--ink-700);
+  background: var(--cream-200);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.shop-scope .pack-size-pill:hover {
+  border-color: rgba(110, 27, 34, 0.35);
+}
+.shop-scope .pack-size-pill.is-selected {
+  background: var(--maroon-600);
+  color: var(--cream-50);
+}
+
 .shop-scope .card-foot {
   margin-top: auto;
   padding-top: var(--s-4);
@@ -1318,6 +1344,9 @@
   border: 1.5px solid var(--cream-300);
   border-radius: var(--radius-pill);
 }
+.shop-scope .qty--card {
+  justify-content: center;
+}
 .shop-scope .qty-btn {
   width: 2rem;
   height: 2rem;
@@ -1491,4 +1520,74 @@
      because the entrance animation is what normally restores it. */
   .stage.will-animate .lineup-item { opacity: 1; }
   .stage.will-animate.is-visible .lineup-item { animation: none; }
+}
+
+/* ---------- floating "proceed to checkout" bar ---------- */
+.shop-scope .checkout-bar {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  z-index: 900;
+  transform: translateX(-50%);
+  width: min(560px, calc(100vw - 100px));
+  animation: checkout-bar-in 0.3s ease;
+}
+@keyframes checkout-bar-in {
+  from { opacity: 0; transform: translate(-50%, 16px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.shop-scope .checkout-bar-link {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  background: var(--maroon-600);
+  color: var(--cream-50);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 14px 32px rgba(74, 16, 26, 0.35);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.shop-scope .checkout-bar-link:hover {
+  background: var(--maroon-700);
+  transform: translateY(-2px);
+}
+
+.shop-scope .checkout-bar-icon {
+  flex: 0 0 auto;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+}
+
+.shop-scope .checkout-bar-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.shop-scope .checkout-bar-text strong {
+  font-size: var(--fs-small);
+  font-weight: 700;
+}
+.shop-scope .checkout-bar-count {
+  font-size: 0.75rem;
+  color: var(--cream-200);
+}
+
+.shop-scope .checkout-bar-chevron {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+}
+
+@media (max-width: 640px) {
+  .shop-scope .checkout-bar {
+    width: calc(100vw - 32px);
+    bottom: 16px;
+  }
 }

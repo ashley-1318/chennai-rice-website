@@ -6,6 +6,7 @@ import ProductGrid from "../sections/ProductGrid.jsx";
 import Varieties from "../sections/Varieties.jsx";
 import Lineup from "../sections/Lineup.jsx";
 import SearchBar from "../components/SearchBar.jsx";
+import CheckoutBar from "../components/CheckoutBar.jsx";
 import usePageMeta from "../hooks/usePageMeta.js";
 
 export default function ProductsPage() {
@@ -32,6 +33,7 @@ export default function ProductsPage() {
       <ProductGrid search={search} activeFilter={activeFilter} onFilterChange={setActiveFilter} />
       <Varieties />
       <Lineup />
+      <CheckoutBar />
     </SiteLayout>
   );
 }

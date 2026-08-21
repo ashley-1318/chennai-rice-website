@@ -1,5 +1,18 @@
-// The four 10 kg packs. `tags` drives the filter chips; `search` is the extra
+// The four packs. `tags` drives the filter chips; `search` is the extra
 // haystack the original markup carried in data-name.
+//
+// Only the 10 kg price is a real, confirmed figure. 5 kg and 25 kg are
+// derived from it by simple per-kg scaling as an editable placeholder —
+// swap in exact real prices for those sizes here as soon as they're known.
+const scalePrice = (price10kg, kg) => Math.round((price10kg / 10) * kg);
+
+function withPackSizes(price10kg) {
+  return [
+    { kg: 5, price: scalePrice(price10kg, 5) },
+    { kg: 10, price: price10kg },
+    { kg: 25, price: scalePrice(price10kg, 25) },
+  ];
+}
 
 export const PRODUCTS = [
   {
@@ -9,6 +22,7 @@ export const PRODUCTS = [
     name: "Rajabhogam Premium",
     description: "Our finest pack — aged, hand-graded premium grains.",
     price: 995,
+    packSizes: withPackSizes(995),
     image: "/assets/shop/pack-premium.png",
     alt: "Special Rajabhogam Kitchidi Ponni Rice in the premium black and gold 10 kg pack",
     width: 456,
@@ -24,6 +38,7 @@ export const PRODUCTS = [
     name: "Raja Bogam Ponni",
     description: "The everyday family pack — soft bite, clean aroma.",
     price: 795,
+    packSizes: withPackSizes(795),
     image: "/assets/shop/pack-red.png",
     alt: "Raja Bogam Ponni rice in the classic red 10 kg pack",
     width: 515,
@@ -38,6 +53,7 @@ export const PRODUCTS = [
     name: "Vada Kolam",
     description: "Fine slender grains that cook light and fluffy.",
     price: 895,
+    packSizes: withPackSizes(895),
     image: "/assets/shop/pack-gold.png",
     alt: "Vada Kolam rice in the golden 10 kg pack",
     width: 490,
@@ -52,6 +68,7 @@ export const PRODUCTS = [
     name: "Akshaya Ponni",
     description: "Full-bodied Ponni grains for generous everyday meals.",
     price: 845,
+    packSizes: withPackSizes(845),
     image: "/assets/shop/pack-akshaya.png",
     alt: "Akshaya Ponni rice in the orange 10 kg pack",
     width: 492,
