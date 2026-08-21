@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import CardQuantityControl from "./CardQuantityControl.jsx";
 import { useRipple } from "../hooks/useRipple.js";
 import { formatRupees } from "../utils/format.js";
@@ -60,10 +61,9 @@ export default function ProductCard({ product }) {
             <span className="price-unit">/ {selected.kg} kg</span>
           </p>
           <div className="card-actions">
-            {/* "View more" is still a stub — the details page hooks in here. */}
-            <button className="view-btn" type="button" onClick={spawnRipple}>
+            <Link className="view-btn" to={`/products/${product.id}`} onClick={spawnRipple}>
               View more
-            </button>
+            </Link>
             <CardQuantityControl product={cartProduct} />
           </div>
         </div>

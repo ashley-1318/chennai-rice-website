@@ -656,12 +656,14 @@
 .shop-scope .view-btn {
   position: relative;
   overflow: hidden;
+  display: inline-block;
   padding: var(--s-2) var(--s-4);
   font: inherit;
   font-weight: 700;
   font-size: var(--fs-small);
   letter-spacing: 0.02em;
   color: var(--maroon-600);
+  text-decoration: none;
   background: transparent;
   border: 1.5px solid rgba(110, 27, 34, 0.35);
   border-radius: var(--radius-pill);

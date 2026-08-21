@@ -13,6 +13,7 @@ import HomePage from './pages/HomePage.jsx'
 import ComingSoonPage from './pages/ComingSoonPage.jsx'
 import ContactPage from './pages/ContactPage.jsx'
 import ProductsPage from './shop/pages/ProductsPage.jsx'
+import ProductDetailPage from './shop/pages/ProductDetailPage.jsx'
 import AboutPage from './shop/pages/AboutPage.jsx'
 import CartPage from './shop/pages/CartPage.jsx'
 import InfrastructurePage from './pages/infrastructure/InfrastructurePage.jsx'
@@ -53,6 +54,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/products" element={<ProductsPage />} />
+        <Route path="/products/:id" element={<ProductDetailPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/infrastructure" element={<InfrastructurePage />} />

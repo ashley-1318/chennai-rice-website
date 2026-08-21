@@ -129,7 +129,7 @@ function ProductSlide({ product, isFirst }) {
           <p className="slide-desc">{product.desc}</p>
           <div className="slide-buttons">
             <a className="btn-maroon" href="/products">
-              Learn More
+              View More Products
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path
                   d="M4 12h15m0 0l-6-6m6 6l-6 6"
