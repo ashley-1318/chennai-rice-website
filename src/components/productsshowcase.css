@@ -27,32 +27,6 @@
   opacity: 0.95;
 }
 
-/* a light drift of rice grains under the hero curve */
-.showcase-fly {
-  position: absolute;
-  left: 5%;
-  top: 20px;
-  width: 165px;
-  opacity: 0.42;
-  z-index: 0;
-  transform: rotate(-10deg);
-  pointer-events: none;
-  user-select: none;
-}
-.showcase-grains {
-  position: absolute;
-  z-index: 0;
-  pointer-events: none;
-  user-select: none;
-  opacity: 0.85;
-}
-.showcase-grains-right {
-  right: 40px;
-  bottom: 40px;
-  width: 190px;
-  transform: rotate(8deg);
-}
-
 /* ---------- persistent header + controls ---------- */
 .showcase-header {
   position: absolute;
@@ -247,22 +221,6 @@
 }
 
 /* ---------- controls ---------- */
-.showcase-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 5;
-}
-.showcase-arrow:hover {
-  transform: translateY(-50%) scale(1.07);
-}
-.showcase-arrow-prev {
-  left: 3vw;
-}
-.showcase-arrow-next {
-  right: 3vw;
-}
-
 .showcase-pagination {
   position: absolute;
   left: 0;
@@ -296,9 +254,7 @@
 }
 
 @media (max-width: 1100px) {
-  .showcase-paddy,
-  .showcase-fly,
-  .showcase-grains {
+  .showcase-paddy {
     display: none;
   }
 }
@@ -327,16 +283,35 @@
     gap: 14px;
     padding: 40px 26px;
   }
+  /* Unwrap slide-left so its children can be reordered individually
+     against slide-center — puts the buttons under the product image
+     instead of above it. */
+  .slide-left {
+    display: contents;
+  }
+  .slide-num {
+    order: 1;
+  }
   .slide-cat {
+    order: 2;
     justify-content: center;
   }
   .slide-desc {
+    order: 3;
     font-size: 16px;
     margin-block: 14px;
     max-width: 440px;
   }
+  .slide-center {
+    order: 4;
+  }
   .slide-buttons {
+    order: 5;
     justify-content: center;
+  }
+  .slide-right {
+    order: 6;
+    text-align: center;
   }
   .huge-bg-text {
     font-size: 72px;
@@ -344,17 +319,11 @@
   .product-bag-img {
     max-height: 300px;
   }
-  .slide-right {
-    text-align: center;
-  }
   .slide-name {
     font-size: 20px;
   }
   .slide-center-col {
     padding: 40px 26px;
-  }
-  .showcase-arrow {
-    display: none;
   }
   .showcase-pagination {
     display: none;

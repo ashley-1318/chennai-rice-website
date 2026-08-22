@@ -95,18 +95,6 @@ function restFor(vars, rest) {
   }, {})
 }
 
-const Arrow = ({ dir = 'left' }) => (
-  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path
-      d={dir === 'left' ? 'M15 5L8 12l7 7' : 'M9 5l7 7-7 7'}
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-)
-
 function ProductSlide({ product, isFirst }) {
   return (
     <div
@@ -361,13 +349,6 @@ export default function ProductsShowcase() {
           alt=""
           aria-hidden="true"
         />
-        <Img className="showcase-fly" src={ASSETS.grainsWhite} alt="" aria-hidden="true" />
-        <Img
-          className="showcase-grains showcase-grains-right"
-          src={ASSETS.grainsWhite}
-          alt=""
-          aria-hidden="true"
-        />
 
         {/* Heading rides inside the pinned frame, so it stays above the
             products the whole way through the carousel. */}
@@ -380,7 +361,7 @@ export default function ProductsShowcase() {
             <div className="slide-col slide-center-col">
               <div className="section-label">
                 <Ornament />
-                <span>Since 1980</span>
+                <span>Since 1950</span>
                 <Ornament flip />
               </div>
               <h3 className="showcase-cta-title">{SHOWCASE.introTitle}</h3>
@@ -404,21 +385,6 @@ export default function ProductsShowcase() {
             </div>
           </div>
         )}
-
-        <button
-          className="circle-arrow showcase-arrow showcase-arrow-prev"
-          onClick={() => goToProduct(activeIndex - 1)}
-          aria-label="Previous product"
-        >
-          <Arrow dir="left" />
-        </button>
-        <button
-          className="circle-arrow showcase-arrow showcase-arrow-next"
-          onClick={() => goToProduct(activeIndex + 1)}
-          aria-label="Next product"
-        >
-          <Arrow dir="right" />
-        </button>
 
         <div className="showcase-pagination" role="tablist" aria-label="Products">
           {PRODUCTS.map((product, index) => (

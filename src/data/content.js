@@ -31,7 +31,7 @@ export const NAV_CTA = { label: 'Reach Us', to: '/contact' }
 export const HERO = {
   titleLines: ['Rice.', 'The White Gold', 'Among Foods.'],
   subtitle: 'The simplicity of cooking rice is the most culturally satisfying experience.',
-  estd: '1980',
+  estd: '1950',
 }
 
 export const PRODUCTS = [
@@ -95,7 +95,7 @@ export const STATS = [
 
 export const SHOWCASE = {
   introTitle: 'Four Signature Varieties',
-  introText: 'Milled, polished and packed with the same care since 1980.',
+  introText: 'Milled, polished and packed with the same care since 1950.',
   ctaTitle: 'Find Your Perfect Grain',
   ctaText: 'Every variety we mill carries the same promise of purity, aroma and trust.',
   ctaButton: 'View All Products',
@@ -189,7 +189,7 @@ export const CELEBS = [
 export const FOOTER = {
   brandName: 'CHENNAI RICE',
   brandSub: 'INDUSTRIES INDIA (P) LTD.',
-  estd: '1980',
+  estd: '1950',
   motto: 'From Our Fields to Your Family',
 
   footerLinks: [

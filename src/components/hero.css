@@ -30,9 +30,9 @@
   z-index: 1;
   background: linear-gradient(
     180deg,
-    rgba(18, 10, 4, 0.35) 0%,
-    rgba(18, 10, 4, 0.15) 40%,
-    rgba(24, 12, 6, 0.55) 100%
+    rgba(18, 10, 4, 0.18) 0%,
+    rgba(18, 10, 4, 0.06) 40%,
+    rgba(24, 12, 6, 0.32) 100%
   );
 }
 
@@ -93,7 +93,7 @@
   }
 }
 
-/* --- ESTD 1975 badge --- */
+/* --- ESTD badge --- */
 .hero-estd {
   position: absolute;
   right: 7vw;
