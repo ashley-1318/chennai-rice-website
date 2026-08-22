@@ -2,7 +2,6 @@ import { useCallback, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import useGsapContext from '../hooks/useGsapContext.js'
-import useIsMobile from '../hooks/useIsMobile.js'
 import Img from './Img.jsx'
 import Ornament from './Ornament.jsx'
 import SectionHead from './SectionHead.jsx'
@@ -162,7 +161,6 @@ function ProductSlide({ product, isFirst }) {
 
 export default function ProductsShowcase() {
   const sectionRef = useRef(null)
-  const isMobile = useIsMobile()
   const [activeIndex, setActiveIndex] = useState(0)
 
   // Jump the scroll so a given product is centred in the pinned frame.
@@ -183,49 +181,7 @@ export default function ProductsShowcase() {
       const section = sectionRef.current
       const slides = PRODUCTS.map(p => section.querySelector(`#slide-${p.num}`))
 
-      // --- Mobile: the slides stack, so each one just reveals on scroll ---
-      if (isMobile) {
-        slides.forEach((slide, index) => {
-          if (!slide) return
-          gsap.fromTo(
-            slide.querySelectorAll('.slide-left > *, .slide-right > *'),
-            { opacity: 0, y: 30 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.6,
-              stagger: 0.08,
-              ease: 'power3.out',
-              scrollTrigger: {
-                trigger: slide,
-                start: 'top 70%',
-                toggleActions: 'play none none none',
-              },
-            }
-          )
-
-          gsap.fromTo(
-            slide.querySelector('.product-bag-img'),
-            { opacity: 0, y: 100, scale: 0.85, rotation: index % 2 === 0 ? -6 : 6 },
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              rotation: 0,
-              duration: 1,
-              ease: 'power2.out',
-              scrollTrigger: {
-                trigger: slide,
-                start: 'top 75%',
-                toggleActions: 'play none none none',
-              },
-            }
-          )
-        })
-        return
-      }
-
-      // --- Desktop: pin the section and scrub one product at a time ---
+      // --- Pin the section and scrub one product at a time (mobile and desktop alike) ---
       // Each product owns 1 unit of timeline: it arrives in its own way, holds
       // in the centre, then leaves as the next one arrives. The last product
       // holds until the pin releases.
@@ -337,7 +293,7 @@ export default function ProductsShowcase() {
       })
     },
     sectionRef,
-    [isMobile]
+    []
   )
 
   return (

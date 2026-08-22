@@ -259,29 +259,31 @@
   }
 }
 
-/* ---------- mobile: no pin, plain stacked list ---------- */
+/* ---------- mobile: same pinned scrub carousel, compacted to fit one screen ---------- */
 @media (max-width: 768px) {
-  .showcase-pin-container {
-    height: auto;
-    min-height: 0;
-    padding-bottom: 40px;
-  }
   .showcase-header {
-    position: relative;
-    padding-top: 70px;
+    padding-top: 78px;
+  }
+  /* The label is decorative and the fixed nav already sits above this
+     point — dropping it buys back the height its padding-top needed. */
+  .showcase-header .section-label {
+    display: none;
   }
   .showcase-slide {
-    position: relative;
-    inset: auto;
-    opacity: 1;
-    pointer-events: auto;
+    top: 138px;
+    /* Bottom-anchor the card: with a fixed reserve below it, this keeps a
+       guaranteed gap above the floating chat button on every phone size,
+       regardless of how tall the content or the viewport is. Any leftover
+       room shows up as breathing space under the header instead, which
+       reads a lot better than a dead gap right above the page dots. */
+    align-items: end;
   }
   .slide-grid {
     grid-template-columns: 1fr;
     justify-items: center;
     text-align: center;
-    gap: 14px;
-    padding: 40px 26px;
+    gap: clamp(8px, 1.8vh, 20px);
+    padding: 0 24px 104px;
   }
   /* Unwrap slide-left so its children can be reordered individually
      against slide-center — puts the buttons under the product image
@@ -291,6 +293,7 @@
   }
   .slide-num {
     order: 1;
+    font-size: clamp(28px, 5vh, 46px);
   }
   .slide-cat {
     order: 2;
@@ -298,9 +301,10 @@
   }
   .slide-desc {
     order: 3;
-    font-size: 16px;
-    margin-block: 14px;
-    max-width: 440px;
+    font-size: clamp(14px, 3.8vw, 17px);
+    line-height: 1.5;
+    margin-block: clamp(6px, 1.2vh, 16px);
+    max-width: 400px;
   }
   .slide-center {
     order: 4;
@@ -308,24 +312,110 @@
   .slide-buttons {
     order: 5;
     justify-content: center;
+    flex-wrap: nowrap;
+    gap: 8px;
+    margin-top: clamp(4px, 1vh, 14px);
+  }
+  .slide-buttons .btn-maroon,
+  .slide-buttons .btn-outline {
+    padding: clamp(11px, 1.8vh, 15px) clamp(16px, 3.6vw, 24px);
+    font-size: clamp(10.5px, 2.7vw, 12px);
+    white-space: nowrap;
   }
   .slide-right {
     order: 6;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2px clamp(12px, 3vw, 22px);
+    width: 100%;
+    max-width: 420px;
     text-align: center;
+    margin-top: clamp(6px, 1.2vh, 16px);
   }
   .huge-bg-text {
-    font-size: 72px;
+    font-size: clamp(50px, 12vh, 96px);
   }
   .product-bag-img {
-    max-height: 300px;
+    max-height: clamp(150px, 22vh, 240px);
   }
   .slide-name {
-    font-size: 20px;
+    flex: 0 0 100%;
+    font-size: clamp(17px, 4.6vw, 20px);
+    padding-bottom: clamp(7px, 1.1vh, 12px);
+    margin-bottom: 0;
+  }
+  .spec-item {
+    flex: 1 1 0;
+    min-width: 92px;
+    padding-block: 0;
+    border-bottom: none;
+  }
+  .spec-value {
+    font-size: clamp(12.5px, 3.4vw, 15px);
+    line-height: 1.25;
+  }
+  .spec-label {
+    margin-top: 2px;
+    font-size: clamp(9px, 2.4vw, 10px);
+    letter-spacing: 0.2em;
+    text-indent: 0.2em;
   }
   .slide-center-col {
     padding: 40px 26px;
   }
   .showcase-pagination {
-    display: none;
+    bottom: 18px;
+    gap: 16px;
+  }
+}
+
+/* ---------- short phones (SE-class, ~667px tall): the generous sizing
+   above doesn't leave enough room for both the fixed nav and the fixed
+   chat button, so this tier compacts everything and top-anchors the card
+   instead of bottom-anchoring it — proven to clear both on a 375x667
+   viewport with every product's copy length. ---------- */
+@media (max-width: 768px) and (max-height: 720px) {
+  .showcase-slide {
+    align-items: start;
+  }
+  .slide-grid {
+    gap: 6px;
+    padding: 0 24px 50px;
+  }
+  .slide-num {
+    font-size: 28px;
+  }
+  .slide-desc {
+    font-size: 13px;
+    line-height: 1.45;
+    margin-block: 4px;
+    max-width: 340px;
+  }
+  .slide-buttons {
+    margin-top: 2px;
+  }
+  .slide-buttons .btn-maroon,
+  .slide-buttons .btn-outline {
+    padding: 10px 14px;
+    font-size: 10px;
+  }
+  .slide-right {
+    gap: 2px 10px;
+    max-width: 360px;
+    margin-top: 4px;
+  }
+  .product-bag-img {
+    max-height: 148px;
+  }
+  .slide-name {
+    font-size: 16px;
+    padding-bottom: 6px;
+  }
+  .spec-value {
+    font-size: 12px;
+  }
+  .spec-label {
+    font-size: 8.5px;
   }
 }
