@@ -27,15 +27,15 @@
 }
 
 .nav-logo img {
-  height: 54px;
-  width: 54px;
+  height: 66px;
+  width: 66px;
   border-radius: 50%;
   object-fit: cover;
   transition: height 0.35s ease, width 0.35s ease;
 }
 .nav-solid .nav-logo img {
-  height: 46px;
-  width: 46px;
+  height: 56px;
+  width: 56px;
 }
 
 .nav-links {
@@ -135,6 +135,6 @@
     margin-left: auto;
   }
   .nav-inner {
-    height: 70px;
+    height: 78px;
   }
 }

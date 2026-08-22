@@ -153,7 +153,10 @@
 .product-bag-img {
   position: relative;
   z-index: 1;
-  max-height: min(56vh, 440px);
+  /* The 3rd term keeps the bag clear of the header above (top:230px) and
+     the pagination dots below on short viewports, where 56vh alone would
+     grow the bag large enough to sit under the page numbers. */
+  max-height: min(56vh, 440px, calc(100vh - 330px));
   width: auto;
   filter: drop-shadow(0 26px 26px rgba(40, 20, 8, 0.28));
   will-change: transform;
@@ -225,7 +228,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 44px;
+  bottom: 28px;
   z-index: 3;
   display: flex;
   justify-content: center;
@@ -313,13 +316,14 @@
     order: 5;
     justify-content: center;
     flex-wrap: nowrap;
-    gap: 8px;
+    gap: clamp(6px, 1.6vw, 12px);
     margin-top: clamp(4px, 1vh, 14px);
   }
   .slide-buttons .btn-maroon,
   .slide-buttons .btn-outline {
-    padding: clamp(11px, 1.8vh, 15px) clamp(16px, 3.6vw, 24px);
-    font-size: clamp(10.5px, 2.7vw, 12px);
+    padding: clamp(11px, 1.8vh, 15px) clamp(10px, 2.8vw, 24px);
+    font-size: clamp(9.5px, 2.4vw, 12px);
+    letter-spacing: clamp(0.08em, 0.05em + 0.5vw, 0.18em);
     white-space: nowrap;
   }
   .slide-right {
@@ -394,11 +398,13 @@
   }
   .slide-buttons {
     margin-top: 2px;
+    gap: 6px;
   }
   .slide-buttons .btn-maroon,
   .slide-buttons .btn-outline {
-    padding: 10px 14px;
-    font-size: 10px;
+    padding: 9px 10px;
+    font-size: 9px;
+    letter-spacing: 0.1em;
   }
   .slide-right {
     gap: 2px 10px;
