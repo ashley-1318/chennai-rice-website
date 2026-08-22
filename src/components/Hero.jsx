@@ -31,14 +31,6 @@ export default function Hero() {
           ))}
         </h1>
         <p className="home-hero-sub">{HERO.subtitle}</p>
-
-        <div className="hero-scroll">
-          <svg width="24" height="38" viewBox="0 0 24 38" fill="none" aria-hidden="true">
-            <rect x="1" y="1" width="22" height="36" rx="11" stroke="#cdb37c" strokeWidth="1.5" />
-            <circle className="hero-scroll-dot" cx="12" cy="11" r="2.5" fill="#cdb37c" />
-          </svg>
-          <span>Scroll</span>
-        </div>
       </div>
 
       <div className="hero-estd">
@@ -46,6 +38,14 @@ export default function Hero() {
           <span className="hero-estd-label">Estd</span>
           <span className="hero-estd-year">{HERO.estd}</span>
         </div>
+      </div>
+
+      <div className="hero-scroll">
+        <svg width="24" height="38" viewBox="0 0 24 38" fill="none" aria-hidden="true">
+          <rect x="1" y="1" width="22" height="36" rx="11" stroke="#cdb37c" strokeWidth="1.5" />
+          <circle className="hero-scroll-dot" cx="12" cy="11" r="2.5" fill="#cdb37c" />
+        </svg>
+        <span>Scroll</span>
       </div>
 
       <svg className="hero-curve" viewBox="0 0 1440 150" preserveAspectRatio="none" aria-hidden="true">

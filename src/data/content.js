@@ -31,7 +31,7 @@ export const NAV_CTA = { label: 'Reach Us', to: '/contact' }
 export const HERO = {
   titleLines: ['Rice.', 'The White Gold', 'Among Foods.'],
   subtitle: 'The simplicity of cooking rice is the most culturally satisfying experience.',
-  estd: '1950',
+  estd: "1950's",
 }
 
 export const PRODUCTS = [
