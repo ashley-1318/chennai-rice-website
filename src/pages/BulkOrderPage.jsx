@@ -64,17 +64,22 @@ export default function BulkOrderPage() {
   }
 
   const chooseType = key => {
-    setForm(f => ({ ...f, type: key }))
-    setErrors(x => ({ ...x, type: undefined, otherType: undefined }))
+    // Retailer has no Representative Name field, so any value typed in
+    // there under a different type is cleared rather than silently
+    // carried into a Retailer submission.
+    setForm(f => ({ ...f, type: key, name: key === 'retailer' ? '' : f.name }))
+    setErrors(x => ({ ...x, type: undefined, otherType: undefined, name: undefined }))
   }
 
   const validate = () => {
+    const isRetailer = form.type === 'retailer'
     const next = {}
     if (!form.type) next.type = 'Please choose who you are ordering as.'
     if (form.type === 'other' && !form.otherType.trim())
       next.otherType = 'Please tell us your business type.'
-    if (!form.company.trim()) next.company = 'Please add your company or business name.'
-    if (!form.name.trim()) next.name = "Please add the representative's name."
+    if (!form.company.trim())
+      next.company = isRetailer ? 'Please add your name.' : 'Please add your company or business name.'
+    if (!isRetailer && !form.name.trim()) next.name = "Please add the representative's name."
     if (!form.email.trim()) next.email = 'Please add an email address.'
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim()))
       next.email = 'That email address does not look right.'
@@ -149,28 +154,30 @@ export default function BulkOrderPage() {
             )}
 
             <label className="field">
-              <span className="field-label">Company / Business Name</span>
+              <span className="field-label">{form.type === 'retailer' ? 'Name' : 'Company / Business Name'}</span>
               <input
                 type="text"
                 value={form.company}
                 onChange={set('company')}
-                placeholder="Your company or shop name"
+                placeholder={form.type === 'retailer' ? 'Your full name' : 'Your company or shop name'}
                 aria-invalid={!!errors.company}
               />
               {errors.company && <span className="field-error">{errors.company}</span>}
             </label>
 
-            <label className="field">
-              <span className="field-label">Representative Name</span>
-              <input
-                type="text"
-                value={form.name}
-                onChange={set('name')}
-                placeholder="Your full name"
-                aria-invalid={!!errors.name}
-              />
-              {errors.name && <span className="field-error">{errors.name}</span>}
-            </label>
+            {form.type !== 'retailer' && (
+              <label className="field">
+                <span className="field-label">Representative Name</span>
+                <input
+                  type="text"
+                  value={form.name}
+                  onChange={set('name')}
+                  placeholder="Your full name"
+                  aria-invalid={!!errors.name}
+                />
+                {errors.name && <span className="field-error">{errors.name}</span>}
+              </label>
+            )}
 
             <label className="field">
               <span className="field-label">Email</span>
