@@ -1,0 +1,43 @@
+/* ---------- buyer type selector (Distributor / Wholesaler / Retailer / Others) ---------- */
+.buyer-type-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.buyer-type-btn {
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--heading);
+  background: var(--cream-soft);
+  border: 1px solid rgba(74, 44, 34, 0.18);
+  border-radius: 999px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+}
+.buyer-type-btn:hover {
+  border-color: var(--gold);
+  transform: translateY(-1px);
+}
+.buyer-type-btn.is-selected {
+  background: var(--maroon);
+  border-color: var(--maroon);
+  color: #f4e6cd;
+}
+.buyer-type-btn:focus-visible {
+  outline: 2px solid var(--maroon);
+  outline-offset: 2px;
+}
+
+@media (max-width: 520px) {
+  .buyer-type-group {
+    gap: 8px;
+  }
+  .buyer-type-btn {
+    flex: 1 1 calc(50% - 8px);
+    text-align: center;
+    padding: 10px 12px;
+  }
+}

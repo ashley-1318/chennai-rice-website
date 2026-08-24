@@ -15,6 +15,7 @@ import CookieBanner from './components/CookieBanner.jsx'
 import HomePage from './pages/HomePage.jsx'
 import ComingSoonPage from './pages/ComingSoonPage.jsx'
 import ContactPage from './pages/ContactPage.jsx'
+import BulkOrderPage from './pages/BulkOrderPage.jsx'
 import ProductsPage from './shop/pages/ProductsPage.jsx'
 import ProductDetailPage from './shop/pages/ProductDetailPage.jsx'
 import AboutPage from './shop/pages/AboutPage.jsx'
@@ -62,6 +63,7 @@ export default function App() {
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/products/:id" element={<ProductDetailPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/bulk-order" element={<BulkOrderPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/infrastructure" element={<InfrastructurePage />} />
         {PLACEHOLDER_PAGES.map(page => (
