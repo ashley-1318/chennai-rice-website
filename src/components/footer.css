@@ -202,6 +202,22 @@
   text-align: center;
 }
 
+.foot-cookie-link {
+  display: block;
+  margin: 6px auto 0;
+  font-size: 11px;
+  color: #e3c9b4;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(227, 201, 180, 0.5);
+  opacity: 0.85;
+  transition: opacity 0.25s ease, color 0.25s ease;
+}
+.foot-cookie-link:hover {
+  opacity: 1;
+  color: var(--gold-soft);
+}
+
 .foot-follow {
   justify-self: end;
   display: grid;

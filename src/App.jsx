@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { CartProvider } from './shop/hooks/useCart.jsx'
+import { WishlistProvider } from './shop/hooks/useWishlist.jsx'
+import { CookieConsentProvider } from './hooks/useCookieConsent.jsx'
 import './shop/styles/styles.scoped.css'
 import './styles/shop-bridge.css'
 
@@ -8,6 +10,7 @@ import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 import RiceCursor from './components/RiceCursor.jsx'
 import SoruKutty from './components/chatbot/SoruKutty.jsx'
+import CookieBanner from './components/CookieBanner.jsx'
 
 import HomePage from './pages/HomePage.jsx'
 import ComingSoonPage from './pages/ComingSoonPage.jsx'
@@ -16,6 +19,7 @@ import ProductsPage from './shop/pages/ProductsPage.jsx'
 import ProductDetailPage from './shop/pages/ProductDetailPage.jsx'
 import AboutPage from './shop/pages/AboutPage.jsx'
 import CartPage from './shop/pages/CartPage.jsx'
+import WishlistPage from './shop/pages/WishlistPage.jsx'
 import InfrastructurePage from './pages/infrastructure/InfrastructurePage.jsx'
 
 /* Routes that exist in the navigation and footer but whose copy is still
@@ -48,7 +52,9 @@ function ScrollToTop() {
 
 export default function App() {
   return (
+    <CookieConsentProvider>
     <CartProvider>
+      <WishlistProvider>
       <ScrollToTop />
       <Navbar />
       <Routes>
@@ -66,6 +72,7 @@ export default function App() {
           />
         ))}
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/wishlist" element={<WishlistPage />} />
         {/* legacy deep links from the product-page repo */}
         <Route path="/index.html" element={<Navigate to="/products" replace />} />
         <Route path="/about.html" element={<Navigate to="/about" replace />} />
@@ -75,6 +82,9 @@ export default function App() {
       <Footer />
       <RiceCursor />
       <SoruKutty />
+      <CookieBanner />
+      </WishlistProvider>
     </CartProvider>
+    </CookieConsentProvider>
   )
 }

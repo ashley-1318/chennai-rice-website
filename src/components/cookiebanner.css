@@ -1,0 +1,246 @@
+/* ============================================================
+   Cookie notice — a floating card near the bottom of the viewport,
+   matching the brand's cream-card / maroon-accent language used
+   elsewhere on the site (see .btn-outline, .btn-maroon in global.css).
+
+   It sits above the page but below the Soru Kutty orb's window, and is
+   only ever in the DOM while the visitor has not answered it, so it costs
+   nothing on repeat visits.
+   ============================================================ */
+.cookie-card-wrap {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: clamp(14px, 3vw, 28px);
+  z-index: 900;
+  display: flex;
+  justify-content: center;
+  /* Extra right-hand padding keeps the card clear of the Soru Kutty
+     launcher, which floats at right:24px/bottom:24px above this notice. */
+  padding: 0 96px 0 16px;
+  pointer-events: none;
+}
+
+@media (max-width: 860px) {
+  .cookie-card-wrap {
+    padding: 0 16px;
+  }
+}
+
+.cookie-card {
+  position: relative;
+  pointer-events: auto;
+  box-sizing: border-box;
+  width: min(100%, 1180px);
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2vw, 26px);
+  padding: clamp(18px, 2.2vw, 26px) clamp(24px, 3vw, 40px);
+  background: var(--cream-soft);
+  border: 1px solid rgba(198, 154, 63, 0.35);
+  border-radius: 16px;
+  box-shadow: 0 22px 50px rgba(40, 8, 14, 0.22), 0 4px 14px rgba(40, 8, 14, 0.1);
+  animation: cookie-card-in 0.45s ease both;
+}
+
+@keyframes cookie-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- close ---------- */
+.cookie-card-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--maroon);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+.cookie-card-close:hover {
+  background: rgba(122, 31, 43, 0.08);
+}
+.cookie-card-close:focus-visible {
+  outline: 2px solid var(--maroon);
+  outline-offset: 2px;
+}
+
+/* ---------- brand + icon ---------- */
+.cookie-card-brand {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+}
+.cookie-card-logo {
+  width: clamp(52px, 5vw, 72px);
+  height: clamp(52px, 5vw, 72px);
+  object-fit: contain;
+}
+
+.cookie-card-divider {
+  flex: 0 0 auto;
+  align-self: stretch;
+  width: 1px;
+  background: rgba(74, 44, 34, 0.18);
+}
+
+.cookie-card-icon {
+  flex: 0 0 auto;
+  color: var(--maroon);
+  display: grid;
+  place-items: center;
+}
+
+/* ---------- copy ---------- */
+.cookie-card-copy {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cookie-card-title {
+  font-family: var(--serif);
+  color: var(--maroon);
+  font-size: clamp(18px, 1.8vw, 22px);
+  line-height: 1.25;
+}
+
+.cookie-card-text {
+  color: var(--ink);
+  opacity: 0.85;
+  font-size: 13.5px;
+  line-height: 1.55;
+  max-width: 70ch;
+}
+
+.cookie-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  margin-top: 2px;
+  color: var(--maroon);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.cookie-card-link:hover {
+  color: var(--maroon-deep);
+}
+
+/* ---------- actions ---------- */
+.cookie-card-actions {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cookie-btn {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 13px 28px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+}
+.cookie-btn:hover {
+  transform: translateY(-2px);
+}
+.cookie-btn:focus-visible {
+  outline: 2px solid var(--maroon);
+  outline-offset: 3px;
+}
+
+/* Accept and Reject are deliberately the same size and weight — only the
+   fill differs — so declining is exactly as easy as agreeing. */
+.cookie-btn-reject {
+  background: transparent;
+  color: var(--maroon);
+  border-color: rgba(122, 31, 43, 0.4);
+}
+.cookie-btn-reject:hover {
+  background: rgba(122, 31, 43, 0.06);
+  border-color: var(--maroon);
+}
+
+.cookie-btn-accept {
+  background: var(--maroon);
+  color: #f4e6cd;
+}
+.cookie-btn-accept:hover {
+  background: var(--maroon-deep);
+}
+
+/* ---------- narrow screens ---------- */
+@media (max-width: 860px) {
+  .cookie-card {
+    flex-wrap: wrap;
+  }
+  .cookie-card-divider {
+    display: none;
+  }
+  /* flex: 1 1 auto's default basis sizes to content, which — combined with
+     the paragraph's max-width — can push the wrapped row past the
+     viewport. Forcing a full-width basis makes it wrap to the card's own
+     width instead. */
+  .cookie-card-copy {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+  .cookie-card-text {
+    max-width: none;
+  }
+  .cookie-card-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .cookie-btn {
+    padding: 13px 12px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 560px) {
+  .cookie-card-wrap {
+    bottom: 0;
+    padding: 0;
+  }
+  .cookie-card {
+    border-radius: 16px 16px 0 0;
+    padding: 20px clamp(16px, 5vw, 24px) calc(18px + env(safe-area-inset-bottom, 0px));
+  }
+  .cookie-card-brand {
+    display: none;
+  }
+  .cookie-card-icon svg {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cookie-card {
+    animation: none;
+  }
+  .cookie-btn:hover {
+    transform: none;
+  }
+}

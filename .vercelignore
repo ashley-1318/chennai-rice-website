@@ -1,0 +1,8 @@
+# Not needed in the deploy upload — Vercel builds from source via
+# buildCommand in vercel.json, so dist/ is regenerated remotely, and these
+# never need to leave the machine.
+.git
+node_modules
+server/node_modules
+design
+dist

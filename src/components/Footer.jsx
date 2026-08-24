@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FOOTER } from '../data/content.js'
+import { useCookieConsent } from '../hooks/useCookieConsent.jsx'
 import './footer.css'
 
 const Social = {
@@ -91,6 +92,7 @@ const Sprig = ({ flip = false }) => (
 )
 
 export default function Footer() {
+  const { reopen } = useCookieConsent()
   const [email, setEmail] = useState('')
   const [state, setState] = useState(null) // 'ok' | 'bad'
 
@@ -192,7 +194,12 @@ export default function Footer() {
             <Laurel flip />
           </div>
 
-          <p className="foot-copy">{FOOTER.copyright}</p>
+          <p className="foot-copy">
+            {FOOTER.copyright}
+            <button type="button" className="foot-cookie-link" onClick={reopen}>
+              Cookie Preferences
+            </button>
+          </p>
 
           <div className="foot-follow">
             <span className="foot-follow-label">Follow Us</span>
