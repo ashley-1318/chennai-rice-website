@@ -26,7 +26,7 @@ export const NAV_LINKS = [
   { label: 'Contact', to: '/contact' },
 ]
 
-export const NAV_CTA = { label: 'Reach Us', to: '/contact' }
+export const NAV_CTA = { label: 'Bulk Order', to: '/contact' }
 
 export const HERO = {
   titleLines: ['Rice.', 'The White Gold', 'Among Foods.'],
