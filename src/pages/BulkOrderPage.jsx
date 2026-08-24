@@ -148,93 +148,89 @@ export default function BulkOrderPage() {
               </label>
             )}
 
-            {form.type && (
-              <>
-                <label className="field">
-                  <span className="field-label">Company / Business Name</span>
-                  <input
-                    type="text"
-                    value={form.company}
-                    onChange={set('company')}
-                    placeholder="Your company or shop name"
-                    aria-invalid={!!errors.company}
-                  />
-                  {errors.company && <span className="field-error">{errors.company}</span>}
-                </label>
+            <label className="field">
+              <span className="field-label">Company / Business Name</span>
+              <input
+                type="text"
+                value={form.company}
+                onChange={set('company')}
+                placeholder="Your company or shop name"
+                aria-invalid={!!errors.company}
+              />
+              {errors.company && <span className="field-error">{errors.company}</span>}
+            </label>
 
-                <label className="field">
-                  <span className="field-label">Representative Name</span>
-                  <input
-                    type="text"
-                    value={form.name}
-                    onChange={set('name')}
-                    placeholder="Your full name"
-                    aria-invalid={!!errors.name}
-                  />
-                  {errors.name && <span className="field-error">{errors.name}</span>}
-                </label>
+            <label className="field">
+              <span className="field-label">Representative Name</span>
+              <input
+                type="text"
+                value={form.name}
+                onChange={set('name')}
+                placeholder="Your full name"
+                aria-invalid={!!errors.name}
+              />
+              {errors.name && <span className="field-error">{errors.name}</span>}
+            </label>
 
-                <label className="field">
-                  <span className="field-label">Email</span>
-                  <input
-                    type="email"
-                    value={form.email}
-                    onChange={set('email')}
-                    placeholder="you@example.com"
-                    aria-invalid={!!errors.email}
-                  />
-                  {errors.email && <span className="field-error">{errors.email}</span>}
-                </label>
+            <label className="field">
+              <span className="field-label">Email</span>
+              <input
+                type="email"
+                value={form.email}
+                onChange={set('email')}
+                placeholder="you@example.com"
+                aria-invalid={!!errors.email}
+              />
+              {errors.email && <span className="field-error">{errors.email}</span>}
+            </label>
 
-                <label className="field">
-                  <span className="field-label">Phone</span>
-                  <input
-                    type="tel"
-                    value={form.phone}
-                    onChange={set('phone')}
-                    placeholder="+91 12345 67890"
-                    aria-invalid={!!errors.phone}
-                  />
-                  {errors.phone && <span className="field-error">{errors.phone}</span>}
-                </label>
+            <label className="field">
+              <span className="field-label">Phone</span>
+              <input
+                type="tel"
+                value={form.phone}
+                onChange={set('phone')}
+                placeholder="+91 12345 67890"
+                aria-invalid={!!errors.phone}
+              />
+              {errors.phone && <span className="field-error">{errors.phone}</span>}
+            </label>
 
-                <label className="field">
-                  <span className="field-label">Quantity Required (KGs)</span>
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    value={form.quantity}
-                    onChange={set('quantity')}
-                    placeholder="e.g. 500"
-                    aria-invalid={!!errors.quantity}
-                  />
-                  {errors.quantity && <span className="field-error">{errors.quantity}</span>}
-                </label>
+            <label className="field">
+              <span className="field-label">Quantity Required (KGs)</span>
+              <input
+                type="text"
+                inputMode="numeric"
+                value={form.quantity}
+                onChange={set('quantity')}
+                placeholder="e.g. 500"
+                aria-invalid={!!errors.quantity}
+              />
+              {errors.quantity && <span className="field-error">{errors.quantity}</span>}
+            </label>
 
-                <label className="field">
-                  <span className="field-label">Message (optional)</span>
-                  <textarea
-                    rows="4"
-                    value={form.message}
-                    onChange={set('message')}
-                    placeholder="Varieties, delivery location, timelines…"
-                  />
-                </label>
+            <label className="field">
+              <span className="field-label">Message (optional)</span>
+              <textarea
+                rows="4"
+                value={form.message}
+                onChange={set('message')}
+                placeholder="Varieties, delivery location, timelines…"
+              />
+            </label>
 
-                <button className="btn-maroon" type="submit">
-                  Send Enquiry
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path
-                      d="M4 12h15m0 0l-6-6m6 6l-6 6"
-                      stroke="currentColor"
-                      strokeWidth="1.8"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-              </>
-            )}
+            <button className="btn-maroon" type="submit">
+              Send Enquiry
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M4 12h15m0 0l-6-6m6 6l-6 6"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
 
             {sent && (
               <p className="field-sent" role="status">
