@@ -2,10 +2,15 @@
 .buyer-type-group {
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
   gap: 10px;
 }
 
 .buyer-type-btn {
+  /* flex: 0 0 auto keeps each button sized to its own label — without it,
+     flex-wrap stretches short labels to fill the row width, turning the
+     999px pill radius into an oval. */
+  flex: 0 0 auto;
   font-size: 12.5px;
   font-weight: 500;
   letter-spacing: 0.04em;
