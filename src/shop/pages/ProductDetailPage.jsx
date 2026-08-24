@@ -14,6 +14,7 @@ import BulkOrderCTA from "../components/BulkOrderCTA.jsx";
 import { PRODUCTS } from "../data/products.js";
 import { getBenefits, getDetails, getCategoryLabel, GRAIN_JOURNEY, TRUST_STRIP } from "../data/productDetails.js";
 import { useCart } from "../hooks/useCart.jsx";
+import { useWishlist } from "../hooks/useWishlist.jsx";
 import { useRipple } from "../hooks/useRipple.js";
 import { formatRupees } from "../utils/format.js";
 import usePageMeta from "../hooks/usePageMeta.js";
@@ -23,6 +24,7 @@ export default function ProductDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { add, items } = useCart();
+  const wishlist = useWishlist();
   const spawnRipple = useRipple();
 
   const product = useMemo(() => PRODUCTS.find((p) => p.id === id), [id]);
@@ -31,7 +33,9 @@ export default function ProductDetailPage() {
   const defaultSize = sizes.find((s) => s.kg === 10) || sizes[0];
   const [selectedKg, setSelectedKg] = useState(defaultSize?.kg);
   const [qty, setQty] = useState(1);
-  const [wishlisted, setWishlisted] = useState(false);
+  // Saved state lives in the shared store, so it persists and the header
+  // badge stays in step.
+  const wishlisted = wishlist.has(id);
 
   usePageMeta(
     product ? `${product.name} — Chennai Rice Industries` : "Product — Chennai Rice Industries",
@@ -147,8 +151,8 @@ export default function ProductDetailPage() {
                 type="button"
                 className={`pdp-wishlist${wishlisted ? " is-active" : ""}`}
                 aria-pressed={wishlisted}
-                aria-label="Save to wishlist"
-                onClick={() => setWishlisted((w) => !w)}
+                aria-label={wishlisted ? "Remove from saved items" : "Save to wishlist"}
+                onClick={() => wishlist.toggle(id)}
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill={wishlisted ? "currentColor" : "none"} aria-hidden="true">
                   <path

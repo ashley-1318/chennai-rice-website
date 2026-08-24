@@ -43,7 +43,7 @@
   align-items: center;
   gap: 28px;
   margin-left: auto;
-  margin-right: 28px;
+  margin-right: 22px;
 }
 
 .nav-link {
@@ -72,6 +72,58 @@
   height: 2px;
   background: var(--gold-soft);
   border-radius: 2px;
+}
+
+/* ---- cart + saved-items icons ---- */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 18px;
+}
+
+.nav-icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #f2e7d0;
+  transition: color 0.25s ease, background 0.25s ease;
+}
+.nav-icon:hover {
+  color: var(--gold-soft);
+  background: rgba(240, 220, 190, 0.1);
+}
+.nav-icon:focus-visible {
+  outline: 2px solid var(--gold-soft);
+  outline-offset: 2px;
+}
+
+/* Count bubble, as on the reference: maroon disc, cream figure. */
+.nav-badge {
+  position: absolute;
+  top: 1px;
+  right: 0;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: 99px;
+  background: var(--maroon);
+  border: 1.5px solid var(--footer-bg);
+  color: #f4e6cd;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 14px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+/* Over the transparent home hero there is no bar colour to cut into, so the
+   ring becomes a soft shadow instead. */
+.nav-bar:not(.nav-solid) .nav-badge {
+  border-color: transparent;
+  box-shadow: 0 0 0 1.5px rgba(20, 8, 10, 0.45);
 }
 
 .nav-cta {
@@ -127,7 +179,8 @@
 
 @media (max-width: 900px) {
   .nav-links,
-  .nav-cta {
+  .nav-cta,
+  .nav-actions {
     display: none;
   }
   .nav-burger {
