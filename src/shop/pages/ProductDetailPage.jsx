@@ -11,7 +11,7 @@ import RecipeTeaser from "../components/RecipeTeaser.jsx";
 import RelatedProducts from "../components/RelatedProducts.jsx";
 import BulkOrderCTA from "../components/BulkOrderCTA.jsx";
 import { PRODUCTS } from "../data/products.js";
-import { getDetails, getCategoryLabel, GRAIN_JOURNEY } from "../data/productDetails.js";
+import { getDetails, getCategoryLabel, GRAIN_JOURNEY, GALLERY_EXTRAS } from "../data/productDetails.js";
 import { useCart } from "../hooks/useCart.jsx";
 import { useWishlist } from "../hooks/useWishlist.jsx";
 import { useRipple } from "../hooks/useRipple.js";
@@ -60,7 +60,7 @@ export default function ProductDetailPage() {
   const details = getDetails(product.id);
   const inCart = items.find((item) => item.id === `${product.id}-${selected.kg}kg`);
 
-  const galleryImages = [{ src: product.image, alt: product.alt }];
+  const galleryImages = [{ src: product.image, alt: product.alt }, ...GALLERY_EXTRAS];
 
   const cartProduct = {
     ...product,
@@ -102,7 +102,7 @@ export default function ProductDetailPage() {
         </div>
 
         <section className="pdp-hero">
-          <ProductGallery images={galleryImages} alt={product.alt} variant={product.variant} />
+          <ProductGallery images={galleryImages} alt={product.alt} />
 
           <div className="pdp-info">
             <span className="pdp-badge">Premium Quality</span>
@@ -110,21 +110,19 @@ export default function ProductDetailPage() {
             <p className="pdp-subtitle">{category}</p>
             <p className="pdp-desc">{product.description}</p>
 
+            <div className="pdp-price-hero">
+              <span className="pdp-price">{formatRupees(selected.price * qty)}</span>
+              <span className="pdp-price-note">Inclusive of applicable taxes</span>
+            </div>
+
             <div className="pdp-divider" />
 
             <div className="pdp-section-label">Select Pack Size</div>
             <PackSizeSelector sizes={sizes} selectedKg={selectedKg} onSelect={(kg) => setSelectedKg(kg)} />
 
-            <div className="pdp-purchase-row">
-              <div className="pdp-qty-block">
-                <span className="pdp-section-label">Quantity</span>
-                <QuantitySelector qty={qty} onChange={setQty} />
-              </div>
-              <div className="pdp-price-block">
-                <span className="pdp-section-label">Total Price</span>
-                <span className="pdp-price">{formatRupees(selected.price * qty)}</span>
-                <span className="pdp-price-note">Inclusive of applicable taxes</span>
-              </div>
+            <div className="pdp-qty-row">
+              <span className="pdp-section-label">Quantity</span>
+              <QuantitySelector qty={qty} onChange={setQty} />
             </div>
 
             <div className="pdp-cta-row">

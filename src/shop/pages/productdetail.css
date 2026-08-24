@@ -3,10 +3,21 @@
    so it inherits the maroon/gold/cream tokens from styles.scoped.css.
    ============================================================ */
 
-.pdp {
-  background: var(--cream-100);
+/* The layout nests this page's <main> inside a wrapper <main>, and
+   `.shop-scope main` paints the corner mandalas on BOTH. Left alone the inner
+   one redraws the kolam directly over the outer's; kept transparent, only the
+   wrapper draws it and the page ground comes from `.shop-scope`. */
+.shop-scope main.pdp {
+  background: transparent;
   color: var(--ink-700);
   padding-bottom: var(--s-16);
+}
+
+/* Smaller kolam on this page so it frames the product instead of crowding it.
+   `--mandala` has to be set on the wrapper that actually paints it — custom
+   properties inherit downward, so setting it on .pdp would never reach. */
+.shop-scope main:has(main.pdp) {
+  --mandala: min(16rem, 30vw);
 }
 
 .pdp-not-found {
@@ -23,7 +34,7 @@
 /* ---------- top bar: back link + breadcrumb ---------- */
 
 .pdp-top {
-  max-width: 1280px;
+  max-width: 1160px;
   margin: 0 auto;
   padding: var(--s-6) var(--s-6) var(--s-4);
 }
@@ -64,92 +75,91 @@
 
 /* ---------- hero: gallery + info, two columns ---------- */
 
+/* The gallery is capped rather than a free half of the row: at half width the
+   4/5 card grew tall enough to tower over the info column and leave a dead
+   gap beside it. */
 .pdp-hero {
-  max-width: 1280px;
+  max-width: 1160px;
   margin: 0 auto;
   padding: 0 var(--s-6) var(--s-16);
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--s-16);
+  grid-template-columns: minmax(0, 440px) minmax(0, 620px);
+  gap: var(--s-12);
   align-items: start;
 }
 
 /* gallery */
 
+/* Transparent on purpose: the page's corner mandalas are painted on <main>,
+   and an opaque card here sliced the left one off mid-pattern. With no
+   background of its own the pack simply floats on the page and the kolam
+   runs through uninterrupted. Scene photos still clip to the radius. */
 .pdp-gallery-main {
   margin: 0;
-  background: var(--cream-100);
+  background: transparent;
   border-radius: var(--radius-md);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   aspect-ratio: 4 / 5;
-  box-shadow: var(--shadow-rest);
 }
-/* Soft variant-tinted wash instead of a flat white/cream box — matches the
-   product grid cards (.card--premium .card-media etc.) so the bag reads as
-   a clean product shot, not a photo floating in a white rectangle. */
-.pdp-gallery-main--premium { background: linear-gradient(180deg, rgba(168, 122, 34, 0.14), rgba(168, 122, 34, 0.02)); }
-.pdp-gallery-main--red     { background: linear-gradient(180deg, rgba(179, 24, 28, 0.10),  rgba(179, 24, 28, 0.02)); }
-.pdp-gallery-main--gold    { background: linear-gradient(180deg, rgba(199, 154, 51, 0.15), rgba(199, 154, 51, 0.02)); }
-.pdp-gallery-main--orange  { background: linear-gradient(180deg, rgba(226, 98, 27, 0.11), rgba(226, 98, 27, 0.02)); }
+/* The pack sits well inside the frame rather than filling it, so the card
+   reads as a product shot with breathing room around the bag. */
 .pdp-gallery-main img {
-  max-width: 84%;
-  max-height: 92%;
+  max-width: 62%;
+  max-height: 74%;
   object-fit: contain;
-  filter: drop-shadow(0 20px 30px rgba(43, 27, 22, 0.22));
+  filter: drop-shadow(0 16px 24px rgba(43, 27, 22, 0.18));
   transition: transform 0.4s ease, filter 0.4s ease;
+}
+/* The story photos are full-bleed shots, not cutouts — they fill the frame
+   instead of floating in it like the pack shots do. */
+.pdp-gallery-main img.is-scene {
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: none;
 }
 .pdp-gallery-main:hover img {
   transform: scale(1.04);
-  filter: drop-shadow(0 26px 38px rgba(43, 27, 22, 0.26));
 }
 
+/* Four thumbnails always fit, so they share the card width as a fixed grid
+   and need no scroll arrows. */
 .pdp-gallery-thumbs {
-  margin-top: var(--s-4);
-  display: flex;
-  align-items: center;
-  gap: var(--s-2);
+  margin-top: var(--s-3);
 }
 .pdp-gallery-thumb-track {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--s-2);
-  overflow-x: auto;
-  flex: 1;
 }
 .pdp-gallery-thumb {
-  flex: 0 0 auto;
-  width: 64px;
-  height: 64px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   border-radius: var(--radius-sm);
-  border: 2px solid transparent;
+  border: 2px solid var(--cream-300);
   background: var(--cream-50);
-  padding: 4px;
+  padding: 0;
+  overflow: hidden;
   cursor: pointer;
+  transition: border-color 0.15s ease;
 }
 .pdp-gallery-thumb.is-active {
   border-color: var(--maroon-600);
 }
+/* Pack shots are cutouts, so they sit whole inside the square; the scene
+   photos crop to fill it. */
 .pdp-gallery-thumb img {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
-.pdp-gallery-arrow {
-  flex: 0 0 auto;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1px solid var(--cream-300);
-  background: var(--white, #fff);
-  color: var(--maroon-600);
-  font-size: 1.1rem;
-  line-height: 1;
-  cursor: pointer;
-}
-.pdp-gallery-arrow:hover {
-  border-color: var(--maroon-600);
+.pdp-gallery-thumb img.is-scene {
+  object-fit: cover;
 }
 
 /* info column */
@@ -197,10 +207,21 @@
   max-width: 46ch;
 }
 
+.pdp-price-hero {
+  margin-bottom: var(--s-6);
+}
+.pdp-price-hero .pdp-price {
+  font-size: 2rem;
+  line-height: 1.15;
+}
+.pdp-price-hero .pdp-price-note {
+  display: block;
+}
+
 .pdp-divider {
   height: 1px;
   background: linear-gradient(90deg, var(--gold-300), transparent);
-  margin: 0 0 var(--s-5);
+  margin: 0 0 var(--s-6);
 }
 
 .pdp-section-label {
@@ -252,14 +273,14 @@
   color: var(--white, #fff);
 }
 
-/* purchase row: qty + price */
-
-.pdp-purchase-row {
+.pdp-qty-row {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--s-6);
-  margin-bottom: var(--s-5);
+  align-items: center;
+  gap: var(--s-4);
+  margin-bottom: var(--s-6);
+}
+.pdp-qty-row .pdp-section-label {
+  margin-bottom: 0;
 }
 
 .pdp-qty {
@@ -287,9 +308,6 @@
   font-weight: 600;
 }
 
-.pdp-price-block {
-  text-align: right;
-}
 .pdp-price {
   display: block;
   font-family: var(--font-display);
@@ -347,7 +365,7 @@
 /* ---------- generic section wrapper ---------- */
 
 .pdp-section {
-  max-width: 1280px;
+  max-width: 1160px;
   margin: 0 auto;
   padding: var(--s-16) var(--s-6) 0;
 }
@@ -427,7 +445,7 @@
 .pdp-panel-subtitle {
   color: var(--ink-500);
   font-size: var(--fs-small);
-  margin: -8px 0 var(--s-5);
+  margin: -8px 0 var(--s-6);
 }
 .pdp-bullets {
   margin: var(--s-4) 0 0;
@@ -480,7 +498,7 @@
 .pdp-cook-steps {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: var(--s-5);
+  gap: var(--s-6);
 }
 .pdp-cook-step {
   display: flex;
@@ -642,13 +660,14 @@
 
 /* ---------- related products ---------- */
 
+/* Fills the row rather than sitting in a fixed-width scroll strip: with only
+   three related packs, 220px columns left most of the row empty. auto-fit
+   collapses the unused tracks so the cards always stretch across, and drops
+   to fewer columns as the viewport narrows. */
 .pdp-related-track {
   display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 220px;
-  gap: var(--s-5);
-  overflow-x: auto;
-  padding-bottom: var(--s-2);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--s-6);
 }
 .pdp-related-card {
   background: var(--cream-50);
@@ -659,15 +678,22 @@
   gap: 4px;
   box-shadow: var(--shadow-rest);
 }
+/* The pack is absolutely positioned so it can't stretch the box: as a normal
+   flex child its natural height overrode `aspect-ratio`, and its `max-height`
+   percentage was circular against a content-sized parent, so each card ended
+   up a different height and the names below sat at staggered baselines.
+   Out of flow, the square holds and `inset: 0 / margin: auto` centres it. */
 .pdp-related-media {
-  display: block;
+  position: relative;
   aspect-ratio: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   margin-bottom: var(--s-2);
 }
 .pdp-related-media img {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: auto;
+  height: auto;
   max-width: 70%;
   max-height: 90%;
   object-fit: contain;
@@ -746,21 +772,20 @@
 }
 
 @media (max-width: 720px) {
-  .pdp-purchase-row {
-    flex-direction: column;
-    align-items: stretch;
-    gap: var(--s-4);
-  }
-  .pdp-price-block {
-    text-align: left;
-  }
+  /* The two buttons share the row and shrink together so the wishlist
+     circle stays alongside them instead of wrapping to its own line. */
   .pdp-cta-row {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    gap: var(--s-2);
   }
   .pdp-cta-row .btn-maroon,
   .pdp-cta-row .btn-outline {
-    flex: 1 1 auto;
+    flex: 1 1 0;
+    min-width: 0;
+    padding-left: var(--s-2);
+    padding-right: var(--s-2);
     justify-content: center;
+    white-space: nowrap;
   }
   .pdp-panel-description {
     grid-template-columns: 1fr;

@@ -1,35 +1,29 @@
 import React, { useState } from "react";
 
 /**
- * Only real photos are ever shown — most packs currently have just the one
- * front-of-bag shot, so the thumbnail row and arrows simply don't render
- * when there's nothing to switch between.
+ * Only real photos are ever shown — the thumbnail row simply doesn't render
+ * when a product has nothing to switch between. Images flagged `scene` are
+ * full-bleed photographs rather than pack cutouts, so they crop to fill the
+ * frame instead of floating inside it.
  */
-export default function ProductGallery({ images, alt, variant }) {
+export default function ProductGallery({ images, alt }) {
   const [active, setActive] = useState(0);
   const hasMultiple = images.length > 1;
   const current = images[active] || images[0];
 
-  const go = (delta) => {
-    setActive((i) => (i + delta + images.length) % images.length);
-  };
-
   return (
     <div className="pdp-gallery">
-      <figure className={`pdp-gallery-main pdp-gallery-main--${variant || "default"}`}>
-        <img src={current.src} alt={current.alt || alt} loading="eager" />
+      <figure className="pdp-gallery-main">
+        <img
+          className={current.scene ? "is-scene" : undefined}
+          src={current.src}
+          alt={current.alt || alt}
+          loading="eager"
+        />
       </figure>
 
       {hasMultiple && (
         <div className="pdp-gallery-thumbs" role="tablist" aria-label="Product images">
-          <button
-            type="button"
-            className="pdp-gallery-arrow"
-            onClick={() => go(-1)}
-            aria-label="Previous image"
-          >
-            &#8249;
-          </button>
           <div className="pdp-gallery-thumb-track">
             {images.map((img, i) => (
               <button
@@ -40,18 +34,15 @@ export default function ProductGallery({ images, alt, variant }) {
                 className={`pdp-gallery-thumb${i === active ? " is-active" : ""}`}
                 onClick={() => setActive(i)}
               >
-                <img src={img.src} alt={img.alt || ""} loading="lazy" />
+                <img
+                  className={img.scene ? "is-scene" : undefined}
+                  src={img.src}
+                  alt={img.alt || ""}
+                  loading="lazy"
+                />
               </button>
             ))}
           </div>
-          <button
-            type="button"
-            className="pdp-gallery-arrow"
-            onClick={() => go(1)}
-            aria-label="Next image"
-          >
-            &#8250;
-          </button>
         </div>
       )}
     </div>
