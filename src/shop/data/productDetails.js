@@ -13,24 +13,6 @@ export const CATEGORY_LABEL = {
   orange: "Ponni Rice",
 };
 
-// Real, already-published benefit copy (see FEATURES in shop/data/content.jsx),
-// mapped per product so a card never claims something specific to a pack we
-// haven't confirmed.
-export const BENEFITS_BY_ID = {
-  "rajabhogam-premium": [
-    { title: "Milled in Erode", note: "Our own facility in Tamil Nadu" },
-    { title: "Hand Graded", note: "Aged, hand-graded premium grains" },
-    { title: "100% Vegetarian", note: "Green mark on every pack" },
-    { title: "Signature Range", note: "Our Special Rajabhogam pack" },
-  ],
-  default: [
-    { title: "Milled in Erode", note: "Our own facility in Tamil Nadu" },
-    { title: "Weight Marked", note: "Net weight printed on every bag" },
-    { title: "100% Vegetarian", note: "Green mark on every pack" },
-    { title: "Quality Checked", note: "Checked before it leaves our facility" },
-  ],
-};
-
 // Mirrors SOURCING_STEPS in data/infrastructure.js — same facility, same
 // verified copy, reused rather than re-described for the product page.
 export const GRAIN_JOURNEY = [
@@ -95,10 +77,6 @@ export const DETAILS_BY_ID = {
   },
 };
 
-export function getBenefits(id) {
-  return BENEFITS_BY_ID[id] || BENEFITS_BY_ID.default;
-}
-
 export function getDetails(id) {
   return DETAILS_BY_ID[id] || DETAILS_BY_ID.default;
 }
@@ -106,11 +84,3 @@ export function getDetails(id) {
 export function getCategoryLabel(product) {
   return CATEGORY_LABEL[product.variant] || "Rice";
 }
-
-// Trust strip under the purchase buttons. Kept as data so it's easy to
-// correct if a claim (e.g. the free-delivery threshold) changes.
-export const TRUST_STRIP = [
-  { title: "Secure Packaging", note: "Sealed to protect grain quality" },
-  { title: "Easy Returns", note: "Reach out within 7 days of delivery" },
-  { title: "Vegetarian Certified", note: "Green mark on every pack" },
-];

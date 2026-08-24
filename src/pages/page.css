@@ -15,19 +15,19 @@
 
 .page-decor {
   position: absolute;
-  bottom: 0;
-  width: 190px;
-  opacity: 0.55;
+  bottom: 30px;
+  width: 130px;
+  opacity: 0.85;
   z-index: 0;
   pointer-events: none;
   user-select: none;
 }
 .page-decor-left {
-  left: -40px;
+  left: -10px;
   transform: scaleX(-1);
 }
 .page-decor-right {
-  right: -30px;
+  right: -10px;
 }
 
 .page-inner {

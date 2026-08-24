@@ -71,7 +71,7 @@ export default function ContactPage() {
 
   return (
     <main className="page">
-      <Img className="page-decor page-decor-right" src={ASSETS.wheatRight} alt="" aria-hidden="true" />
+      <Img className="page-decor page-decor-right" src={ASSETS.grainsWhite} alt="" aria-hidden="true" />
 
       <div className="container page-inner page-inner--wide">
         <div className="section-label">

@@ -79,8 +79,6 @@ export default function FeatureStrip() {
         </svg>
 
         <Img className="feat-bowl" src={ASSETS.riceBowl} alt="" aria-hidden="true" />
-        <Img className="feat-grains" src={ASSETS.grainsGold} alt="" aria-hidden="true" />
-        <Img className="feat-wheat" src={ASSETS.wheatRight} alt="" aria-hidden="true" />
 
         <div className="container feat-row">
           {FEATURES.map(f => (

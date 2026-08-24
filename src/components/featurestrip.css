@@ -42,32 +42,6 @@
   user-select: none;
 }
 
-/* loose paddy grains spilling from under the bowl, kept low so they
-   never run into the first feature label */
-.feat-grains {
-  position: absolute;
-  left: 172px;
-  bottom: -42px;
-  width: 152px;
-  z-index: 2;
-  opacity: 0.9;
-  transform: rotate(-6deg);
-  pointer-events: none;
-  user-select: none;
-}
-
-/* paddy stalks tucked into the right edge, behind the last label */
-.feat-wheat {
-  position: absolute;
-  right: -38px;
-  bottom: -30px;
-  width: 132px;
-  z-index: 1;
-  opacity: 0.62;
-  pointer-events: none;
-  user-select: none;
-}
-
 .feat-row {
   position: relative;
   z-index: 1;
@@ -99,9 +73,7 @@
 }
 
 @media (max-width: 1100px) {
-  .feat-bowl,
-  .feat-grains,
-  .feat-wheat {
+  .feat-bowl {
     display: none;
   }
 }

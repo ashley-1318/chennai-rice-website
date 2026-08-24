@@ -5,14 +5,13 @@ import Breadcrumb from "../components/Breadcrumb.jsx";
 import ProductGallery from "../components/ProductGallery.jsx";
 import PackSizeSelector from "../components/PackSizeSelector.jsx";
 import QuantitySelector from "../components/QuantitySelector.jsx";
-import ProductBenefits from "../components/ProductBenefits.jsx";
 import ProductTabs from "../components/ProductTabs.jsx";
 import JourneyTimeline from "../components/JourneyTimeline.jsx";
 import RecipeTeaser from "../components/RecipeTeaser.jsx";
 import RelatedProducts from "../components/RelatedProducts.jsx";
 import BulkOrderCTA from "../components/BulkOrderCTA.jsx";
 import { PRODUCTS } from "../data/products.js";
-import { getBenefits, getDetails, getCategoryLabel, GRAIN_JOURNEY, TRUST_STRIP } from "../data/productDetails.js";
+import { getDetails, getCategoryLabel, GRAIN_JOURNEY } from "../data/productDetails.js";
 import { useCart } from "../hooks/useCart.jsx";
 import { useWishlist } from "../hooks/useWishlist.jsx";
 import { useRipple } from "../hooks/useRipple.js";
@@ -58,7 +57,6 @@ export default function ProductDetailPage() {
 
   const selected = sizes.find((s) => s.kg === selectedKg) || defaultSize;
   const category = getCategoryLabel(product);
-  const benefits = getBenefits(product.id);
   const details = getDetails(product.id);
   const inCart = items.find((item) => item.id === `${product.id}-${selected.kg}kg`);
 
@@ -104,15 +102,13 @@ export default function ProductDetailPage() {
         </div>
 
         <section className="pdp-hero">
-          <ProductGallery images={galleryImages} alt={product.alt} />
+          <ProductGallery images={galleryImages} alt={product.alt} variant={product.variant} />
 
           <div className="pdp-info">
             <span className="pdp-badge">Premium Quality</span>
             <h1 className="pdp-title">{product.name}</h1>
             <p className="pdp-subtitle">{category}</p>
             <p className="pdp-desc">{product.description}</p>
-
-            <ProductBenefits benefits={benefits} />
 
             <div className="pdp-divider" />
 
@@ -166,17 +162,8 @@ export default function ProductDetailPage() {
             </div>
 
             <Link className="pdp-bulk-link" to="/contact">
-              Request Bulk Quote for institutional or trade orders &rarr;
+              Bulk Order Enquiry &rarr;
             </Link>
-
-            <ul className="pdp-trust-strip">
-              {TRUST_STRIP.map((t) => (
-                <li key={t.title}>
-                  <strong>{t.title}</strong>
-                  <span>{t.note}</span>
-                </li>
-              ))}
-            </ul>
           </div>
         </section>
 

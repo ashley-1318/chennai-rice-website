@@ -7,8 +7,8 @@ import './page.css'
 export default function ComingSoonPage({ title, blurb }) {
   return (
     <main className="page page-center">
-      <Img className="page-decor page-decor-left" src={ASSETS.wheatRight} alt="" aria-hidden="true" />
-      <Img className="page-decor page-decor-right" src={ASSETS.wheatRight} alt="" aria-hidden="true" />
+      <Img className="page-decor page-decor-left" src={ASSETS.grainsWhite} alt="" aria-hidden="true" />
+      <Img className="page-decor page-decor-right" src={ASSETS.grainsWhite} alt="" aria-hidden="true" />
 
       <div className="container page-inner">
         <div className="section-label">

@@ -26,6 +26,12 @@
   width: 255px;
   opacity: 0.95;
 }
+.showcase-paddy-b {
+  left: 0;
+  bottom: -10px;
+  width: 255px;
+  opacity: 0.95;
+}
 
 /* ---------- persistent header + controls ---------- */
 .showcase-header {

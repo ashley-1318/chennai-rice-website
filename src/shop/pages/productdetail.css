@@ -78,7 +78,7 @@
 
 .pdp-gallery-main {
   margin: 0;
-  background: var(--cream-50);
+  background: var(--cream-100);
   border-radius: var(--radius-md);
   overflow: hidden;
   display: flex;
@@ -87,14 +87,23 @@
   aspect-ratio: 4 / 5;
   box-shadow: var(--shadow-rest);
 }
+/* Soft variant-tinted wash instead of a flat white/cream box — matches the
+   product grid cards (.card--premium .card-media etc.) so the bag reads as
+   a clean product shot, not a photo floating in a white rectangle. */
+.pdp-gallery-main--premium { background: linear-gradient(180deg, rgba(168, 122, 34, 0.14), rgba(168, 122, 34, 0.02)); }
+.pdp-gallery-main--red     { background: linear-gradient(180deg, rgba(179, 24, 28, 0.10),  rgba(179, 24, 28, 0.02)); }
+.pdp-gallery-main--gold    { background: linear-gradient(180deg, rgba(199, 154, 51, 0.15), rgba(199, 154, 51, 0.02)); }
+.pdp-gallery-main--orange  { background: linear-gradient(180deg, rgba(226, 98, 27, 0.11), rgba(226, 98, 27, 0.02)); }
 .pdp-gallery-main img {
-  max-width: 78%;
-  max-height: 88%;
+  max-width: 84%;
+  max-height: 92%;
   object-fit: contain;
-  transition: transform 0.4s ease;
+  filter: drop-shadow(0 20px 30px rgba(43, 27, 22, 0.22));
+  transition: transform 0.4s ease, filter 0.4s ease;
 }
 .pdp-gallery-main:hover img {
   transform: scale(1.04);
+  filter: drop-shadow(0 26px 38px rgba(43, 27, 22, 0.26));
 }
 
 .pdp-gallery-thumbs {
@@ -186,40 +195,6 @@
   line-height: 1.6;
   margin: 0 0 var(--s-6);
   max-width: 46ch;
-}
-
-/* benefits */
-
-.pdp-benefits {
-  list-style: none;
-  margin: 0 0 var(--s-6);
-  padding: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--s-3) var(--s-6);
-}
-.pdp-benefit {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: var(--fs-small);
-}
-.pdp-benefit-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--gold-500);
-  margin-top: 7px;
-  flex: 0 0 auto;
-}
-.pdp-benefit strong {
-  display: block;
-  color: var(--ink-900);
-  font-weight: 600;
-}
-.pdp-benefit-note {
-  display: block;
-  color: var(--ink-500);
 }
 
 .pdp-divider {
@@ -367,31 +342,6 @@
 }
 .pdp-bulk-link:hover {
   text-decoration: underline;
-}
-
-/* trust strip */
-
-.pdp-trust-strip {
-  list-style: none;
-  margin: 0;
-  padding: var(--s-4) 0 0;
-  border-top: 1px solid var(--cream-300);
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--s-4);
-}
-.pdp-trust-strip li {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  font-size: var(--fs-small);
-}
-.pdp-trust-strip strong {
-  color: var(--ink-900);
-}
-.pdp-trust-strip span {
-  color: var(--ink-500);
-  font-size: 0.75rem;
 }
 
 /* ---------- generic section wrapper ---------- */
@@ -796,9 +746,6 @@
 }
 
 @media (max-width: 720px) {
-  .pdp-benefits {
-    grid-template-columns: 1fr;
-  }
   .pdp-purchase-row {
     flex-direction: column;
     align-items: stretch;
@@ -814,9 +761,6 @@
   .pdp-cta-row .btn-outline {
     flex: 1 1 auto;
     justify-content: center;
-  }
-  .pdp-trust-strip {
-    grid-template-columns: 1fr;
   }
   .pdp-panel-description {
     grid-template-columns: 1fr;

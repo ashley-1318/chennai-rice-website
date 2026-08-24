@@ -5,7 +5,7 @@ import React, { useState } from "react";
  * front-of-bag shot, so the thumbnail row and arrows simply don't render
  * when there's nothing to switch between.
  */
-export default function ProductGallery({ images, alt }) {
+export default function ProductGallery({ images, alt, variant }) {
   const [active, setActive] = useState(0);
   const hasMultiple = images.length > 1;
   const current = images[active] || images[0];
@@ -16,7 +16,7 @@ export default function ProductGallery({ images, alt }) {
 
   return (
     <div className="pdp-gallery">
-      <figure className="pdp-gallery-main">
+      <figure className={`pdp-gallery-main pdp-gallery-main--${variant || "default"}`}>
         <img src={current.src} alt={current.alt || alt} loading="eager" />
       </figure>
 
