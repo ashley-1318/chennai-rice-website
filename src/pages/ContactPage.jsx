@@ -4,7 +4,7 @@ import Img from '../components/Img.jsx'
 import { ASSETS, FOOTER } from '../data/content.js'
 import './page.css'
 
-const EMPTY = { name: '', email: '', enquiry: '' }
+const EMPTY = { name: '', email: '', phone: '', enquiry: '' }
 
 const Icon = ({ kind }) => (
   <svg
@@ -52,6 +52,9 @@ export default function ContactPage() {
     if (!form.email.trim()) next.email = 'Please add an email address.'
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim()))
       next.email = 'That email address does not look right.'
+    if (!form.phone.trim()) next.phone = 'Please add a phone number.'
+    else if (!/^[+()\-\s\d]{8,16}$/.test(form.phone.trim()))
+      next.phone = 'That phone number does not look right.'
     if (!form.enquiry.trim()) next.enquiry = 'Please tell us what you need.'
     return next
   }
@@ -108,6 +111,18 @@ export default function ContactPage() {
                 aria-invalid={!!errors.email}
               />
               {errors.email && <span className="field-error">{errors.email}</span>}
+            </label>
+
+            <label className="field">
+              <span className="field-label">Phone</span>
+              <input
+                type="tel"
+                value={form.phone}
+                onChange={set('phone')}
+                placeholder="+91 12345 67890"
+                aria-invalid={!!errors.phone}
+              />
+              {errors.phone && <span className="field-error">{errors.phone}</span>}
             </label>
 
             <label className="field">
