@@ -1,0 +1,38 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 1440, "h": 3460, "title": "Founder page — desktop" },
+    { "file": "Mobile.dc.html", "x": 1560, "y": 0, "w": 390, "h": 3140, "title": "Founder page — phone" },
+    { "file": "PortraitFirst.dc.html", "x": 2070, "y": 0, "w": 1440, "h": 1020, "title": "Alt hero — portrait first" }
+  ],
+  "annotations": [
+    {
+      "id": "portrait-placeholder",
+      "x": 0,
+      "y": -190,
+      "w": 420,
+      "text": "Portrait is a marked placeholder — there is no founder photo in /public/assets. Drop one in and it replaces the plate."
+    },
+    {
+      "id": "facts-source",
+      "x": 520,
+      "y": -190,
+      "w": 440,
+      "text": "Every fact here comes from the site's own content: the name, role and quote from the About page; 1950s / 2013 / Today from the Timeline; the four figures and principles from about.jsx. Nothing invented."
+    },
+    {
+      "id": "motion-notes",
+      "x": 1060,
+      "y": -190,
+      "w": 460,
+      "text": "Motion reuses about.css exactly: the same cubic-bezier(0.16, 0.68, 0.24, 1), 1.5s reveals, 0.16s stagger.\n\nHero — name rises out of a mask, texture parallaxes, rice grains drift up, scroll cue pulses.\nQuote — words lift one at a time in reading order.\nStory — gold rails draw left-to-right, staggered.\nFigures — count up from zero when the band arrives.\nPrinciples — pointer tilt, icons rotate on hover.\n\nAll of it turns off under prefers-reduced-motion, and reveals are armed by JS so a failed observer means nothing stays hidden."
+    },
+    {
+      "id": "alt-hero-note",
+      "x": 2070,
+      "y": -190,
+      "w": 420,
+      "text": "Alt hero only — swaps for section 01 of the desktop page. Portrait leads and the quote moves up into the hero; calmer and more formal, but it pushes the story further down the page."
+    }
+  ],
+  "launch": { "view": "canvas" }
+}

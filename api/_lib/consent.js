@@ -65,7 +65,7 @@ export function buildRecord({ body, ip, userAgent, now }) {
 }
 
 /** Drops the host-identifying part of an IP, keeping enough for jurisdiction. */
-function anonymiseIp(ip) {
+export function anonymiseIp(ip) {
   if (typeof ip !== 'string' || !ip) return null
   // Proxies chain addresses; the client is the first entry.
   const first = ip.split(',')[0].trim()

@@ -18,6 +18,10 @@ export const INFRA_ASSETS = {
   warehouse: '/assets/infrastructure/warehouse.jpg',
   truck: '/assets/infrastructure/truck.jpg',
   fieldLandscape: '/assets/infrastructure/field-landscape.jpg',
+  /* showcase section — existing photography reused, no new files needed */
+  processingUnit: '/assets/about/plant.png',
+  siloYard: '/assets/about/silos.png',
+  packagingUnit: '/assets/about/factory.png',
   processing: {
     'raw-paddy': '/assets/infrastructure/process-raw-paddy.jpg',
     'pre-cleaning': '/assets/infrastructure/process-pre-cleaning.jpg',
@@ -211,3 +215,85 @@ export const INFRA_FINAL_CTA = {
   cta: 'Discover Our Products',
   to: '/products',
 }
+
+/* -------------------- showcase: opening section -------------------- */
+/* Editorial overview that opens the page. Figures below are the same
+   reported numbers used elsewhere in this file — no plant count, machine
+   count or "% tested" claim is included, because none is recorded. */
+
+export const SHOWCASE_SLIDES = [
+  {
+    id: 'facility',
+    image: 'heroImage',
+    alt: 'Aerial view of the Chennai Rice processing facility and silo farm',
+    titleLines: ['Built on Strength.', 'Driven by Excellence.'],
+    text: 'Integrated infrastructure — controlled procurement, modern processing and monitored storage that protect purity and consistency in every grain.',
+  },
+  {
+    id: 'storage',
+    image: 'facilityAerial',
+    alt: 'Paddy storage silos at the Chennai Rice facility',
+    titleLines: ['Stored with Care.', 'Milled with Precision.'],
+    text: '21 silos across Nasiyanur and SIPCOT hold 61,500 MT of paddy under monitored conditions before it enters the milling line.',
+  },
+  {
+    id: 'quality',
+    image: 'qualityInspection',
+    alt: 'Quality inspection of incoming paddy',
+    titleLines: ['Checked at Intake.', 'Checked Before Dispatch.'],
+    text: 'Moisture, purity and grain condition are assessed as paddy arrives, as it moves through processing, and before any batch leaves the facility.',
+  },
+]
+
+export const SHOWCASE_STATS = [
+  { icon: 'capacity', value: '210,240', label: 'MTPA Capacity' },
+  { icon: 'storage', value: '61,500', label: 'MT Paddy Storage' },
+  { icon: 'silos', value: '21', label: 'Storage Silos' },
+  { icon: 'stages', value: '10', label: 'Processing Stages' },
+  { icon: 'people', value: '1000+', label: 'Across Value Chain' },
+]
+
+export const SHOWCASE_CARDS = [
+  {
+    icon: 'processing',
+    image: 'processingUnit',
+    alt: 'Rice processing plant',
+    title: 'Modern Processing Units',
+    text: 'A ten-stage milling line — pre-cleaning, destoning, husking, whitening, grading and colour sorting.',
+  },
+  {
+    icon: 'storage',
+    image: 'siloYard',
+    alt: 'Paddy storage silo yard',
+    title: 'Controlled Silo Storage',
+    text: '21 silos across Nasiyanur and SIPCOT holding 61,500 MT of paddy under monitored conditions.',
+  },
+  {
+    icon: 'quality',
+    image: 'qualityInspection',
+    alt: 'Quality inspection of paddy',
+    title: 'Quality Inspection',
+    text: 'Moisture, purity and grain condition are checked at intake, in process and before dispatch.',
+  },
+  {
+    icon: 'sourcing',
+    image: 'paddySelection',
+    alt: 'Paddy selection at source',
+    title: 'Controlled Procurement',
+    text: 'Varieties are kept separate and traceable from the point of purchase through to storage.',
+  },
+  {
+    icon: 'logistics',
+    image: 'transportation',
+    alt: 'Transport fleet moving paddy',
+    title: 'Logistics Network',
+    text: 'Controlled handling from field to facility, and onward through warehouse to distribution.',
+  },
+  {
+    icon: 'packaging',
+    image: 'packagingUnit',
+    alt: 'Packaging and dispatch facility',
+    title: 'Packaging & Dispatch',
+    text: 'Finished rice is packed and prepared for dispatch, with a final check before it leaves the facility.',
+  },
+]

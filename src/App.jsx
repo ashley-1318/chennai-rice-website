@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { CartProvider } from './shop/hooks/useCart.jsx'
 import { WishlistProvider } from './shop/hooks/useWishlist.jsx'
 import { CookieConsentProvider } from './hooks/useCookieConsent.jsx'
+import { useVisitorTracking } from './hooks/useVisitorTracking.jsx'
 import './shop/styles/styles.scoped.css'
 import './styles/shop-bridge.css'
 
@@ -51,12 +52,19 @@ function ScrollToTop() {
   return null
 }
 
+/** Visitor analytics — gated on cookie consent inside the hook itself. */
+function VisitorTracking() {
+  useVisitorTracking()
+  return null
+}
+
 export default function App() {
   return (
     <CookieConsentProvider>
     <CartProvider>
       <WishlistProvider>
       <ScrollToTop />
+      <VisitorTracking />
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />

@@ -1,0 +1,22 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 1440, "h": 1620, "title": "Infrastructure page" }
+  ],
+  "annotations": [
+    {
+      "id": "figures-note",
+      "x": 0,
+      "y": -230,
+      "w": 560,
+      "text": "Stat bar uses YOUR real figures from src/data/infrastructure.js, not the reference's.\n\nThe reference showed 5 Plants / 2.5L+ MT / 150+ Machines / 100% Tested / 1000+ People. Your recorded storage is 61,500 MT — the reference's 2.5L+ MT would have been ~40x your actual figure, and plant/machine counts aren't tracked anywhere in the repo.\n\nShown instead: 210,240 MTPA capacity, 61,500 MT storage, 21 silos, 10 processing stages, 1000+ across the value chain."
+    },
+    {
+      "id": "images-note",
+      "x": 610,
+      "y": -230,
+      "w": 500,
+      "text": "All six card photos and the hero are your own files from /public/assets — silos, plant, factory, quality inspection, transportation, paddy selection. Downsampled for the canvas only; the real page would use the originals.\n\nNo stock photography and no invented imagery."
+    }
+  ],
+  "launch": { "view": "focused", "file": "Main.dc.html" }
+}

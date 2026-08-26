@@ -1,0 +1,513 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap">
+  <style>
+    /* Landing-page token set (global.css), since this page sits in the main
+       site shell rather than the shop scope. */
+    :root {
+      --maroon: #7a1f2b;
+      --maroon-deep: #5f141f;
+      --maroon-ink: #4a1016;
+      --cream: #f6efdc;
+      --cream-soft: #faf5e9;
+      --gold: #c69a3f;
+      --gold-deep: #a8842e;
+      --gold-soft: #d9b96a;
+      --ink: #33241f;
+      --heading: #4a2c22;
+      --muted: #7d6a5b;
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans: 'Poppins', 'Segoe UI', sans-serif;
+      --ease: cubic-bezier(0.16, 0.68, 0.24, 1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: var(--sans); color: var(--ink); background: var(--cream); }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: var(--gold-deep); }
+    a:hover { color: var(--maroon); }
+
+    /* gold small-caps label, exactly as .section-label */
+    .lbl {
+      display: flex; align-items: center; justify-content: center; gap: 16px;
+      color: var(--gold-deep); font-size: 13px; font-weight: 500;
+      letter-spacing: 0.35em; text-transform: uppercase; text-indent: 0.35em;
+    }
+    .lbl--left { justify-content: flex-start; }
+
+    .stitle {
+      font-family: var(--serif); font-weight: 600; color: var(--heading);
+      text-align: center; font-size: 44px; line-height: 1.2;
+    }
+
+    .btn-maroon {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--maroon); color: #f4e6cd;
+      font-size: 12px; font-weight: 500; letter-spacing: 0.18em;
+      text-transform: uppercase; padding: 14px 26px; border-radius: 4px;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .btn-maroon:hover { background: var(--maroon-deep); transform: translateY(-2px); color: #f4e6cd; }
+
+    .btn-gold {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(180deg, #d9b96a 0%, #c69a3f 100%);
+      color: #40210f; font-size: 12px; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; padding: 14px 28px; border-radius: 4px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 8px 20px rgba(120, 80, 20, 0.28);
+    }
+    .btn-gold:hover { transform: translateY(-2px); color: #40210f; box-shadow: 0 12px 28px rgba(120, 80, 20, 0.36); }
+
+    /* round carousel arrow, as .circle-arrow */
+    .arrow {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: var(--maroon-ink); color: #e9cf9e;
+      display: grid; place-items: center; flex: 0 0 auto;
+      box-shadow: 0 8px 18px rgba(60, 12, 18, 0.32);
+      transition: background 0.3s ease, transform 0.3s ease;
+      border: none; cursor: pointer;
+    }
+    .arrow:hover { background: var(--maroon); transform: scale(1.07); }
+
+    /* ---- feature cards ---- */
+    .card {
+      position: relative;
+      background: #fffdf6;
+      border: 1px solid rgba(198, 154, 63, 0.16);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 14px 32px rgba(90, 60, 30, 0.09);
+      transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
+      display: flex; flex-direction: column;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 46px rgba(90, 60, 30, 0.16);
+      border-color: rgba(198, 154, 63, 0.4);
+    }
+    .card-media { position: relative; height: 176px; overflow: hidden; background: #e9dfc8; }
+    .card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s var(--ease); }
+    .card:hover .card-media img { transform: scale(1.06); }
+    /* the round maroon badge straddling the image edge, as in the reference */
+    .card-badge {
+      position: absolute; left: 50%; bottom: -21px; translate: -50% 0;
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--maroon); color: #e9cf9e;
+      display: grid; place-items: center;
+      box-shadow: 0 6px 14px rgba(60, 12, 18, 0.34);
+      border: 2px solid #fffdf6;
+      transition: transform 0.35s var(--ease), background 0.35s var(--ease);
+    }
+    .card:hover .card-badge { transform: translate(-50%, 0) scale(1.09); background: var(--maroon-deep); }
+    .card-body { padding: 34px 22px 26px; display: flex; flex-direction: column; gap: 9px; text-align: center; }
+    .card-title { font-family: var(--serif); font-weight: 600; font-size: 16px; color: var(--heading); }
+    .card-text { font-size: 12.5px; line-height: 1.85; color: #6b5b4b; }
+
+    /* ---- stat bar ---- */
+    .stat-bar {
+      display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
+      background: #fffdf6;
+      border: 1px solid rgba(198, 154, 63, 0.2);
+      border-radius: 12px;
+      box-shadow: 0 18px 44px rgba(90, 60, 30, 0.12);
+      overflow: hidden;
+    }
+    .stat {
+      display: flex; align-items: center; gap: 13px;
+      padding: 22px 18px;
+      border-right: 1px solid rgba(198, 154, 63, 0.18);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num { font-family: var(--serif); font-weight: 600; font-size: 23px; line-height: 1.1; color: var(--gold-deep); }
+    .stat-lbl { font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); line-height: 1.5; }
+
+    /* ---- decorative wheat, drawn not photographed ---- */
+    .wheat { position: absolute; z-index: 0; pointer-events: none; user-select: none; opacity: 0.85; }
+
+    /* ---- scroll reveal, same contract as the rest of the site ---- */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 1.1s var(--ease), transform 1.1s var(--ease); }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal.d1 { transition-delay: 0.1s; }
+    .reveal.d2 { transition-delay: 0.2s; }
+    .reveal.d3 { transition-delay: 0.3s; }
+    .reveal.d4 { transition-delay: 0.4s; }
+    .reveal.d5 { transition-delay: 0.5s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .card, .card-media img, .card-badge, .btn-maroon, .btn-gold, .arrow { transition: none; }
+    }
+  </style>
+</helmet>
+
+<div style="width: 1440px; background: var(--cream); position: relative; overflow: hidden;">
+
+  <!-- ============ 01 · HERO ============ -->
+  <div style="position: relative; padding: 0 0 22px;">
+
+    <!-- wheat stalk, top-left, behind the copy -->
+    <svg class="wheat" style="left: -18px; top: 30px; width: 150px;" viewBox="0 0 120 300" fill="none" aria-hidden="true">
+      <path d="M60 300V60" stroke="#c69a3f" stroke-width="2.4" stroke-linecap="round"></path>
+      <g stroke="#c69a3f" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.9">
+        <path d="M60 74c-16-6-26-20-26-36 16 2 26 14 26 30zM60 74c16-6 26-20 26-36-16 2-26 14-26 30z"></path>
+        <path d="M60 116c-16-6-26-20-26-36 16 2 26 14 26 30zM60 116c16-6 26-20 26-36-16 2-26 14-26 30z"></path>
+        <path d="M60 158c-16-6-26-20-26-36 16 2 26 14 26 30zM60 158c16-6 26-20 26-36-16 2-26 14-26 30z"></path>
+        <path d="M60 200c-16-6-26-20-26-36 16 2 26 14 26 30zM60 200c16-6 26-20 26-36-16 2-26 14-26 30z"></path>
+      </g>
+    </svg>
+
+    <div style="position: relative; z-index: 2; width: 1220px; margin-inline: auto; padding-top: 74px;">
+
+      <div style="position: relative; border-radius: 14px; overflow: hidden; height: 470px; background: #d9cdb4;">
+        <img src="infra-hero.jpg" alt="Aerial view of the Chennai Rice processing facility and silo farm" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+        <!-- warm scrim so the cream copy holds against the photograph -->
+        <div style="position: absolute; inset: 0; background: linear-gradient(100deg, rgba(246,239,220,0.97) 0%, rgba(246,239,220,0.93) 30%, rgba(246,239,220,0.55) 52%, rgba(246,239,220,0) 74%);"></div>
+
+        <div style="position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 22px; padding: 0 56px; max-width: 640px;">
+          <div class="lbl lbl--left reveal">Our Infrastructure</div>
+
+          <h1 class="reveal d1" style="font-family: var(--serif); font-weight: 600; font-size: 43px; line-height: 1.22; color: var(--heading);">
+            Built on Strength.<br>Driven by Excellence.
+          </h1>
+
+          <!-- small gold diamond divider, as on the reference -->
+          <svg class="reveal d1" width="60" height="10" viewBox="0 0 60 10" fill="none" aria-hidden="true">
+            <path d="M0 5h22" stroke="#c69a3f" stroke-width="1"></path>
+            <circle cx="30" cy="5" r="3" stroke="#c69a3f" stroke-width="1" fill="none"></circle>
+            <path d="M38 5h22" stroke="#c69a3f" stroke-width="1"></path>
+          </svg>
+
+          <p class="reveal d2" style="font-size: 13.5px; line-height: 1.95; color: #6b5b4b; max-width: 400px;">
+            Chennai Rice Industries is powered by integrated infrastructure — controlled
+            procurement, modern processing and monitored storage that protect purity and
+            consistency in every grain.
+          </p>
+
+          <div class="reveal d3">
+            <a class="btn-maroon" href="#">
+              Explore Our Infrastructure
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- carousel controls under the hero, as in the reference -->
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 18px 4px 0;">
+        <button class="arrow" aria-label="Previous">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="width: 22px; height: 3px; border-radius: 99px; background: var(--gold-deep);"></span>
+          <span style="width: 22px; height: 3px; border-radius: 99px; background: rgba(160,130,80,0.3);"></span>
+          <span style="width: 22px; height: 3px; border-radius: 99px; background: rgba(160,130,80,0.3);"></span>
+          <span style="width: 22px; height: 3px; border-radius: 99px; background: rgba(160,130,80,0.3);"></span>
+        </div>
+
+        <button class="arrow" aria-label="Next">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 02 · STAT BAR — real figures from infrastructure.js ============ -->
+  <div style="position: relative; z-index: 3; width: 1220px; margin-inline: auto; padding-top: 20px;">
+    <div class="stat-bar reveal">
+
+      <div class="stat">
+        <svg width="27" height="27" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 21h18M5 21V9l5-3 5 3v12M9 21v-4h2v4" stroke="#a8842e" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path>
+          <path d="M15 21V11l4-2v12" stroke="#a8842e" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <div>
+          <div class="stat-num">210,240</div>
+          <div class="stat-lbl">MTPA Capacity</div>
+        </div>
+      </div>
+
+      <div class="stat">
+        <svg width="27" height="27" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 21V8.5L12 4l7 4.5V21" stroke="#a8842e" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path>
+          <path d="M5 21h14M9 21v-6h6v6" stroke="#a8842e" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <div>
+          <div class="stat-num">61,500</div>
+          <div class="stat-lbl">MT Paddy Storage</div>
+        </div>
+      </div>
+
+      <div class="stat">
+        <svg width="27" height="27" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M7 21V10a5 5 0 0 1 10 0v11" stroke="#a8842e" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path>
+          <path d="M4 21h16M7 14h10" stroke="#a8842e" stroke-width="1.3" stroke-linecap="round"></path>
+        </svg>
+        <div>
+          <div class="stat-num">21</div>
+          <div class="stat-lbl">Storage Silos</div>
+        </div>
+      </div>
+
+      <div class="stat">
+        <svg width="27" height="27" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="8.4" stroke="#a8842e" stroke-width="1.3"></circle>
+          <path d="M8.4 12.4l2.5 2.5 4.7-5" stroke="#a8842e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <div>
+          <div class="stat-num">10</div>
+          <div class="stat-lbl">Processing Stages</div>
+        </div>
+      </div>
+
+      <div class="stat">
+        <svg width="27" height="27" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="9" cy="8" r="3.2" stroke="#a8842e" stroke-width="1.3"></circle>
+          <path d="M3.4 19.2c0-3.1 2.5-5.2 5.6-5.2s5.6 2.1 5.6 5.2" stroke="#a8842e" stroke-width="1.3" stroke-linecap="round"></path>
+          <path d="M16 5.2a3.2 3.2 0 0 1 0 5.6M17.4 14.4c2.1.6 3.4 2.4 3.4 4.8" stroke="#a8842e" stroke-width="1.3" stroke-linecap="round"></path>
+        </svg>
+        <div>
+          <div class="stat-num">1000+</div>
+          <div class="stat-lbl">Across Value Chain</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============ 03 · CAPABILITY GRID ============ -->
+  <div style="position: relative; padding: 74px 0 86px;">
+
+    <!-- wheat either side of the section head -->
+    <svg class="wheat" style="left: 26px; top: 60px; width: 128px; transform: rotate(-8deg);" viewBox="0 0 120 300" fill="none" aria-hidden="true">
+      <path d="M60 300V60" stroke="#c69a3f" stroke-width="2.2" stroke-linecap="round"></path>
+      <g stroke="#c69a3f" stroke-width="1.9" stroke-linecap="round" fill="none" opacity="0.85">
+        <path d="M60 78c-15-6-24-19-24-34 15 2 24 13 24 28zM60 78c15-6 24-19 24-34-15 2-24 13-24 28z"></path>
+        <path d="M60 118c-15-6-24-19-24-34 15 2 24 13 24 28zM60 118c15-6 24-19 24-34-15 2-24 13-24 28z"></path>
+        <path d="M60 158c-15-6-24-19-24-34 15 2 24 13 24 28zM60 158c15-6 24-19 24-34-15 2-24 13-24 28z"></path>
+      </g>
+    </svg>
+    <svg class="wheat" style="right: 26px; top: 60px; width: 128px; transform: rotate(8deg) scaleX(-1);" viewBox="0 0 120 300" fill="none" aria-hidden="true">
+      <path d="M60 300V60" stroke="#c69a3f" stroke-width="2.2" stroke-linecap="round"></path>
+      <g stroke="#c69a3f" stroke-width="1.9" stroke-linecap="round" fill="none" opacity="0.85">
+        <path d="M60 78c-15-6-24-19-24-34 15 2 24 13 24 28zM60 78c15-6 24-19 24-34-15 2-24 13-24 28z"></path>
+        <path d="M60 118c-15-6-24-19-24-34 15 2 24 13 24 28zM60 118c15-6 24-19 24-34-15 2-24 13-24 28z"></path>
+        <path d="M60 158c-15-6-24-19-24-34 15 2 24 13 24 28zM60 158c15-6 24-19 24-34-15 2-24 13-24 28z"></path>
+      </g>
+    </svg>
+
+    <div style="position: relative; z-index: 2; width: 1220px; margin-inline: auto; display: flex; flex-direction: column; gap: 44px;">
+
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 14px;">
+        <div class="lbl reveal">World Class Infrastructure</div>
+        <h2 class="stitle reveal d1">Technology. Quality. Capacity.</h2>
+        <svg class="reveal d1" width="60" height="10" viewBox="0 0 60 10" fill="none" aria-hidden="true">
+          <path d="M0 5h22" stroke="#c69a3f" stroke-width="1"></path>
+          <circle cx="30" cy="5" r="3" stroke="#c69a3f" stroke-width="1" fill="none"></circle>
+          <path d="M38 5h22" stroke="#c69a3f" stroke-width="1"></path>
+        </svg>
+        <p class="reveal d2" style="max-width: 560px; text-align: center; font-size: 13.5px; line-height: 1.95; color: #6b5b4b;">
+          From paddy intake to packaging, our integrated infrastructure protects grain
+          condition and consistency at every step.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px;">
+
+        <div class="card reveal">
+          <div class="card-media">
+            <img src="infra-processing.jpg" alt="Rice processing plant">
+            <span class="card-badge">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 21h16M6 21V11l4-2.5V21M14 21V8l4-2.5V21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+          </div>
+          <div class="card-body">
+            <div class="card-title">Modern Processing Units</div>
+            <p class="card-text">A ten-stage milling line — pre-cleaning, destoning, husking, whitening, grading and colour sorting.</p>
+          </div>
+        </div>
+
+        <div class="card reveal d1">
+          <div class="card-media">
+            <img src="infra-storage.jpg" alt="Paddy storage silo farm">
+            <span class="card-badge">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M7 21V10a5 5 0 0 1 10 0v11M4 21h16M7 14h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+          </div>
+          <div class="card-body">
+            <div class="card-title">Controlled Silo Storage</div>
+            <p class="card-text">21 silos across Nasiyanur and SIPCOT holding 61,500 MT of paddy under monitored conditions.</p>
+          </div>
+        </div>
+
+        <div class="card reveal d2">
+          <div class="card-media">
+            <img src="infra-lab.jpg" alt="Quality inspection of paddy">
+            <span class="card-badge">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="10.5" cy="10.5" r="5.6" stroke="currentColor" stroke-width="1.5"></circle>
+                <path d="M14.6 14.6L20 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+              </svg>
+            </span>
+          </div>
+          <div class="card-body">
+            <div class="card-title">Quality Inspection</div>
+            <p class="card-text">Moisture, purity and grain condition are checked at intake, in process and before dispatch.</p>
+          </div>
+        </div>
+
+        <div class="card reveal d3">
+          <div class="card-media">
+            <img src="infra-sourcing.jpg" alt="Paddy selection at source">
+            <span class="card-badge">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 21V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                <path d="M12 10c0-3.5 2.6-6 6-6 0 3.5-2.6 6-6 6zm0 3c0-3-2.4-5.4-5.4-5.4C6.6 10.6 9 13 12 13z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+          </div>
+          <div class="card-body">
+            <div class="card-title">Controlled Procurement</div>
+            <p class="card-text">Varieties are kept separate and traceable from the point of purchase through to storage.</p>
+          </div>
+        </div>
+
+        <div class="card reveal d4">
+          <div class="card-media">
+            <img src="infra-logistics.jpg" alt="Transport fleet moving paddy">
+            <span class="card-badge">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M2.6 16.4V7h10v9.4M12.6 10.4h4l3 3.2v2.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                <circle cx="7" cy="17.6" r="1.7" stroke="currentColor" stroke-width="1.5"></circle>
+                <circle cx="16.6" cy="17.6" r="1.7" stroke="currentColor" stroke-width="1.5"></circle>
+              </svg>
+            </span>
+          </div>
+          <div class="card-body">
+            <div class="card-title">Logistics Network</div>
+            <p class="card-text">Controlled handling from field to facility, and onward through warehouse to distribution.</p>
+          </div>
+        </div>
+
+        <div class="card reveal d5">
+          <div class="card-media">
+            <img src="infra-packaging.jpg" alt="Packaging and dispatch facility">
+            <span class="card-badge">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M3.6 7.6L12 3.6l8.4 4v8.8L12 20.4l-8.4-4V7.6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+                <path d="M3.6 7.6L12 11.6l8.4-4M12 11.6v8.8" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+          </div>
+          <div class="card-body">
+            <div class="card-title">Packaging &amp; Dispatch</div>
+            <p class="card-text">Finished rice is packed and prepared for dispatch, with a final check before it leaves the facility.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 04 · CLOSING BAND ============ -->
+  <div style="position: relative; overflow: hidden; background: linear-gradient(180deg, #6b1722 0%, #530f19 55%, #3a080f 100%);">
+    <!-- the horizontal darkening every band-coloured surface gets -->
+    <div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,2,4,0.62) 0%, rgba(10,2,4,0) 22%, rgba(10,2,4,0) 78%, rgba(10,2,4,0.62) 100%); pointer-events: none;"></div>
+    <div style="position: absolute; inset: 0; background: radial-gradient(80% 260% at 50% 55%, rgba(163,34,51,0.8) 0%, rgba(163,34,51,0) 72%); pointer-events: none;"></div>
+
+    <div style="position: relative; z-index: 2; width: 1220px; margin-inline: auto; padding: 52px 0; display: flex; align-items: center; gap: 34px;">
+
+      <!-- gold emblem -->
+      <svg class="reveal" width="74" height="74" viewBox="0 0 80 80" fill="none" aria-hidden="true" style="flex: 0 0 auto;">
+        <circle cx="40" cy="40" r="37" stroke="#c69a3f" stroke-width="1.4"></circle>
+        <circle cx="40" cy="40" r="31" stroke="#c69a3f" stroke-width="0.8" opacity="0.7"></circle>
+        <path d="M40 56V32" stroke="#d9b96a" stroke-width="1.8" stroke-linecap="round"></path>
+        <g stroke="#d9b96a" stroke-width="1.5" fill="none" stroke-linecap="round">
+          <path d="M40 36c-7-3-11-9-11-16 7 1 11 6 11 13zM40 36c7-3 11-9 11-16-7 1-11 6-11 13z"></path>
+          <path d="M40 46c-7-3-11-9-11-16 7 1 11 6 11 13zM40 46c7-3 11-9 11-16-7 1-11 6-11 13z"></path>
+        </g>
+      </svg>
+
+      <div class="reveal d1" style="display: flex; flex-direction: column; gap: 9px; flex: 1;">
+        <h2 style="font-family: var(--serif); font-weight: 600; font-size: 28px; line-height: 1.28; color: #f4e6cd;">
+          Strong Infrastructure.<br>Stronger Promise.
+        </h2>
+        <p style="font-size: 13px; line-height: 1.85; color: rgba(244,230,205,0.72); max-width: 480px;">
+          Our infrastructure is the backbone of our promise to deliver the finest rice, always.
+        </p>
+      </div>
+
+      <div class="reveal d2" style="flex: 0 0 auto;">
+        <a class="btn-gold" href="#">
+          Explore Our Plants
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"$preview":{"width":1440,"height":1580}}'>
+/**
+ * Motion only. Content renders visible in the markup and is hidden by CSS that
+ * this script arms, so no script / no observer / reduced motion all degrade to
+ * "no animation" rather than "no content".
+ */
+class Component extends DCLogic {
+  componentDidMount() {
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const targets = Array.from(document.body.querySelectorAll('.reveal'));
+
+    if (reduced || !('IntersectionObserver' in window)) {
+      targets.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    targets.forEach(function (el) { io.observe(el); });
+    this.io = io;
+
+    // Backstop: nothing stays hidden after 4s whatever the observer did.
+    this.backstop = window.setTimeout(function () {
+      targets.forEach(function (el) { el.classList.add('in'); });
+    }, 4000);
+  }
+
+  componentWillUnmount() {
+    if (this.io) this.io.disconnect();
+    if (this.backstop) window.clearTimeout(this.backstop);
+  }
+
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

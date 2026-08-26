@@ -40,6 +40,8 @@ export default function ContactPage() {
   const [form, setForm] = useState(EMPTY)
   const [errors, setErrors] = useState({})
   const [sent, setSent] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
 
   const set = key => e => {
     setForm(f => ({ ...f, [key]: e.target.value }))
@@ -59,17 +61,29 @@ export default function ContactPage() {
     return next
   }
 
-  const onSubmit = e => {
+  const onSubmit = async e => {
     e.preventDefault()
     const next = validate()
     setErrors(next)
     if (Object.keys(next).length) return
-    // No backend is wired up yet — this records the enquiry locally so the
-    // form is testable, and shows the confirmation state.
-    // eslint-disable-next-line no-console
-    console.info('Enquiry captured (not yet sent to a server):', form)
-    setSent(true)
-    setForm(EMPTY)
+
+    setSubmitError('')
+    setSubmitting(true)
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(data.error || 'Could not send your enquiry.')
+      setSent(true)
+      setForm(EMPTY)
+    } catch (err) {
+      setSubmitError(err.message || 'Could not send your enquiry. Please try again.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -137,8 +151,8 @@ export default function ContactPage() {
               {errors.enquiry && <span className="field-error">{errors.enquiry}</span>}
             </label>
 
-            <button className="btn-maroon" type="submit">
-              Send Enquiry
+            <button className="btn-maroon" type="submit" disabled={submitting}>
+              {submitting ? 'Sending…' : 'Send Enquiry'}
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path
                   d="M4 12h15m0 0l-6-6m6 6l-6 6"
@@ -150,10 +164,15 @@ export default function ContactPage() {
               </svg>
             </button>
 
+            {submitError && (
+              <p className="field-error" role="alert">
+                {submitError}
+              </p>
+            )}
+
             {sent && (
               <p className="field-sent" role="status">
-                Thank you — your enquiry has been recorded. Note that no mail server is
-                connected yet, so it has not been delivered.
+                Thank you — your enquiry has been sent. Our team will get back to you shortly.
               </p>
             )}
           </form>
