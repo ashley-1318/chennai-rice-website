@@ -1,5 +1,5 @@
 import React from "react";
-import { LINEUP } from "../data/products.js";
+import { useProducts } from "../data/products.js";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll.js";
 
 /**
@@ -14,6 +14,7 @@ import { useRevealOnScroll } from "../hooks/useRevealOnScroll.js";
  */
 export default function Lineup() {
   const { ref, armed, revealed } = useRevealOnScroll({ threshold: 0.2 });
+  const { lineup } = useProducts();
 
   const stageClass = ["stage", armed && "will-animate", revealed && "is-visible"]
     .filter(Boolean)
@@ -34,7 +35,7 @@ export default function Lineup() {
 
       <div className={stageClass} ref={ref}>
         <ul className="lineup-row">
-          {LINEUP.map((pack, index) => (
+          {lineup.map((pack, index) => (
             <li className="lineup-item" key={pack.id} style={{ "--i": index }}>
               <img src={pack.image} alt={pack.alt} width={pack.width} height={pack.height} loading="lazy" />
               {/* mirrored copy beneath each pack */}

@@ -3,6 +3,11 @@
 .env.local
 .env.*.local
 server/.env
+# Broad safety net for any other real env file, but NOT *.example files —
+# those are meant to be committed (see server/.env.example,
+# .env.local.example) so contributors know which vars to set.
+.env*
+!.env*.example
 
 # Vercel CLI project link metadata
 .vercel
@@ -13,8 +18,3 @@ server/node_modules
 # Root dependencies and build output — reinstall/rebuild instead of tracking
 node_modules
 dist
-
-.vercel
-
-.vercel
-.env*

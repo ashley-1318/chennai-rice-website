@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import SiteLayout from "../layouts/SiteLayout.jsx";
 import Breadcrumb from "../components/Breadcrumb.jsx";
@@ -10,7 +10,7 @@ import JourneyTimeline from "../components/JourneyTimeline.jsx";
 import RecipeTeaser from "../components/RecipeTeaser.jsx";
 import RelatedProducts from "../components/RelatedProducts.jsx";
 import BulkOrderCTA from "../components/BulkOrderCTA.jsx";
-import { PRODUCTS } from "../data/products.js";
+import { useProduct, useProducts } from "../data/products.js";
 import { getDetails, getCategoryLabel, GRAIN_JOURNEY, GALLERY_EXTRAS } from "../data/productDetails.js";
 import { useCart } from "../hooks/useCart.jsx";
 import { useWishlist } from "../hooks/useWishlist.jsx";
@@ -26,7 +26,8 @@ export default function ProductDetailPage() {
   const wishlist = useWishlist();
   const spawnRipple = useRipple();
 
-  const product = useMemo(() => PRODUCTS.find((p) => p.id === id), [id]);
+  const { product, loading } = useProduct(id);
+  const { products: allProducts } = useProducts();
 
   const sizes = product?.packSizes || [];
   const defaultSize = sizes.find((s) => s.kg === 10) || sizes[0];
@@ -40,6 +41,17 @@ export default function ProductDetailPage() {
     product ? `${product.name} — Chennai Rice Industries` : "Product — Chennai Rice Industries",
     product ? product.description : undefined
   );
+
+  // Pack size defaults to 10 kg once the product has loaded — keep the
+  // selector in sync instead of getting stuck on the pre-load undefined.
+  useEffect(() => {
+    if (defaultSize && selectedKg === undefined) setSelectedKg(defaultSize.kg);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultSize]);
+
+  if (loading) {
+    return <SiteLayout skipTo="pdp-main" skipLabel="Skip to content"><main id="pdp-main" className="pdp" /></SiteLayout>;
+  }
 
   if (!product) {
     return (
@@ -79,7 +91,7 @@ export default function ProductDetailPage() {
     navigate("/cart");
   };
 
-  const related = PRODUCTS.filter((p) => p.id !== product.id);
+  const related = allProducts.filter((p) => p.id !== product.id);
 
   return (
     <SiteLayout skipTo="pdp-main" skipLabel="Skip to product">

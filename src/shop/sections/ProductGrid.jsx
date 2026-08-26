@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import ProductCard from "../components/ProductCard.jsx";
 import CartButton from "../components/CartButton.jsx";
-import { PRODUCTS, FILTERS } from "../data/products.js";
+import { FILTERS, useProducts } from "../data/products.js";
 
 /**
  * Search box and filter chips feed one derived list, exactly as the original
@@ -13,19 +13,21 @@ import { PRODUCTS, FILTERS } from "../data/products.js";
  * upon (it stays in the stylesheet harmlessly).
  */
 export default function ProductGrid({ search, activeFilter, onFilterChange }) {
+  const { products, loading, error } = useProducts();
+
   const visible = useMemo(() => {
     const query = search.trim().toLowerCase();
-    return PRODUCTS.filter((product) => {
+    return products.filter((product) => {
       const matchesChip = activeFilter === "all" || product.tags.includes(activeFilter);
       const haystack = `${product.search} ${product.name} ${product.description}`.toLowerCase();
       return matchesChip && haystack.includes(query);
     });
-  }, [search, activeFilter]);
+  }, [products, search, activeFilter]);
 
   const note =
-    visible.length === PRODUCTS.length
+    visible.length === products.length
       ? `Showing ${visible.length} products`
-      : `Showing ${visible.length} of ${PRODUCTS.length} products`;
+      : `Showing ${visible.length} of ${products.length} products`;
 
   return (
     <section className="products" id="products" aria-labelledby="products-heading">
@@ -54,17 +56,25 @@ export default function ProductGrid({ search, activeFilter, onFilterChange }) {
         </div>
       </div>
 
-      <ul className="product-grid">
-        {visible.map((product) => (
-          <li key={product.id}>
-            <ProductCard product={product} />
-          </li>
-        ))}
-      </ul>
+      {!loading && !error && (
+        <ul className="product-grid">
+          {visible.map((product) => (
+            <li key={product.id}>
+              <ProductCard product={product} />
+            </li>
+          ))}
+        </ul>
+      )}
 
-      {visible.length === 0 && (
+      {!loading && !error && visible.length === 0 && (
         <p className="no-results">
           No packs match this filter and search. Choose &ldquo;All packs&rdquo; or clear the search box.
+        </p>
+      )}
+
+      {error && (
+        <p className="no-results">
+          We couldn&rsquo;t load our packs right now. Please refresh, or check back shortly.
         </p>
       )}
     </section>

@@ -9,11 +9,8 @@ export default function BulkOrderCTA() {
         <p>Connect with Chennai Rice for distributor, retailer and institutional requirements.</p>
       </div>
       <div className="pdp-bulk-actions">
-        <Link className="btn-maroon" to="/contact">
+        <Link className="btn-maroon" to="/bulk-order">
           Request Bulk Quote
-        </Link>
-        <Link className="btn-outline" to="/contact">
-          Contact Sales
         </Link>
       </div>
     </div>

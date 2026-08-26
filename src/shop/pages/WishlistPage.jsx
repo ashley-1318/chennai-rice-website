@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SiteLayout from "../layouts/SiteLayout.jsx";
-import { PRODUCTS } from "../data/products.js";
+import { useProducts } from "../data/products.js";
 import { useWishlist } from "../hooks/useWishlist.jsx";
 import { useCart } from "../hooks/useCart.jsx";
 import usePageMeta from "../hooks/usePageMeta.js";
@@ -21,10 +21,11 @@ const inr = new Intl.NumberFormat("en-IN", {
 export default function WishlistPage() {
   const { ids, remove, clear } = useWishlist();
   const { add } = useCart();
+  const { products, loading } = useProducts();
 
   usePageMeta("Saved Items — Chennai Rice Industries", "The packs you have saved for later.");
 
-  const saved = ids.map((id) => PRODUCTS.find((p) => p.id === id)).filter(Boolean);
+  const saved = loading ? [] : ids.map((id) => products.find((p) => p.id === id)).filter(Boolean);
 
   return (
     <SiteLayout skipTo="wishlist-main" skipLabel="Skip to content">
@@ -40,7 +41,7 @@ export default function WishlistPage() {
             )}
           </header>
 
-          {saved.length === 0 ? (
+          {loading ? null : saved.length === 0 ? (
             <div className="wl-empty">
               <svg width="46" height="46" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path

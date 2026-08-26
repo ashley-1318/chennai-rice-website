@@ -243,6 +243,7 @@ export const FOOTER = {
         { label: 'Track Order', to: '/track-order' },
         { label: 'Shipping & Delivery', to: '/shipping' },
         { label: 'Terms & Conditions', to: '/terms' },
+        { label: 'Privacy Policy', to: '/privacy' },
       ],
     },
   ],
