@@ -18,6 +18,7 @@ import ComingSoonPage from './pages/ComingSoonPage.jsx'
 import ContactPage from './pages/ContactPage.jsx'
 import BulkOrderPage from './pages/BulkOrderPage.jsx'
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage.jsx'
+import TermsPage from './pages/TermsPage.jsx'
 import ProductsPage from './shop/pages/ProductsPage.jsx'
 import ProductDetailPage from './shop/pages/ProductDetailPage.jsx'
 import AboutPage from './shop/pages/AboutPage.jsx'
@@ -43,7 +44,6 @@ const PLACEHOLDER_PAGES = [
   { path: '/downloads', title: 'Downloads', blurb: 'Product sheets, certifications and trade catalogues will be available to download here.' },
   { path: '/faqs', title: 'FAQs', blurb: 'Answers to the questions we are asked most about storage, cooking and ordering are being compiled.' },
   { path: '/track-order', title: 'Track Order', blurb: 'Order tracking will live here once our ordering system is connected.' },
-  { path: '/terms', title: 'Terms & Conditions', blurb: 'Our trading terms are being finalised with our legal team and will be published here shortly.' },
   { path: '/shipping', title: 'Shipping & Delivery', blurb: 'Dispatch timelines, delivery areas and freight terms are on their way to this page.' },
   { path: '/refund', title: 'Refund Policy', blurb: 'Our returns and refund process is being documented and will be published here shortly.' },
 ]
@@ -105,6 +105,7 @@ export default function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/infrastructure" element={<InfrastructurePage />} />
         <Route path="/privacy" element={<PrivacyPolicyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
         {PLACEHOLDER_PAGES.map(page => (
           <Route
             key={page.path}

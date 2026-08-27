@@ -90,6 +90,15 @@
   color: var(--heading);
 }
 
+.legal-copyright {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(198, 154, 63, 0.16);
+  font-size: 13px;
+  color: #7a6a54;
+  text-align: center;
+}
+
 @media (max-width: 900px) {
   .legal-body {
     padding: 30px 22px;
