@@ -11,7 +11,14 @@ import {
   saveRecord,
 } from '../api/_lib/consent.js'
 import { buildContactRow, buildBulkOrderRow, insertEnquiry } from '../api/_lib/enquiries.js'
-import { buildSessionRow, insertSession, touchSession, insertPageview } from '../api/_lib/analytics.js'
+import {
+  buildSessionRow,
+  insertSession,
+  touchSession,
+  insertPageview,
+  insertEvent,
+  insertInteractions,
+} from '../api/_lib/analytics.js'
 import { hasSupabase } from '../api/_lib/supabase.js'
 
 const app = express()
@@ -122,6 +129,28 @@ app.post('/api/track/pageview', async (req, res) => {
   } catch (err) {
     console.error('Pageview tracking error:', err)
     res.status(err.status || 500).json({ error: err.publicMessage || 'Could not record pageview.' })
+  }
+})
+
+app.post('/api/track/event', async (req, res) => {
+  try {
+    const { error, stored } = await insertEvent(req.body)
+    if (error) return res.status(400).json({ error })
+    res.json({ ok: true, stored })
+  } catch (err) {
+    console.error('Event tracking error:', err)
+    res.status(err.status || 500).json({ error: err.publicMessage || 'Could not record event.' })
+  }
+})
+
+app.post('/api/track/interactions', async (req, res) => {
+  try {
+    const { error, stored, skipped } = await insertInteractions(req.body)
+    if (error) return res.status(400).json({ error })
+    res.json({ ok: true, stored, skipped })
+  } catch (err) {
+    console.error('Interaction tracking error:', err)
+    res.status(err.status || 500).json({ error: err.publicMessage || 'Could not record interactions.' })
   }
 })
 

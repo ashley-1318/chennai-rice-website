@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { trackAddToCart } from "../../services/events.js";
 
 /**
  * The cart, ported from js/cart-store.js.
@@ -46,6 +47,11 @@ export function CartProvider({ children }) {
   }, []);
 
   const add = useCallback((product) => {
+    // Fired outside the state updater: React may invoke that function more
+    // than once, which would record duplicate events for a single add.
+    // Best-effort and gated on analytics consent inside trackAddToCart.
+    trackAddToCart(product);
+
     setItems((current) => {
       const existing = current.find((item) => item.id === product.id);
       if (existing) {

@@ -23,6 +23,13 @@ function int(value) {
   return Number.isFinite(n) && n >= 0 ? Math.round(n) : null
 }
 
+/** A 0-100 percentage, or null when nothing usable was sent. */
+function percent(value) {
+  const n = Number(value)
+  if (!Number.isFinite(n)) return null
+  return Math.min(100, Math.max(0, Math.round(n)))
+}
+
 /** Very small user-agent sniff — enough to bucket sessions, not a full parser. */
 function parseUserAgent(ua) {
   const s = typeof ua === 'string' ? ua : ''
@@ -113,9 +120,24 @@ export async function buildSessionRow({ body, req }) {
   }
 }
 
+/**
+ * Gives the browser its permanent display number ("0001", "0002") the first
+ * time it is seen, and refreshes last_seen_at on every later visit. See
+ * ensure_visitor() in supabase/migrations/add_admin_dashboard.sql.
+ *
+ * Deliberately non-fatal: a visitor without a number is a cosmetic problem
+ * on one dashboard row, whereas throwing here would lose the session itself.
+ * The dashboard left-joins this table so an unnumbered visitor still shows.
+ */
+async function ensureVisitor(visitorId) {
+  const { error } = await supabase.rpc('ensure_visitor', { p_visitor_id: visitorId })
+  if (error) console.error('ensure_visitor failed (session still recorded):', error.message)
+}
+
 /** Inserts a new session row. Resolves to false when Supabase isn't configured. */
 export async function insertSession(row) {
   if (!hasSupabase) return false
+  await ensureVisitor(row.visitor_id)
   const { error } = await supabase.from('visitor_sessions').insert(row)
   if (error) throw storeError('visitor_sessions', error)
   return true
@@ -156,9 +178,137 @@ export async function insertPageview(body) {
     session_id: sessionId,
     path,
     seconds_on_page: int(body?.secondsOnPage) || 0,
+    // Null, not 0, when the client sent nothing: "not measured" and "never
+    // scrolled" are different findings and must not be merged.
+    max_scroll_percent: percent(body?.maxScrollPercent),
   })
   if (error) throw storeError('visitor_pageviews', error)
   return { stored: true }
+}
+
+/**
+ * Records a product/cart event (see the visitor_event_type enum in
+ * supabase/migrations/add_admin_dashboard.sql). The session must already
+ * exist — visitor_events.session_id is a foreign key — so an event fired
+ * before the session insert lands is dropped rather than erroring at the
+ * visitor's tab.
+ */
+const EVENT_TYPES = new Set([
+  'product_view',
+  'add_to_cart',
+  'remove_from_cart',
+  'begin_checkout',
+  'purchase',
+])
+
+export async function insertEvent(body) {
+  const sessionId = str(body?.sessionId, 64)
+  const visitorId = str(body?.visitorId, 64)
+  const eventType = str(body?.eventType, 32)
+
+  if (!sessionId || !ID_PATTERN.test(sessionId)) return { error: 'A valid sessionId is required.' }
+  if (!visitorId || !ID_PATTERN.test(visitorId)) return { error: 'A valid visitorId is required.' }
+  if (!eventType || !EVENT_TYPES.has(eventType)) return { error: 'Unknown eventType.' }
+
+  if (!hasSupabase) return { stored: false }
+
+  const quantity = int(body?.quantity)
+  const variantKg = Number(body?.variantKg)
+  const value = Number(body?.valueInr)
+
+  const { error } = await supabase.from('visitor_events').insert({
+    session_id: sessionId,
+    visitor_id: visitorId,
+    event_type: eventType,
+    product_slug: str(body?.productSlug, 128),
+    variant_kg: Number.isFinite(variantKg) ? variantKg : null,
+    quantity: quantity === null ? null : quantity,
+    value_inr: Number.isFinite(value) ? value : null,
+    order_ref: str(body?.orderRef, 128),
+  })
+
+  // A foreign-key violation means the session row isn't there (yet). That is
+  // a dropped event, not a server fault — reporting it as an error would put
+  // a failure in the visitor's console for something they cannot act on.
+  if (error) {
+    if (error.code === '23503') return { stored: false }
+    throw storeError('visitor_events', error)
+  }
+  return { stored: true }
+}
+
+/**
+ * Click-level analytics: heatmap points, rage clicks and dead clicks.
+ * See supabase/migrations/add_interaction_analytics.sql for the table and
+ * src/services/interactions.js for how each kind is detected.
+ *
+ * Arrives batched, because clicks are an order of magnitude more frequent
+ * than anything else recorded here and one request per click would be
+ * wasteful on a phone connection.
+ */
+const INTERACTION_KINDS = new Set(['click', 'rage_click', 'dead_click'])
+
+/** Hard ceiling per request. Anything above it is reported, not dropped quietly. */
+const MAX_INTERACTIONS_PER_BATCH = 100
+
+function shapeInteraction(item) {
+  const kind = str(item?.kind, 20)
+  const path = str(item?.path, 512)
+  if (!kind || !INTERACTION_KINDS.has(kind) || !path) return null
+
+  const relX = Number(item?.relX)
+
+  return {
+    kind,
+    path,
+    selector: str(item?.selector, 240),
+    label: str(item?.label, 80),
+    tag: str(item?.tag, 32),
+    rel_x: Number.isFinite(relX) ? Math.min(1, Math.max(0, relX)) : null,
+    abs_y: int(item?.absY),
+    viewport_width: int(item?.viewportWidth),
+    doc_height: int(item?.docHeight),
+    // Only a rage click has a burst length. Sending one on any other kind
+    // would be a number with no meaning behind it.
+    click_count: kind === 'rage_click' ? int(item?.clickCount) : null,
+    // occurred_at is left to the column default rather than taken from the
+    // browser. Client clocks are not trustworthy, and batching means the
+    // server time is late by at most one flush interval — a far smaller
+    // error than a misconfigured device clock.
+  }
+}
+
+export async function insertInteractions(body) {
+  const sessionId = str(body?.sessionId, 64)
+  const visitorId = str(body?.visitorId, 64)
+
+  if (!sessionId || !ID_PATTERN.test(sessionId)) return { error: 'A valid sessionId is required.' }
+  if (!visitorId || !ID_PATTERN.test(visitorId)) return { error: 'A valid visitorId is required.' }
+
+  const items = Array.isArray(body?.items) ? body.items : null
+  if (!items || !items.length) return { error: 'items must be a non-empty array.' }
+
+  const accepted = items.slice(0, MAX_INTERACTIONS_PER_BATCH)
+  const rows = accepted
+    .map(shapeInteraction)
+    .filter(Boolean)
+    .map((row) => ({ ...row, session_id: sessionId, visitor_id: visitorId }))
+
+  const skipped = items.length - rows.length
+  if (!rows.length) return { stored: 0, skipped }
+
+  if (!hasSupabase) return { stored: 0, skipped }
+
+  const { error } = await supabase.from('visitor_interactions').insert(rows)
+
+  // Same reasoning as insertEvent: a foreign-key violation means the
+  // session row is not there, which is a dropped batch rather than a
+  // server fault the visitor could do anything about.
+  if (error) {
+    if (error.code === '23503') return { stored: 0, skipped }
+    throw storeError('visitor_interactions', error)
+  }
+  return { stored: rows.length, skipped }
 }
 
 function storeError(table, cause) {

@@ -103,7 +103,10 @@ export default function RiceCursor() {
   }, [])
 
   return (
-    <div className="rice-cursor" ref={layerRef} aria-hidden="true">
+    /* data-analytics-ignore: this layer rewrites a transform on every mouse
+       move, which would otherwise read as the page responding to a click.
+       See src/services/interactions.js. */
+    <div className="rice-cursor" ref={layerRef} aria-hidden="true" data-analytics-ignore="">
       {Array.from({ length: TRAIL_GRAINS + 1 }, (_, i) => (
         <span
           className="rice-grain"

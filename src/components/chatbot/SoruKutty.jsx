@@ -34,7 +34,7 @@ export default function SoruKutty() {
   }, [])
 
   return (
-    <div className="sk">
+    <div className="sk" data-analytics-ignore="">
       {isOpen && (
         <ChatWindow chat={chat} isClosing={isClosing} onClose={close} onMinimize={close} titleId={titleId} />
       )}

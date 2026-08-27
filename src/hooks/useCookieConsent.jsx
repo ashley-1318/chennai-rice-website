@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { CONSENT_KEY, POLICY_VERSION, readConsent } from '../lib/consentPolicy.js'
 
 /**
  * Cookie consent, stored the same way as the cart and saved items: React
@@ -10,38 +11,13 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useS
  * the visitor's decision.
  */
 
-const KEY = 'chennai-rice-cookie-consent'
-
-/* Must match POLICY_VERSION in api/_lib/consent.js. When the notice's
-   wording or categories change, bump both: a choice recorded against an
-   older policy no longer covers the current one, so the banner re-asks. */
-const POLICY_VERSION = '2026-08-24'
+/* The key, the policy version and the "is this consent still current" test
+   live in src/lib/consentPolicy.js, because the tracking services need the
+   same answer and run outside React. */
+const KEY = CONSENT_KEY
+const readStorage = readConsent
 
 const CookieConsentContext = createContext(null)
-
-function readStorage() {
-  try {
-    const raw = window.localStorage.getItem(KEY)
-    if (!raw) return null
-    const saved = JSON.parse(raw)
-    // Ignore anything that is not a consent for the current policy rather
-    // than trusting it — an outdated or malformed record means "ask again".
-    if (!saved || typeof saved !== 'object') return null
-    if (saved.policyVersion !== POLICY_VERSION) return null
-    if (typeof saved.id !== 'string') return null
-    return {
-      id: saved.id,
-      analytics: saved.analytics === true,
-      marketing: saved.marketing === true,
-      policyVersion: saved.policyVersion,
-      decidedAt: typeof saved.decidedAt === 'string' ? saved.decidedAt : null,
-    }
-  } catch {
-    // Private mode, disabled storage, or corrupt JSON — ask again rather
-    // than break the page.
-    return null
-  }
-}
 
 /** Opaque per-visitor id so a stored consent can be tied to its server record. */
 function newId() {

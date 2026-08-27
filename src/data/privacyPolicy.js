@@ -2,7 +2,7 @@
 // inline JSX) so the legal text can be updated without touching the page's
 // layout code — mirrors how other long-form content lives in src/data/.
 
-export const POLICY_LAST_UPDATED = 'August 21, 2026'
+export const POLICY_LAST_UPDATED = 'August 27, 2026'
 
 export const POLICY_INTRO = [
   `At Chennai Rice Industries, we respect your privacy and are committed to protecting the personal information you share with us. This policy explains, in plain language, what information we collect, why we collect it, how we use it, and how we protect it, whenever you visit our website, enquire about our products, place an order, fill out a form, or reach us by WhatsApp, phone, or email.`,
@@ -47,6 +47,7 @@ export const POLICY_SECTIONS = [
       'Order and transaction details. Products ordered, quantities, order and payment status, delivery status, and related enquiries.',
       'Communication records. Emails, WhatsApp chats, calls, form submissions, and support conversations.',
       'Website and technical details. IP address, browser and device type, pages visited, referring site, cookies, and general website usage and security information.',
+      'How you use a page. If you accept analytics cookies, we also record where on a page you click and how far down it you scroll, so we can find parts of the site that are confusing or broken. This is not linked to your name or contact details, and we do not record what you type.',
     ],
   },
   {
@@ -121,6 +122,7 @@ export const POLICY_SECTIONS = [
     paragraphs: [
       'Our website uses cookies, pixels, and similar technologies to keep it running smoothly: remembering preferences, maintaining sessions, understanding usage, improving performance, and supporting security and (where applicable) marketing.',
       'Browsing our site also means we may pick up technical details like your IP address, device and browser type, pages visited, and approximate location, which help us understand and improve the experience. You can manage cookie preferences through your browser, though turning some off may affect how the site works.',
+      'Where you have accepted analytics cookies, we additionally record which parts of a page were clicked and how far down each page was read. We use this to spot buttons that do not work, links people expect to be clickable, and content nobody reaches. It is stored on our own systems, is not shared with advertisers, and stops the moment you withdraw consent.',
     ],
   },
   {

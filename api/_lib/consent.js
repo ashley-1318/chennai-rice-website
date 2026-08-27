@@ -7,7 +7,7 @@
    recorded against an older version are no longer proof of agreement to the
    current policy, so the banner re-asks anyone whose stored version is
    behind this one. */
-export const POLICY_VERSION = '2026-08-24'
+export const POLICY_VERSION = '2026-08-27'
 
 /* Necessary cookies are not a choice — the cart and consent record itself
    depend on them — so only the optional buckets are stored per visitor. */

@@ -1,6 +1,12 @@
 import { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useCookieConsent } from './useCookieConsent.jsx'
+import {
+  beginPage,
+  flushInteractions,
+  readScrollDepth,
+  startInteractionTracking,
+} from '../services/interactions.js'
 
 /**
  * Visitor analytics: a unique visitor id, a per-tab session, pages visited,
@@ -116,19 +122,38 @@ export function useVisitorTracking() {
     return () => clearInterval(interval)
   }, [allowAnalytics])
 
+  // Clicks, rage clicks, dead clicks and scroll depth. Kept in its own
+  // module because it listens to the whole document rather than to React
+  // state — see src/services/interactions.js.
+  useEffect(() => {
+    if (!allowAnalytics) return undefined
+    return startInteractionTracking()
+  }, [allowAnalytics])
+
   // One pageview per route change, carrying the time spent on whichever
-  // page was open before it.
+  // page was open before it and how far down it was read.
   useEffect(() => {
     if (!allowAnalytics || !sessionRef.current.sessionId) return
 
     const prev = pageRef.current
     if (prev.path) {
       const seconds = Math.round((Date.now() - prev.enteredAt) / 1000)
-      post('/api/track/pageview', { sessionId: sessionRef.current.sessionId, path: prev.path, secondsOnPage: seconds })
+      post('/api/track/pageview', {
+        sessionId: sessionRef.current.sessionId,
+        path: prev.path,
+        secondsOnPage: seconds,
+        // Read before beginPage() below resets it for the new page.
+        maxScrollPercent: readScrollDepth(),
+      })
+      // Send the clicks captured on the page being left along with it,
+      // rather than waiting for the batch timer that may never fire if the
+      // visitor leaves the site from here.
+      flushInteractions()
     }
 
     pageRef.current = { path: pathname, enteredAt: Date.now() }
     sessionRef.current.pageCount += 1
+    beginPage(pathname)
   }, [allowAnalytics, pathname])
 
   // Flush the final page's time when the tab actually closes.
@@ -139,12 +164,13 @@ export function useVisitorTracking() {
       const prev = pageRef.current
       if (!prev.path || !sessionRef.current.sessionId) return
       const seconds = Math.round((Date.now() - prev.enteredAt) / 1000)
-      navigator.sendBeacon?.(
-        '/api/track/pageview',
-        new Blob([JSON.stringify({ sessionId: sessionRef.current.sessionId, path: prev.path, secondsOnPage: seconds })], {
-          type: 'application/json',
-        })
-      )
+      const body = JSON.stringify({
+        sessionId: sessionRef.current.sessionId,
+        path: prev.path,
+        secondsOnPage: seconds,
+        maxScrollPercent: readScrollDepth(),
+      })
+      navigator.sendBeacon?.('/api/track/pageview', new Blob([body], { type: 'application/json' }))
     }
 
     window.addEventListener('pagehide', onUnload)

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { CartProvider } from './shop/hooks/useCart.jsx'
 import { WishlistProvider } from './shop/hooks/useWishlist.jsx'
@@ -24,6 +24,11 @@ import AboutPage from './shop/pages/AboutPage.jsx'
 import CartPage from './shop/pages/CartPage.jsx'
 import WishlistPage from './shop/pages/WishlistPage.jsx'
 import InfrastructurePage from './pages/infrastructure/InfrastructurePage.jsx'
+
+/* Lazily loaded so the dashboard and the Supabase auth code it pulls in stay
+   out of the bundle every ordinary shopper downloads — only someone who
+   actually opens /admin pays for it. */
+const AdminPage = lazy(() => import('./pages/admin/AdminPage.jsx'))
 
 /* Routes that exist in the navigation and footer but whose copy is still
    being written. Listed here so no link in the footer ever 404s. */
@@ -58,15 +63,40 @@ function VisitorTracking() {
   return null
 }
 
+/* The heatmap panel in /admin loads the real site into an iframe so click
+   positions can be drawn on top of the layout they were recorded against.
+   That embedded copy must not be counted as a visit — the dashboard would
+   otherwise appear in its own numbers — and the decorative chrome only
+   obscures the overlay, so both are suppressed whenever the app is framed.
+   Navigation and footer stay, because clicks landed on them too. */
+const isEmbedded = typeof window !== 'undefined' && window.self !== window.top
+
 export default function App() {
+  const { pathname } = useLocation()
+  /* The dashboard is an internal tool, not part of the storefront. It gets
+     none of the marketing chrome, and — importantly — no visitor tracking:
+     the analyst reading the numbers must not be counted inside them. */
+  const isAdminRoute = pathname.startsWith('/admin')
+  const isStorefront = !isAdminRoute && !isEmbedded
+
   return (
     <CookieConsentProvider>
     <CartProvider>
       <WishlistProvider>
       <ScrollToTop />
-      <VisitorTracking />
-      <Navbar />
+      {isStorefront && <VisitorTracking />}
+      {!isAdminRoute && <Navbar />}
       <Routes>
+        {/* Must be declared before the "*" catch-all below, which would
+            otherwise redirect /admin straight back to the home page. */}
+        <Route
+          path="/admin"
+          element={
+            <Suspense fallback={null}>
+              <AdminPage />
+            </Suspense>
+          }
+        />
         <Route path="/" element={<HomePage />} />
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/products/:id" element={<ProductDetailPage />} />
@@ -90,10 +120,10 @@ export default function App() {
         <Route path="/cart.html" element={<Navigate to="/cart" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-      <Footer />
-      <RiceCursor />
-      <SoruKutty />
-      <CookieBanner />
+      {!isAdminRoute && <Footer />}
+      {isStorefront && <RiceCursor />}
+      {isStorefront && <SoruKutty />}
+      {isStorefront && <CookieBanner />}
       </WishlistProvider>
     </CartProvider>
     </CookieConsentProvider>
