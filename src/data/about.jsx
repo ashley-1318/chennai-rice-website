@@ -1,17 +1,5 @@
 // About page content — deliberately terse. Four layouts, minimal words.
 
-export const HERO = {
-  eyebrow: "About Chennai Rice",
-  // Typed out one after another, on a loop.
-  phrases: [
-    "Rooted in Tamil Nadu.",
-    "Built for scale.",
-    "Made for every family.",
-    "70+ years of heritage."
-  ],
-  sub: "Paddy procurement to packed rice — one integrated ecosystem."
-};
-
 export const SCALE = {
   // Written for the scroll reveal: one continuous sentence, no line breaks, so
   // the words uncover in reading order as the section scrolls past.

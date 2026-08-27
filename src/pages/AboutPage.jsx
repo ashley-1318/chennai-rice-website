@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SiteLayout from "../layouts/SiteLayout.jsx";
-import AboutHero from "../sections/about/AboutHero.jsx";
 import Scale from "../sections/about/Scale.jsx";
 import PromiseCta from "../sections/about/PromiseCta.jsx";
 import StatementCard from "../components/StatementCard.jsx";
@@ -12,7 +11,7 @@ import usePageMeta from "../hooks/usePageMeta.js";
 import "../styles/about.css";
 
 /**
- * Hero → statement → scale → statement → statement → close.
+ * Scale → heritage → statement → statement → close.
  *
  * The statement cards are the connective tissue: each one lands on the seam
  * between two sections, alternating side, so the page reads as a sequence of
@@ -82,14 +81,6 @@ export default function AboutPage() {
             </div>
             <Timeline />
           </div>
-          {/* below this block is the hero now, whose top is rice-toned (see
-              .ab-hero's gradient), not the forest tone Scale used to be */}
-          <SectionCurve place="bottom" tone="rice" variant={2} />
-        </div>
-
-        <div className="ab-flow-block">
-          <AboutHero />
-          <SectionCurve place="bottom" tone="rice" variant={1} />
         </div>
 
         <div className="ab-flow-block ab-flow-block--rice">
@@ -120,7 +111,6 @@ export default function AboutPage() {
               <span aria-hidden="true">&rarr;</span>
             </Link>
           </div>
-          <SectionCurve place="bottom" tone="forest-deep" variant={2} />
         </div>
 
         <div className="ab-flow-block">

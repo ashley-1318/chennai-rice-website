@@ -77,48 +77,6 @@
 
 .about-page p { line-height: 1.75; color: var(--ink-soft); }
 
-/* ---------------------------- 01 hero ---------------------------------- */
-
-/* Light, editorial hero: words left, photo mosaic right. Clean ground rather
-   than a full-bleed image, so the page opens calm and the photographs read as
-   deliberate rather than decorative. */
-.ab-hero {
-  position: relative;
-  padding: clamp(5rem, 12vw, 9rem) 0 clamp(7rem, 14vw, 11rem);
-  overflow: hidden;
-  isolation: isolate;
-  background:
-    radial-gradient(120% 80% at 85% 0%, rgba(214, 162, 43, 0.14), transparent 60%),
-    linear-gradient(180deg, var(--rice) 0%, var(--cream) 55%, var(--cream) 100%);
-}
-
-.ab-hero-copy { position: relative; z-index: 2; max-width: 40rem; }
-
-/* small facts under the headline */
-.ab-hero-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(1.4rem, 3vw, 2.6rem);
-  margin: 2.2rem 0 0;
-  padding-top: 1.4rem;
-  border-top: 1px solid var(--cream-deep);
-}
-.ab-hero-meta div { display: flex; flex-direction: column; gap: 0.15rem; }
-.ab-hero-meta dt {
-  font-size: 0.66rem;
-  font-weight: 800;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-.ab-hero-meta dd {
-  margin: 0;
-  font-family: var(--sans);
-  font-weight: 800;
-  font-size: 1.05rem;
-  color: var(--forest);
-}
-
 /* ---- photo mosaic ---- */
 
 .ab-mosaic {
@@ -211,12 +169,14 @@
   gap: clamp(1.5rem, 4vw, 2.5rem);
 }
 @media (min-width: 700px) {
-  .ab-heritage-intro { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); }
+  .ab-heritage-intro { grid-template-columns: minmax(0, 0.6fr) minmax(0, 1.4fr); }
 }
 
 .ab-heritage-photo {
   margin: 0;
   overflow: hidden;
+  max-width: 320px;
+  justify-self: start;
 }
 .ab-heritage-photo img {
   display: block;
@@ -528,90 +488,6 @@
 
 
 
-.ab-hero .eyebrow { color: var(--gold); }
-
-.ab-hero h1 {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: clamp(2.4rem, 6.2vw, 4.9rem);
-  line-height: 1.06;
-  letter-spacing: -0.015em;
-  color: var(--forest);
-  margin: 0 0 1.4rem;
-}
-
-/* Contrast comes from the scrim behind the text, not from a heavy shadow:
-   a tight dark shadow on thin glyphs darkens the strokes themselves and the
-   line reads as grey. Keep the shadow wide and soft. */
-.ab-hero-quote {
-  font-family: var(--sans);
-  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
-  font-weight: 600;
-  letter-spacing: 0.015em;
-  line-height: 1.6;
-  color: var(--ink-soft);
-  margin: 0;
-  max-width: 40ch;
-}
-
-/* word-by-word reveal */
-.ab-word {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(0.6em);
-  animation: word-up 0.85s var(--ease) forwards;
-}
-@keyframes word-up { to { opacity: 1; transform: none; } }
-
-.ab-scroll-cue {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  translate: -50% 0;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
-.ab-scroll-cue span {
-  width: 1px;
-  height: 2.6rem;
-  background: linear-gradient(180deg, var(--gold), transparent);
-  animation: cue 2s ease-in-out infinite;
-}
-@keyframes cue {
-  0%   { transform: scaleY(0); transform-origin: top; }
-  50%  { transform: scaleY(1); transform-origin: top; }
-  51%  { transform-origin: bottom; }
-  100% { transform: scaleY(0); transform-origin: bottom; }
-}
-
-/* floating rice grains */
-.ab-particles { position: absolute; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
-.ab-grain {
-  position: absolute;
-  width: 12px;
-  height: 5px;
-  border-radius: 50%;
-  background: linear-gradient(120deg, #E8CE8A, #C09A3C);
-  opacity: 0;
-  animation: grain-float var(--dur) linear infinite;
-  animation-delay: var(--delay);
-  box-shadow: 0 0 6px rgba(214, 162, 43, 0.35);
-}
-@keyframes grain-float {
-  0%   { opacity: 0; transform: translate3d(0, 12vh, 0) rotate(0deg); }
-  12%  { opacity: var(--peak); }
-  88%  { opacity: var(--peak); }
-  100% { opacity: 0; transform: translate3d(var(--drift), -102vh, 0) rotate(540deg); }
-}
-
 /* ---------------------------- 03 scale --------------------------------- */
 
 .ab-scale {
@@ -750,33 +626,6 @@
   text-transform: uppercase;
 }
 
-.ab-hero h1.ab-display { font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 1.4rem; }
-
-/* Typed headline. The phrases differ in length, so the box is held at the
-   height of the tallest (two lines) — otherwise the whole hero jumps every
-   time the line count changes mid-cycle. */
-/* The phrases differ in length, so some wrap to two lines mid-cycle.
-   Anchoring to flex-start keeps line one at a fixed y — centring made the
-   whole headline jump every time the line count changed. min-height still
-   reserves the two-line box so nothing below it moves. */
-.ab-typed {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  min-height: 2.2em;
-}
-.ab-caret {
-  display: inline-block;
-  width: 0.06em;
-  height: 0.82em;
-  margin-left: 0.06em;
-  vertical-align: -0.06em;
-  background: var(--gold);
-  box-shadow: 0 0 14px rgba(214, 162, 43, 0.55);
-}
-/* solid while typing, blinking once the phrase is complete */
-.ab-caret.is-blinking { animation: caret 1.5s steps(1) infinite; }
-@keyframes caret { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
 .about-page h2.ab-display { font-size: clamp(1.7rem, 3.8vw, 2.9rem); }
 
 /* each line masked and pushed up on entry — the padding keeps ascenders and
@@ -903,19 +752,13 @@
    prefix makes each (0,2,0)+ so intent wins over the blanket default.
    ---------------------------------------------------------------------- */
 
-.about-page .ab-hero-quote { color: var(--ink-soft); }
 .about-page .ab-scale p { color: rgba(253, 252, 247, 0.8); }
 
 /* ---------------------------- reduced motion --------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
   .about-page .reveal { opacity: 1; transform: none; transition: none; }
-  .ab-hero-media img,
-  .ab-grain,
-  .ab-scroll-cue span { animation: none; }
-  .ab-grain { opacity: 0; }
   .ab-word { opacity: 1; transform: none; animation: none; }
   .about-page .reveal--left { transform: none; }
-  .ab-caret { animation: none; }
   .ab-marquee-track { animation: none; }
 }
