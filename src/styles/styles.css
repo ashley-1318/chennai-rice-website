@@ -10,6 +10,7 @@
   --maroon-600: #6E1B22;        /* primary */
   --maroon-500: #8A2A31;
   --gold-600:   #A87A22;        /* secondary, AA on cream for large text */
+  --gold-700:   #8A6218;        /* 5.08:1 on cream — AA for small labels */
   --gold-500:   #C08A2D;
   --gold-300:   #E8C766;
 
@@ -264,7 +265,7 @@ main {
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--gold-600);
+  color: var(--gold-700);
 }
 
 /* ---------- Premium banner with glitter ---------- */
@@ -579,9 +580,9 @@ main {
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
-.card--premium .card-tag { color: var(--gold-600); }
+.card--premium .card-tag { color: var(--gold-700); }
 .card--red  .card-tag { color: var(--pack-red); }
-.card--gold .card-tag { color: var(--gold-600); }
+.card--gold .card-tag { color: var(--gold-700); }
 .card--orange .card-tag { color: var(--pack-orange); }
 
 .card-title { font-size: var(--fs-h3); }
@@ -728,7 +729,7 @@ main {
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--gold-600);
+  color: var(--gold-700);
 }
 
 /* Heavy grotesque for the statement — deliberately not the page's serif */
@@ -955,7 +956,7 @@ main {
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--gold-600);
+  color: var(--gold-700);
 }
 .cart-item-name { margin: var(--s-1) 0; font-size: var(--fs-h3); }
 .cart-item-unit { margin: 0; font-size: var(--fs-small); color: var(--ink-500); }
@@ -1250,6 +1251,283 @@ main {
 }
 
 .order-summary .checkout-btn { margin-top: var(--s-2); text-decoration: none; }
+
+/* ---------- Founder page ---------- */
+
+.founder-page { background: var(--cream-100); }
+
+.founder-page .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 700ms ease, transform 700ms ease;
+}
+.founder-page .reveal.in { opacity: 1; transform: none; }
+.founder-page .reveal--left { transform: translateX(-40px); }
+.founder-page .reveal--left.in { transform: none; }
+.founder-page .reveal--right { transform: translateX(40px); }
+.founder-page .reveal--right.in { transform: none; }
+
+.fp-shell { max-width: 72rem; margin-inline: auto; padding-inline: var(--s-4); }
+
+.fp-crumb {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding-top: var(--s-6);
+  font-size: var(--fs-small);
+  color: var(--ink-500);
+}
+.fp-crumb a { color: var(--maroon-600); font-weight: 700; text-decoration: none; }
+.fp-crumb a:hover { text-decoration: underline; }
+.fp-crumb [aria-current="page"] { color: var(--ink-700); }
+
+/* ============================================================
+   Founder hero — flat disc composition.
+   A single saturated circle, the portrait breaking past its base,
+   and a heavy display line overlapping the disc. Stacking order is
+   disc (0) -> headline (2) -> portrait (3); .fp-hero-stage must
+   never take a z-index or a transform, or it would trap its
+   children in their own context and the headline could no longer
+   slide between them.
+   ============================================================ */
+
+.fp-hero { padding-block: var(--s-8) var(--s-12); }
+
+.fp-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-6);
+  align-items: center;
+}
+
+.fp-hero-note { max-width: 30rem; }
+.fp-intro {
+  margin: var(--s-4) 0 0;
+  color: var(--ink-500);
+  line-height: 1.8;
+  font-size: var(--fs-small);
+}
+
+.fp-eyebrow {
+  display: inline-block;
+  margin: 0;
+  padding: var(--s-2) var(--s-4);
+  font-size: var(--fs-tag);
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-700);
+  background: rgba(232, 199, 102, 0.22);
+  border: 1px solid rgba(168, 122, 34, 0.32);
+  border-radius: var(--radius-pill);
+}
+
+/* The heavy grotesque voice the shop's closing lineup already uses —
+   deliberately not the page serif, so it reads as a statement. */
+.fp-hero-title {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+  color: var(--ink-900);
+  text-wrap: balance;
+}
+.fp-hero-title::after { content: "."; color: var(--gold-500); }
+
+.fp-hero-stage {
+  position: relative;      /* no z-index, no transform — see note above */
+  width: 100%;
+  max-width: 24rem;
+  margin-inline: auto;
+}
+
+.fp-disc {
+  position: absolute;
+  z-index: 0;
+  top: 2%;
+  left: 50%;
+  translate: -50% 0;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--gold-300);
+}
+
+.fp-hero-photo {
+  position: relative;
+  z-index: 3;              /* above the headline */
+  aspect-ratio: 4 / 5;
+  width: 100%;
+}
+.fp-hero-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: saturate(0.72) contrast(1.06) brightness(1.01)
+    drop-shadow(0 14px 18px rgba(43, 27, 22, 0.16));
+}
+
+/* fallback panel when the portrait is missing */
+.fp-hero-photo--empty {
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-md);
+  background: linear-gradient(150deg, var(--maroon-600), var(--maroon-700));
+  box-shadow: var(--shadow-lift);
+}
+.fp-hero-initial { font-family: var(--font-display); font-size: 6rem; color: var(--gold-300); }
+
+.fp-hero-sign { align-self: end; }
+.fp-signature {
+  margin: 0;
+  font-family: "Great Vibes", cursive;
+  font-size: 2.4rem;
+  line-height: 1.1;
+  color: var(--maroon-600);
+}
+.fp-name {
+  margin: var(--s-2) 0 0;
+  font-weight: 800;
+  font-size: var(--fs-small);
+  letter-spacing: 0.02em;
+  color: var(--maroon-700);
+}
+.fp-title { margin: 0.15rem 0 0; font-size: var(--fs-tag); line-height: 1.6; color: var(--ink-500); }
+
+.fp-hero-place {
+  align-self: end;
+  margin: 0;
+  font-size: var(--fs-tag);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-700);
+}
+
+/* ---- desktop: three overlapping columns ---- */
+@media (min-width: 900px) {
+  .fp-hero { padding-block: var(--s-8) var(--s-16); }
+
+  .fp-hero-grid {
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    column-gap: var(--s-4);
+    row-gap: var(--s-8);
+    min-height: 34rem;
+  }
+
+  .fp-hero-note  { grid-column: 1 / 4;  grid-row: 2; align-self: start; }
+  .fp-hero-stage { grid-column: 4 / 10; grid-row: 1 / 4; align-self: stretch; max-width: none; }
+  .fp-hero-title { grid-column: 8 / 13; grid-row: 2; z-index: 2; align-self: center; }
+  .fp-hero-sign  { grid-column: 1 / 4;  grid-row: 3; }
+  .fp-hero-place { grid-column: 10 / 13; grid-row: 3; text-align: right; }
+
+  /* the stage fills its rows, so the portrait sits on the floor of the
+     grid and the disc floats above it */
+  .fp-hero-stage { display: flex; align-items: flex-end; }
+  .fp-hero-photo { max-width: 22rem; margin-inline: auto; }
+  .fp-disc { top: auto; bottom: 18%; width: 26rem; max-width: 100%; }
+}
+
+@media (max-width: 899px) {
+  .fp-hero-title { order: -1; }
+}
+
+.fp-vision { padding-block: var(--s-4) var(--s-16); }
+.fp-vision-grid { display: grid; grid-template-columns: 1fr; gap: var(--s-8); align-items: start; }
+@media (min-width: 900px) {
+  .fp-vision-grid { grid-template-columns: minmax(0, 1fr) 21rem; }
+}
+.fp-bio h2 { font-size: var(--fs-h2); margin: var(--s-2) 0 var(--s-4); }
+.fp-bio p { margin: 0 0 var(--s-4); color: var(--ink-700); line-height: 1.75; }
+.fp-bio p:last-child { margin-bottom: 0; }
+
+.fp-glance {
+  padding: var(--s-6);
+  background: var(--cream-50);
+  border: 1px solid var(--cream-300);
+  border-top: 3px solid var(--gold-500);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-rest);
+}
+.fp-glance-title {
+  margin: 0 0 var(--s-4);
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  color: var(--ink-900);
+}
+.fp-glance dl { margin: 0; }
+.fp-glance-row { padding: var(--s-3) 0; border-bottom: 1px solid var(--cream-300); }
+.fp-glance-row:last-child { border-bottom: none; padding-bottom: 0; }
+.fp-glance-row dt {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--fs-tag);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold-700);
+}
+.fp-glance-row dt svg { flex-shrink: 0; color: var(--maroon-600); }
+.fp-glance-row dd { margin: 0.3rem 0 0 1.65rem; font-size: var(--fs-body); color: var(--ink-700); }
+
+.fp-stats {
+  margin-top: var(--s-4);
+  padding: var(--s-8) var(--s-6);
+  background: var(--cream-50);
+  border: 1px solid var(--cream-300);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-rest);
+  text-align: center;
+}
+.fp-stats-title {
+  margin: 0 0 var(--s-6);
+  font-size: var(--fs-tag);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-700);
+}
+.fp-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: var(--s-6); }
+.fp-stat-value {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 2.4rem);
+  color: var(--maroon-600);
+  font-variant-numeric: tabular-nums;
+}
+/* 0.6em of the display size lands ~17px at normal weight — still "small
+   text" by WCAG, so it takes the AA-passing gold. */
+.fp-stat-value span { font-size: 0.6em; color: var(--gold-700); }
+.fp-stat-unit { margin: 0.2rem 0 0; font-size: var(--fs-small); font-weight: 700; color: var(--ink-700); }
+.fp-stat-label { margin: 0.1rem 0 0; font-size: var(--fs-tag); color: var(--ink-500); }
+
+.fp-quote {
+  max-width: 46rem;
+  margin: var(--s-16) auto;
+  padding-inline: var(--s-4);
+  text-align: center;
+}
+.fp-quote-mark {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 4.5rem;
+  line-height: 1;
+  color: var(--gold-300);
+}
+.fp-quote-text {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 3vw, 1.9rem);
+  line-height: 1.4;
+  color: var(--ink-900);
+}
+.fp-quote-attr { margin-top: var(--s-4); font-size: var(--fs-small); font-weight: 700; letter-spacing: 0.03em; color: var(--maroon-600); }
 
 /* ---------- Empty state & footer ---------- */
 

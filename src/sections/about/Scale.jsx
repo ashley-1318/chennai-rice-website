@@ -29,8 +29,6 @@ export default function Scale() {
       </div>
 
       <div className="about-shell">
-        <p className="eyebrow reveal">{SCALE.eyebrow}</p>
-
         {/* Word-by-word scroll reveal — the first block of text you scroll to.
             It needs scroll distance to scrub against, which is why it lives
             here rather than in the hero (nothing scrolls above the hero). */}
