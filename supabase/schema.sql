@@ -36,12 +36,13 @@ create table bulk_order_enquiries (
   id                   uuid primary key default gen_random_uuid(),
   buyer_type           buyer_type not null,
   other_type           text,              -- only set when buyer_type = 'other'
-  company_or_name      text not null,     -- "Company / Business Name" or, for retailers, plain "Name"
-  representative_name  text,              -- null for retailer (no rep field for that type)
+  company_or_name      text not null,     -- "Company / Business Name"
+  representative_name  text not null,     -- "Representative Name"
   email                text not null,
   phone                text not null,
-  quantity_kg          text not null,     -- kept as text: visitors type "500" or "1 tonne" etc, not strictly numeric
+  quantity_kg          text,              -- kept as text: visitors type "500" or "1 tonne" etc, not strictly numeric. Only collected for buyer_type = 'other'.
   message              text,
+  gstin                text not null,     -- required for every buyer_type
   status               lead_status not null default 'new',
   notes                text,
   created_at           timestamptz not null default now(),

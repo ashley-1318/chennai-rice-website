@@ -21,6 +21,7 @@ const EMPTY = {
   phone: '',
   quantity: '',
   message: '',
+  gstin: '',
 }
 
 const Icon = ({ kind }) => (
@@ -66,29 +67,36 @@ export default function BulkOrderPage() {
   }
 
   const chooseType = key => {
-    // Retailer has no Representative Name field, so any value typed in
-    // there under a different type is cleared rather than silently
-    // carried into a Retailer submission.
-    setForm(f => ({ ...f, type: key, name: key === 'retailer' ? '' : f.name }))
-    setErrors(x => ({ ...x, type: undefined, otherType: undefined, name: undefined }))
+    // Only "Others" has a Quantity field, so switching away from it clears
+    // any stale value rather than silently carrying it into a submission.
+    setForm(f => ({ ...f, type: key, quantity: key === 'other' ? f.quantity : '' }))
+    setErrors(x => ({ ...x, type: undefined, otherType: undefined, quantity: undefined }))
   }
 
+  const GSTIN_PATTERN = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][1-9A-Z]Z[0-9A-Z]$/
+
   const validate = () => {
-    const isRetailer = form.type === 'retailer'
     const next = {}
     if (!form.type) next.type = 'Please choose who you are ordering as.'
     if (form.type === 'other' && !form.otherType.trim())
       next.otherType = 'Please tell us your business type.'
-    if (!form.company.trim())
-      next.company = isRetailer ? 'Please add your name.' : 'Please add your company or business name.'
-    if (!isRetailer && !form.name.trim()) next.name = "Please add the representative's name."
-    if (!form.email.trim()) next.email = 'Please add an email address.'
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim()))
-      next.email = 'That email address does not look right.'
+
+    if (!form.company.trim()) next.company = 'Please add your company or business name.'
+
+    if (!form.gstin.trim()) next.gstin = 'Please add your GSTIN.'
+    else if (!GSTIN_PATTERN.test(form.gstin.trim().toUpperCase()))
+      next.gstin = 'That GSTIN does not look right.'
+
+    if (!form.name.trim()) next.name = "Please add the representative's name."
     if (!form.phone.trim()) next.phone = 'Please add a phone number.'
     else if (!/^[+()\-\s\d]{8,16}$/.test(form.phone.trim()))
       next.phone = 'That phone number does not look right.'
-    if (!form.quantity.trim()) next.quantity = 'Please tell us how many KGs you need.'
+    if (!form.email.trim()) next.email = 'Please add an email address.'
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim()))
+      next.email = 'That email address does not look right.'
+    if (form.type === 'other' && !form.quantity.trim())
+      next.quantity = 'Please tell us how many KGs you need.'
+
     return next
   }
 
@@ -168,41 +176,39 @@ export default function BulkOrderPage() {
             )}
 
             <label className="field">
-              <span className="field-label">{form.type === 'retailer' ? 'Name' : 'Company / Business Name'}</span>
+              <span className="field-label">Company / Business Name</span>
               <input
                 type="text"
                 value={form.company}
                 onChange={set('company')}
-                placeholder={form.type === 'retailer' ? 'Your full name' : 'Your company or shop name'}
+                placeholder="Your company or shop name"
                 aria-invalid={!!errors.company}
               />
               {errors.company && <span className="field-error">{errors.company}</span>}
             </label>
 
-            {form.type !== 'retailer' && (
-              <label className="field">
-                <span className="field-label">Representative Name</span>
-                <input
-                  type="text"
-                  value={form.name}
-                  onChange={set('name')}
-                  placeholder="Your full name"
-                  aria-invalid={!!errors.name}
-                />
-                {errors.name && <span className="field-error">{errors.name}</span>}
-              </label>
-            )}
+            <label className="field">
+              <span className="field-label">GSTIN</span>
+              <input
+                type="text"
+                value={form.gstin}
+                onChange={set('gstin')}
+                placeholder="22AAAAA0000A1Z5"
+                aria-invalid={!!errors.gstin}
+              />
+              {errors.gstin && <span className="field-error">{errors.gstin}</span>}
+            </label>
 
             <label className="field">
-              <span className="field-label">Email</span>
+              <span className="field-label">Representative Name</span>
               <input
-                type="email"
-                value={form.email}
-                onChange={set('email')}
-                placeholder="you@example.com"
-                aria-invalid={!!errors.email}
+                type="text"
+                value={form.name}
+                onChange={set('name')}
+                placeholder="Your full name"
+                aria-invalid={!!errors.name}
               />
-              {errors.email && <span className="field-error">{errors.email}</span>}
+              {errors.name && <span className="field-error">{errors.name}</span>}
             </label>
 
             <label className="field">
@@ -218,17 +224,31 @@ export default function BulkOrderPage() {
             </label>
 
             <label className="field">
-              <span className="field-label">Quantity Required (KGs)</span>
+              <span className="field-label">Email</span>
               <input
-                type="text"
-                inputMode="numeric"
-                value={form.quantity}
-                onChange={set('quantity')}
-                placeholder="e.g. 500"
-                aria-invalid={!!errors.quantity}
+                type="email"
+                value={form.email}
+                onChange={set('email')}
+                placeholder="you@example.com"
+                aria-invalid={!!errors.email}
               />
-              {errors.quantity && <span className="field-error">{errors.quantity}</span>}
+              {errors.email && <span className="field-error">{errors.email}</span>}
             </label>
+
+            {form.type === 'other' && (
+              <label className="field">
+                <span className="field-label">Quantity Required (KGs)</span>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={form.quantity}
+                  onChange={set('quantity')}
+                  placeholder="e.g. 500"
+                  aria-invalid={!!errors.quantity}
+                />
+                {errors.quantity && <span className="field-error">{errors.quantity}</span>}
+              </label>
+            )}
 
             <label className="field">
               <span className="field-label">Message (optional)</span>

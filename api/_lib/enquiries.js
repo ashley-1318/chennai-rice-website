@@ -6,6 +6,7 @@ import { hasSupabase, supabase } from './supabase.js'
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const PHONE_PATTERN = /^[+()\-\s\d]{8,16}$/
+const GSTIN_PATTERN = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][1-9A-Z]Z[0-9A-Z]$/
 const BUYER_TYPES = ['distributor', 'wholesaler', 'retailer', 'other']
 
 function str(value) {
@@ -43,28 +44,28 @@ export function buildBulkOrderRow(body) {
   const phone = str(body?.phone)
   const quantity = str(body?.quantity)
   const message = str(body?.message)
-  const isRetailer = buyerType === 'retailer'
+  const gstin = str(body?.gstin).toUpperCase()
 
   if (!BUYER_TYPES.includes(buyerType)) return { error: 'Please choose who you are ordering as.' }
   if (buyerType === 'other' && !otherType) return { error: 'Please tell us your business type.' }
-  if (!company) {
-    return { error: isRetailer ? 'Please add your name.' : 'Please add your company or business name.' }
-  }
-  if (!isRetailer && !name) return { error: "Please add the representative's name." }
+  if (!company) return { error: 'Please add your company or business name.' }
+  if (!gstin || !GSTIN_PATTERN.test(gstin)) return { error: 'A valid GSTIN is required.' }
+  if (!name) return { error: "Please add the representative's name." }
   if (!email || !EMAIL_PATTERN.test(email)) return { error: 'A valid email address is required.' }
   if (!phone || !PHONE_PATTERN.test(phone)) return { error: 'A valid phone number is required.' }
-  if (!quantity) return { error: 'Please tell us how many KGs you need.' }
+  if (buyerType === 'other' && !quantity) return { error: 'Please tell us how many KGs you need.' }
 
   return {
     row: {
       buyer_type: buyerType,
       other_type: buyerType === 'other' ? otherType : null,
       company_or_name: company,
-      representative_name: isRetailer ? null : name,
+      representative_name: name,
       email,
       phone,
-      quantity_kg: quantity,
+      quantity_kg: quantity || null,
       message: message || null,
+      gstin,
     },
   }
 }
