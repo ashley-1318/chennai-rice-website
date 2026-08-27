@@ -11,30 +11,20 @@ const TABS = [
 
 function DescriptionPanel({ product, details }) {
   return (
-    <div className="pdp-tab-panel pdp-panel-description">
-      <div>
-        <h3>About This Rice</h3>
-        <p>{product.description}</p>
-        {details.aboutBullets.length > 0 ? (
-          <ul className="pdp-bullets">
-            {details.aboutBullets.map((line) => (
-              <li key={line}>{line}</li>
-            ))}
-          </ul>
-        ) : (
-          <ComingSoonNote>
-            Detailed product notes for this pack are being finalised and will appear here shortly.
-          </ComingSoonNote>
-        )}
-      </div>
-      <svg className="pdp-panel-decor" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
-        <path
-          d="M100 10c0 60 40 90 40 140M100 10c0 60-40 90-40 140M100 10v140"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.4"
-        />
-      </svg>
+    <div className="pdp-tab-panel">
+      <h3>About This Rice</h3>
+      <p>{product.description}</p>
+      {details.aboutBullets.length > 0 ? (
+        <ul className="pdp-bullets">
+          {details.aboutBullets.map((line) => (
+            <li key={line}>{line}</li>
+          ))}
+        </ul>
+      ) : (
+        <ComingSoonNote>
+          Detailed product notes for this pack are being finalised and will appear here shortly.
+        </ComingSoonNote>
+      )}
     </div>
   );
 }

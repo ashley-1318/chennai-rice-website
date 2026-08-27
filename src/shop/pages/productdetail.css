@@ -33,6 +33,8 @@
 
 /* ---------- top bar: back link + breadcrumb ---------- */
 
+/* Matches .pdp-hero's width so the breadcrumb lines up with the gallery card
+   above the centred product block. */
 .pdp-top {
   max-width: 1160px;
   margin: 0 auto;
@@ -75,9 +77,12 @@
 
 /* ---------- hero: gallery + info, two columns ---------- */
 
-/* The gallery is capped rather than a free half of the row: at half width the
-   4/5 card grew tall enough to tower over the info column and leave a dead
-   gap beside it. */
+/* Centred at its natural size rather than stretched to the full container.
+   The gallery is capped because at half width the 4/5 card grew tall enough
+   to tower over the info column; the info column is capped because its
+   content is finite — letting it take the leftover space on a wide screen
+   just parks a band of dead space to the right of the buttons. The two
+   columns plus the gap add up to this max-width, so nothing trails. */
 .pdp-hero {
   max-width: 1160px;
   margin: 0 auto;
@@ -365,7 +370,7 @@
 /* ---------- generic section wrapper ---------- */
 
 .pdp-section {
-  max-width: 1160px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: var(--s-16) var(--s-6) 0;
 }
@@ -399,8 +404,12 @@
   overflow-x: auto;
   margin-bottom: var(--s-8);
 }
+/* The five tabs span the whole strip instead of packing to the left: grow
+   shares the spare width between them, and shrink: 0 keeps each label intact
+   so narrow screens scroll the strip rather than squashing the text. */
 .pdp-tab {
-  flex: 0 0 auto;
+  flex: 1 0 auto;
+  text-align: center;
   padding: 12px 20px;
   background: none;
   border: none;
@@ -420,27 +429,18 @@
 
 .pdp-tab-panel {
   position: relative;
-  max-width: 900px;
-}
-.pdp-panel-description {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: var(--s-8);
-  align-items: start;
-  max-width: none;
-}
-.pdp-panel-decor {
-  width: 140px;
-  height: 140px;
-  color: var(--gold-300);
-  opacity: 0.6;
-  justify-self: end;
 }
 .pdp-tab-panel h3 {
   font-family: var(--font-display);
   font-size: var(--fs-h3);
   color: var(--ink-900);
-  margin: 0 0 var(--s-3);
+  margin: 0 0 var(--s-4);
+}
+/* Body copy under the heading, and breathing room before whatever follows it
+   (bullet list or the placeholder note). */
+.pdp-tab-panel > p {
+  margin: 0 0 var(--s-6);
+  line-height: 1.7;
 }
 .pdp-panel-subtitle {
   color: var(--ink-500);
@@ -454,6 +454,8 @@
   line-height: 1.7;
 }
 
+/* Spans its column rather than a 46ch measure — as a short italic note in a
+   dashed box it read as a stray card floating in an empty row. */
 .pdp-coming-soon {
   font-size: var(--fs-small);
   color: var(--ink-500);
@@ -462,7 +464,6 @@
   border: 1px dashed var(--cream-300);
   border-radius: var(--radius-sm);
   padding: var(--s-4);
-  max-width: 46ch;
 }
 
 .pdp-nutrition-grid {
@@ -786,12 +787,6 @@
     padding-right: var(--s-2);
     justify-content: center;
     white-space: nowrap;
-  }
-  .pdp-panel-description {
-    grid-template-columns: 1fr;
-  }
-  .pdp-panel-decor {
-    display: none;
   }
   .pdp-cook-steps {
     grid-template-columns: repeat(2, 1fr);
