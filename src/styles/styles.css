@@ -1298,14 +1298,19 @@ main {
   grid-template-columns: 1fr;
   gap: var(--s-6);
   align-items: center;
+  padding-bottom: var(--s-6);
+  border-bottom: 1px solid rgba(168, 122, 34, 0.35);
 }
 
-.fp-hero-note { max-width: 30rem; }
+.fp-hero-note { max-width: 26rem; }
+/* cursive, and sized well past body text — read as the founder's own
+   voice rather than a caption, so it needs the room a quote earns */
 .fp-intro {
   margin: var(--s-4) 0 0;
-  color: var(--ink-500);
-  line-height: 1.8;
-  font-size: var(--fs-small);
+  font-family: "Great Vibes", cursive;
+  font-size: clamp(1.6rem, 3.2vw, 2.15rem);
+  line-height: 1.35;
+  color: var(--ink-900);
 }
 
 .fp-eyebrow {
@@ -1320,6 +1325,19 @@ main {
   background: rgba(232, 199, 102, 0.22);
   border: 1px solid rgba(168, 122, 34, 0.32);
   border-radius: var(--radius-pill);
+}
+
+/* the eyebrow's moved up beside the portrait and needs to carry more
+   weight there, so it drops the small pill treatment for a bold line */
+.fp-vision-eyebrow {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: clamp(1.15rem, 2.6vw, 1.7rem);
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--ink-900);
 }
 
 /* The heavy grotesque voice the shop's closing lineup already uses —
@@ -1382,11 +1400,13 @@ main {
 .fp-hero-initial { font-family: var(--font-display); font-size: 6rem; color: var(--gold-300); }
 
 .fp-hero-sign { align-self: end; }
+/* a signature-style script, deliberately not the quote's Great Vibes —
+   the two cursive moments need to read as different hands */
 .fp-signature {
   margin: 0;
-  font-family: "Great Vibes", cursive;
-  font-size: 2.4rem;
-  line-height: 1.1;
+  font-family: "Mrs Saint Delafield", cursive;
+  font-size: 3.1rem;
+  line-height: 1;
   color: var(--maroon-600);
 }
 .fp-name {
@@ -1394,19 +1414,9 @@ main {
   font-weight: 800;
   font-size: var(--fs-small);
   letter-spacing: 0.02em;
-  color: var(--maroon-700);
+  color: var(--ink-900);
 }
 .fp-title { margin: 0.15rem 0 0; font-size: var(--fs-tag); line-height: 1.6; color: var(--ink-500); }
-
-.fp-hero-place {
-  align-self: end;
-  margin: 0;
-  font-size: var(--fs-tag);
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-700);
-}
 
 /* ---- desktop: three overlapping columns ---- */
 @media (min-width: 900px) {
@@ -1420,17 +1430,18 @@ main {
     min-height: 34rem;
   }
 
-  .fp-hero-note  { grid-column: 1 / 4;  grid-row: 2; align-self: start; }
-  .fp-hero-stage { grid-column: 4 / 10; grid-row: 1 / 4; align-self: stretch; max-width: none; }
-  .fp-hero-title { grid-column: 8 / 13; grid-row: 2; z-index: 2; align-self: center; }
-  .fp-hero-sign  { grid-column: 1 / 4;  grid-row: 3; }
-  .fp-hero-place { grid-column: 10 / 13; grid-row: 3; text-align: right; }
+  .fp-hero-title { grid-column: 1 / 7; grid-row: 1; z-index: 2; align-self: start; }
+  .fp-hero-note  { grid-column: 1 / 7;  grid-row: 2; align-self: center; }
+  .fp-hero-stage { grid-column: 7 / 13; grid-row: 1 / 4; align-self: stretch; max-width: none; }
+  .fp-hero-sign  { grid-column: 1 / 7;  grid-row: 3; }
+  .fp-hero-vision { grid-column: 7 / 13; grid-row: 1; align-self: start; text-align: right; }
 
-  /* the stage fills its rows, so the portrait sits on the floor of the
-     grid and the disc floats above it */
-  .fp-hero-stage { display: flex; align-items: flex-end; }
-  .fp-hero-photo { max-width: 22rem; margin-inline: auto; }
-  .fp-disc { top: auto; bottom: 18%; width: 26rem; max-width: 100%; }
+  /* the stage fills its rows, so the framed portrait sits on the floor
+     of the grid, flush against the right edge — so the founder's photo
+     lands in the page's rightmost corner */
+  .fp-hero-stage { display: flex; align-items: flex-end; justify-content: flex-end; }
+  .fp-hero-photo { max-width: 22rem; margin-inline: auto 0; }
+  .fp-disc { top: auto; left: auto; right: 6%; translate: 0 0; bottom: 18%; width: 26rem; max-width: 100%; }
 }
 
 @media (max-width: 899px) {

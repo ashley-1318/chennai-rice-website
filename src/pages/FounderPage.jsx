@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import SiteLayout from "../layouts/SiteLayout.jsx";
-import FeatureStrip from "../sections/FeatureStrip.jsx";
 import { FOUNDER } from "../data/founder.js";
-import { SCALE } from "../data/about.jsx";
 import { useCountUp } from "../hooks/useCountUp.js";
 import { useRevealGroup } from "../hooks/useScrollFx.js";
 import usePageMeta from "../hooks/usePageMeta.js";
@@ -22,7 +20,7 @@ const GLANCE_ICONS = {
   Focus: <path d="M12 20s-7-4.3-7-9a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 4.7-7 9-7 9z" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
 };
 
-function StatFigure({ figure }) {
+function HeroStatFigure({ figure }) {
   const { ref, value } = useCountUp(figure.to);
   return (
     <div className="fp-stat" ref={ref}>
@@ -30,8 +28,7 @@ function StatFigure({ figure }) {
         {value.toLocaleString("en-IN")}
         <span>{figure.suffix}</span>
       </p>
-      <p className="fp-stat-unit">{figure.unit}</p>
-      <p className="fp-stat-label">{figure.label}</p>
+      <p className="fp-stat-unit">{figure.text}</p>
     </div>
   );
 }
@@ -62,14 +59,15 @@ export default function FounderPage() {
 
         <section className="fp-hero fp-shell">
           <div className="fp-hero-grid">
-            <div className="fp-hero-note reveal reveal--left">
-              <p className="fp-eyebrow">{FOUNDER.eyebrow}</p>
-              <p className="fp-intro">{FOUNDER.intro}</p>
-            </div>
-
             <h1 id="founder-heading" className="fp-hero-title reveal">
               {FOUNDER.heading}
             </h1>
+
+            <div className="fp-hero-note reveal reveal--left">
+              {/* curly quotes are already in the copy, so the cursive
+                  treatment alone is enough to read as spoken */}
+              <p className="fp-intro">{FOUNDER.intro}</p>
+            </div>
 
             {/* no reveal class on the stage: its transform would create a
                 stacking context and trap the disc behind the headline */}
@@ -96,11 +94,20 @@ export default function FounderPage() {
               <p className="fp-title">{FOUNDER.title}</p>
             </div>
 
-            <p className="fp-hero-place">Erode, Tamil Nadu</p>
+            <div className="fp-hero-vision reveal reveal--right">
+              <p className="fp-vision-eyebrow">{FOUNDER.eyebrow}</p>
+            </div>
           </div>
         </section>
 
-        <FeatureStrip />
+        <section className="fp-stats fp-shell reveal" aria-label="The scale of his vision">
+          <p className="fp-stats-title">{FOUNDER.heroStatsEyebrow}</p>
+          <div className="fp-stats-grid">
+            {FOUNDER.heroStats.map((figure) => (
+              <HeroStatFigure key={figure.text} figure={figure} />
+            ))}
+          </div>
+        </section>
 
         <section className="fp-vision fp-shell">
           <div className="fp-vision-grid">
@@ -128,15 +135,6 @@ export default function FounderPage() {
                 ))}
               </dl>
             </aside>
-          </div>
-        </section>
-
-        <section className="fp-stats fp-shell reveal" aria-label="Chennai Rice Industries, by the numbers">
-          <p className="fp-stats-title">{FOUNDER.statsEyebrow}</p>
-          <div className="fp-stats-grid">
-            {SCALE.figures.map((figure) => (
-              <StatFigure key={figure.label} figure={figure} />
-            ))}
           </div>
         </section>
 

@@ -3,15 +3,23 @@
 // never disagree — nothing here is invented.
 
 export const FOUNDER = {
-  eyebrow: "Our leader, our inspiration",
+  eyebrow: "The Vision Behind Our Journey",
   heading: "Meet Our Founder",
   intro:
-    "A leader with deep roots in Tamil Nadu's rice trade and an unwavering focus on quality. His journey laid the foundation of Chennai Rice — built on trust, purity, and a promise to every family.",
+    "“Our legacy gave us roots. Our vision takes us beyond.”",
   name: "M. S. Tamilselvan",
   title: "Founder & Chairman",
   company: "Chennai Rice Industries India (P) Ltd",
   photo: "/assets/about/founder-nobg.png",
   photoAlt: "M. S. Tamilselvan, Founder and Chairman of Chennai Rice Industries",
+
+  heroStatsEyebrow: "The Scale of His Vision",
+  heroStats: [
+    { to: 1000, suffix: "+", text: "Tonnes Processed Daily" },
+    { to: 5, suffix: "", text: "States in Our Procurement Network" },
+    { to: 6, suffix: "", text: "Warehousing Locations" },
+    { to: 1000, suffix: "+", text: "People Behind the Journey" }
+  ],
 
   visionEyebrow: "About our founder",
   visionHeading: "A Vision Rooted in Heritage",
@@ -29,8 +37,6 @@ export const FOUNDER = {
     { label: "Facility", value: "Own mill, Erode, Tamil Nadu" },
     { label: "Focus", value: "Quality grain, farmer trust, pan-India reach" }
   ],
-
-  statsEyebrow: "Built at scale",
 
   quote: "Build capabilities today that create scale for tomorrow.",
   quoteAttribution: "M. S. Tamilselvan, Founder & Chairman"
