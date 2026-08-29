@@ -176,9 +176,9 @@ export const CELEBS = [
     image: '/assets/celebs/kushboo.png',
   },
   {
-    name: 'CHEF DHAMO',
+    name: 'CHEF DHAMU',
     quote: 'As a chef, I choose only the best. Chennai Rice brings out the best in every dish.',
-    signature: 'Chef Dhamo',
+    signature: 'Chef Dhamu',
     image: '/assets/celebs/chef-dhamo.png',
     // his shot is a half-body crop, so it needs more height to read
     // at the same visual size as the others
