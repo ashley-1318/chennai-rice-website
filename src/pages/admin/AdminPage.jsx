@@ -12,9 +12,11 @@ import {
   isAdmin,
   logAccess,
   onAuthChange,
+  resolveAccess,
   signIn,
   signOut,
 } from '../../services/admin.service.js'
+import JournalPanel from '../blog/JournalPanel.jsx'
 import { LoadingRegion } from './components/ui.jsx'
 import {
   BehaviourView,
@@ -42,7 +44,8 @@ import './admin.css'
  * never refetch or reset the date range.
  */
 
-const NAV = [
+/* Sections that need a row in admin_users. */
+const ANALYTICS_NAV = [
   { id: 'overview', label: 'Overview', subtitle: 'How the site is performing', icon: 'grid' },
   { id: 'visitors', label: 'Visitors', subtitle: 'Everyone who has browsed', icon: 'user' },
   { id: 'products', label: 'Products', subtitle: 'Which packs draw attention', icon: 'box' },
@@ -53,6 +56,14 @@ const NAV = [
   { id: 'scroll', label: 'Scroll depth', subtitle: 'How far down pages are read', icon: 'depth' },
   { id: 'realtime', label: 'Realtime', subtitle: 'Who is on the site now', icon: 'pulse' },
 ]
+
+/* Section that needs a row in blog_authors. */
+const JOURNAL_NAV = {
+  id: 'journal',
+  label: 'Journal',
+  subtitle: 'Write and publish blog posts',
+  icon: 'pen',
+}
 
 /* Sections whose data comes from the interaction tables rather than from
    fetchAnalytics(). Grouped so switching between them does not refetch. */
@@ -77,6 +88,7 @@ const PATHS = {
   target: <><circle cx="10" cy="10" r="6.8" /><circle cx="10" cy="10" r="2.6" /><path d="M10 1.6v2.2M10 16.2v2.2M18.4 10h-2.2M3.8 10H1.6" /></>,
   depth: <><path d="M10 2.6v9.6" /><path d="M6.2 8.4L10 12.2l3.8-3.8" /><path d="M3.4 16.6h13.2" /></>,
   doc: <><path d="M5 2.5h6.5L15.5 6.5V17.5H5z" /><path d="M11.5 2.5V6.5h4" /></>,
+  pen: <><path d="M13.4 3.2l3.4 3.4-9 9-4.2.8.8-4.2z" /><path d="M11.8 4.8l3.4 3.4" /></>,
   cog: <><circle cx="10" cy="10" r="2.6" /><path d="M10 2.6v2.1M10 15.3v2.1M17.4 10h-2.1M4.7 10H2.6M15.2 4.8l-1.5 1.5M6.3 13.7l-1.5 1.5M15.2 15.2l-1.5-1.5M6.3 6.3L4.8 4.8" /></>,
 }
 
@@ -90,25 +102,36 @@ const NavIcon = ({ name }) => (
 export default function AdminPage() {
   const [checking, setChecking] = useState(true)
   const [session, setSession] = useState(null)
+  const [access, setAccess] = useState(null)
 
   useEffect(() => {
     let cancelled = false
 
-    // A Supabase session in localStorage is not proof of dashboard access —
-    // the account could have been removed from admin_users since last login,
-    // so membership is re-checked on every load rather than trusted.
+    // A Supabase session in localStorage is not proof of access — the
+    // account could have been removed from admin_users or blog_authors
+    // since last login, so both are re-checked on every load rather than
+    // trusted.
     getSession()
       .then(async (existing) => {
+        if (cancelled || !existing) return
+        const resolved = await resolveAccess()
         if (cancelled) return
-        if (existing && (await isAdmin())) setSession(existing)
-        else if (existing) await signOut()
+        if (resolved.any) {
+          setSession(existing)
+          setAccess(resolved)
+        } else {
+          await signOut()
+        }
       })
       .finally(() => {
         if (!cancelled) setChecking(false)
       })
 
     const unsubscribe = onAuthChange((next) => {
-      if (!next) setSession(null)
+      if (!next) {
+        setSession(null)
+        setAccess(null)
+      }
     })
 
     return () => {
@@ -125,10 +148,22 @@ export default function AdminPage() {
     )
   }
 
-  return session ? (
-    <Dashboard session={session} onSignOut={() => setSession(null)} />
+  return session && access ? (
+    <Dashboard
+      session={session}
+      access={access}
+      onSignOut={() => {
+        setSession(null)
+        setAccess(null)
+      }}
+    />
   ) : (
-    <LoginScreen onSignedIn={setSession} />
+    <LoginScreen
+      onSignedIn={async (resolved) => {
+        setAccess(resolved)
+        setSession(await getSession())
+      }}
+    />
   )
 }
 
@@ -159,7 +194,7 @@ function LoginScreen({ onSignedIn }) {
         <div className="ad-login-brand">
           <span className="ad-logo" aria-hidden="true">CR</span>
           <div>
-            <h1 className="ad-login-title">Analyst Dashboard</h1>
+            <h1 className="ad-login-title">Staff Sign In</h1>
             <p className="ad-muted ad-small">Chennai Rice Industries</p>
           </div>
         </div>
@@ -188,11 +223,22 @@ function LoginScreen({ onSignedIn }) {
 
 /* ------------------------------------------------------------ dashboard */
 
-function Dashboard({ session, onSignOut }) {
+function Dashboard({ session, access, onSignOut }) {
+  /* The sidebar is built from what this account may actually do, so a
+     writer never sees an analytics section they cannot open, and an
+     analyst never sees the journal. */
+  const nav = useMemo(() => {
+    const items = []
+    if (access.analyst) items.push(...ANALYTICS_NAV)
+    if (access.author) items.push(JOURNAL_NAV)
+    return items
+  }, [access])
+
   const [raw, setRaw] = useState(null)
   const [error, setError] = useState('')
-  const [loading, setLoading] = useState(true)
-  const [view, setView] = useState('overview')
+  // A writer never loads analytics, so they never start in a loading state.
+  const [loading, setLoading] = useState(access.analyst)
+  const [view, setView] = useState(nav[0]?.id ?? 'journal')
   const [rangeId, setRangeId] = useState('7d')
   const [navOpen, setNavOpen] = useState(false)
   const [journeyVisitor, setJourneyVisitor] = useState(null)
@@ -211,6 +257,9 @@ function Dashboard({ session, onSignOut }) {
   const [refreshKey, setRefreshKey] = useState(0)
 
   const load = useCallback(() => {
+    // A writer has no rows to read here — RLS would return an empty set —
+    // so the query is not made at all rather than made and discarded.
+    if (!access.analyst) return
     setLoading(true)
     fetchAnalytics()
       .then((data) => {
@@ -219,7 +268,7 @@ function Dashboard({ session, onSignOut }) {
       })
       .catch((err) => setError(err.message || 'Could not load analytics.'))
       .finally(() => setLoading(false))
-  }, [])
+  }, [access.analyst])
 
   const refresh = useCallback(() => {
     load()
@@ -228,8 +277,10 @@ function Dashboard({ session, onSignOut }) {
 
   useEffect(() => {
     load()
-    logAccess('view_dashboard')
-  }, [load])
+    // admin_audit_log only accepts writes from an analyst, and a writer
+    // opening the journal is not the access this log exists to record.
+    if (access.analyst) logAccess('view_dashboard')
+  }, [load, access.analyst])
 
   const needsInteractions = INTERACTION_VIEWS.has(view)
 
@@ -304,7 +355,7 @@ function Dashboard({ session, onSignOut }) {
     logAccess('view_visitor', visitorId)
   }
 
-  const active = NAV.find((n) => n.id === view) ?? NAV[0]
+  const active = nav.find((n) => n.id === view) ?? nav[0]
 
   const handleSignOut = async () => {
     await signOut()
@@ -331,7 +382,7 @@ function Dashboard({ session, onSignOut }) {
         </div>
 
         <nav className="ad-nav">
-          {NAV.map((item) => (
+          {nav.map((item) => (
             <button
               key={item.id}
               type="button"
@@ -347,9 +398,9 @@ function Dashboard({ session, onSignOut }) {
             </button>
           ))}
 
-          <span className="ad-nav-divider" role="presentation" />
+          {access.analyst && <span className="ad-nav-divider" role="presentation" />}
 
-          {NAV_SOON.map((item) => (
+          {access.analyst && NAV_SOON.map((item) => (
             <button key={item.id} type="button" className="ad-nav-item is-disabled" disabled
                     title="Not available yet">
               <NavIcon name={item.icon} />
@@ -365,7 +416,13 @@ function Dashboard({ session, onSignOut }) {
           </span>
           <span className="ad-side-user-text">
             <span className="ad-side-email" title={session.user.email}>{session.user.email}</span>
-            <span className="ad-muted ad-small">Analyst</span>
+            <span className="ad-muted ad-small">
+              {access.analyst && access.author
+                ? 'Analyst · Writer'
+                : access.analyst
+                  ? 'Analyst'
+                  : 'Writer'}
+            </span>
           </span>
         </div>
       </aside>
@@ -383,7 +440,7 @@ function Dashboard({ session, onSignOut }) {
           </div>
 
           <div className="ad-topbar-actions">
-            {view !== 'realtime' && (
+            {view !== 'realtime' && view !== 'journal' && (
               <label className="ad-select-wrap">
                 <span className="ad-sr">Date range</span>
                 <select className="ad-select" value={rangeId} onChange={(e) => setRangeId(e.target.value)}>
@@ -393,17 +450,21 @@ function Dashboard({ session, onSignOut }) {
                 </select>
               </label>
             )}
-            <button type="button" className="ad-btn ad-btn-quiet" onClick={refresh} disabled={loading}>
-              {loading ? 'Refreshing…' : 'Refresh'}
-            </button>
+            {view !== 'journal' && (
+              <button type="button" className="ad-btn ad-btn-quiet" onClick={refresh} disabled={loading}>
+                {loading ? 'Refreshing…' : 'Refresh'}
+              </button>
+            )}
             <button type="button" className="ad-btn ad-btn-quiet" onClick={handleSignOut}>Sign out</button>
           </div>
         </header>
 
         <main className="ad-main" id="ad-main">
-          {/* The interaction sections are fed by their own queries, so a
-              failure in one dataset never blanks the other. */}
-          {needsInteractions ? (
+          {/* The journal brings its own data and its own error handling —
+              it shares nothing with the analytics queries. */}
+          {view === 'journal' ? (
+            <JournalPanel author={access.author} />
+          ) : needsInteractions ? (
             <>
               {view === 'behaviour' && (
                 <BehaviourView behaviour={behaviour} error={interactionError} />

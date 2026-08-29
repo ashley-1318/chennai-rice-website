@@ -31,6 +31,12 @@ import InfrastructurePage from './pages/infrastructure/InfrastructurePage.jsx'
    actually opens /admin pays for it. */
 const AdminPage = lazy(() => import('./pages/admin/AdminPage.jsx'))
 
+/* The journal is split out too. It carries its own Markdown renderer, and
+   most visitors come for the packs — there is no reason for every one of
+   them to download an article reader they never open. */
+const BlogListPage = lazy(() => import('./pages/blog/BlogListPage.jsx'))
+const BlogPostPage = lazy(() => import('./pages/blog/BlogPostPage.jsx'))
+
 /* Routes that exist in the navigation and footer but whose copy is still
    being written. Listed here so no link in the footer ever 404s. */
 const PLACEHOLDER_PAGES = [
@@ -39,7 +45,6 @@ const PLACEHOLDER_PAGES = [
   { path: '/quality', title: 'Quality', blurb: 'Our sorting, grading and testing process is being documented and will be published here shortly.' },
   { path: '/packaging', title: 'Packaging', blurb: 'Pack sizes, materials and our move to recyclable packaging are being written up for this page.' },
   { path: '/recipes', title: 'Recipes', blurb: 'Family recipes for biryani, pongal, idli and more are being collected and will be shared here.' },
-  { path: '/blog', title: 'Blogs', blurb: 'Notes from the mill, the fields and the kitchen are on their way to this page.' },
   { path: '/csr', title: 'CSR', blurb: 'Our work with farming families and the community around Erode is being written up for this page.' },
   { path: '/downloads', title: 'Downloads', blurb: 'Product sheets, certifications and trade catalogues will be available to download here.' },
   { path: '/faqs', title: 'FAQs', blurb: 'Answers to the questions we are asked most about storage, cooking and ordering are being compiled.' },
@@ -76,8 +81,12 @@ export default function App() {
   /* The dashboard is an internal tool, not part of the storefront. It gets
      none of the marketing chrome, and — importantly — no visitor tracking:
      the analyst reading the numbers must not be counted inside them. */
-  const isAdminRoute = pathname.startsWith('/admin')
-  const isStorefront = !isAdminRoute && !isEmbedded
+  /* The one staff portal — analytics and the journal both live behind it.
+     It gets no marketing chrome and, importantly, no visitor tracking:
+     whoever is reading the numbers or writing the posts must not appear
+     inside them. */
+  const isTool = pathname.startsWith('/admin')
+  const isStorefront = !isTool && !isEmbedded
 
   return (
     <CookieConsentProvider>
@@ -85,7 +94,7 @@ export default function App() {
       <WishlistProvider>
       <ScrollToTop />
       {isStorefront && <VisitorTracking />}
-      {!isAdminRoute && <Navbar />}
+      {!isTool && <Navbar />}
       <Routes>
         {/* Must be declared before the "*" catch-all below, which would
             otherwise redirect /admin straight back to the home page. */}
@@ -105,6 +114,28 @@ export default function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/infrastructure" element={<InfrastructurePage />} />
         <Route path="/privacy" element={<PrivacyPolicyPage />} />
+
+        {/* Writing now lives in the one staff portal at /admin. This
+            redirect keeps any saved link working, and must stay declared
+            before /blog/:slug, which would otherwise swallow it as a post
+            called "studio". */}
+        <Route path="/blog/studio" element={<Navigate to="/admin" replace />} />
+        <Route
+          path="/blog"
+          element={
+            <Suspense fallback={null}>
+              <BlogListPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/blog/:slug"
+          element={
+            <Suspense fallback={null}>
+              <BlogPostPage />
+            </Suspense>
+          }
+        />
         <Route path="/terms" element={<TermsPage />} />
         {PLACEHOLDER_PAGES.map(page => (
           <Route
@@ -121,7 +152,7 @@ export default function App() {
         <Route path="/cart.html" element={<Navigate to="/cart" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-      {!isAdminRoute && <Footer />}
+      {!isTool && <Footer />}
       {isStorefront && <RiceCursor />}
       {isStorefront && <SoruKutty />}
       {isStorefront && <CookieBanner />}

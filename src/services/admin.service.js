@@ -11,6 +11,7 @@
 // src/pages/admin/ are presentation only and must not query Supabase
 // directly, so the data contract stays in one reviewable place.
 import { supabase, hasSupabase } from '../lib/supabaseClient.js'
+import { getAuthor } from './blog.service.js'
 
 /** Rows pulled per table. Aggregation happens in the browser (see below). */
 const ROW_LIMIT = 5000
@@ -30,6 +31,24 @@ function requireClient() {
 
 // ---------------------------------------------------------------- auth
 
+/**
+ * What this account may do here.
+ *
+ * /admin is the one staff portal, and the two jobs behind it are separate:
+ * a row in admin_users grants the analytics sections, a row in
+ * blog_authors grants the journal. Most accounts have one; an account may
+ * have both, and then it sees both. Neither is inferred from the other —
+ * reading individual visitors' browsing history and writing a blog post
+ * are different responsibilities.
+ *
+ * Both checks read back through RLS, so neither can be faked from the
+ * browser: a non-member simply reads nothing.
+ */
+export async function resolveAccess() {
+  const [analyst, author] = await Promise.all([isAdmin(), getAuthor()])
+  return { analyst, author, any: analyst || Boolean(author) }
+}
+
 export async function signIn(email, password) {
   requireClient()
   const { error } = await supabase.auth.signInWithPassword({ email, password })
@@ -39,16 +58,17 @@ export async function signIn(email, password) {
     // form into a way to discover which email addresses exist.
     throw new AdminError('Incorrect email or password.')
   }
+
   // Signing in is not the same as being allowed in. Anyone with a Supabase
-  // account authenticates successfully; only admin_users members may look
-  // at visitor data, so that is checked separately and the session is
-  // dropped again if they are not on the list.
-  const allowed = await isAdmin()
-  if (!allowed) {
+  // account authenticates successfully; only a listed analyst or author may
+  // go further, so that is checked separately and the session is dropped
+  // again if they are on neither list.
+  const access = await resolveAccess()
+  if (!access.any) {
     await signOut()
-    throw new AdminError('This account does not have dashboard access.')
+    throw new AdminError('This account does not have access.')
   }
-  return getSession()
+  return access
 }
 
 export async function signOut() {
