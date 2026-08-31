@@ -1,108 +1,189 @@
 .celeb {
   position: relative;
-  background: linear-gradient(180deg, #f2e3c2 0%, #e9d3a4 60%, #e3ca98 100%);
-  padding-top: 40px;
+  background: var(--cream-soft);
+  padding: 74px 0 90px;
   overflow: hidden;
+}
+
+/* Wheat line-art held well back, so it reads as watermark rather than
+   illustration and never competes with the portraits. */
+.celeb-decor {
+  position: absolute;
+  top: 0;
+  z-index: 0;
+  width: 190px;
+  opacity: 0.16;
+  pointer-events: none;
+  user-select: none;
+}
+.celeb-decor-left {
+  left: -46px;
+  transform: scaleX(-1);
+}
+.celeb-decor-right {
+  right: -46px;
 }
 
 .celeb-head {
   position: relative;
-  z-index: 2;
-  margin-bottom: 16px;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  margin-bottom: 44px;
 }
 
-.celeb::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(45% 60% at 25% 55%, rgba(255, 244, 214, 0.9), transparent 70%),
-    radial-gradient(45% 60% at 75% 55%, rgba(255, 244, 214, 0.9), transparent 70%);
-  pointer-events: none;
-}
-
-/* wheat stalks flanking both edges of the band */
-.celeb-decor {
-  position: absolute;
-  bottom: 0;
-  z-index: 0;
-  pointer-events: none;
-  user-select: none;
-  opacity: 0.9;
-}
-.celeb-decor-left {
-  left: -34px;
-  width: 250px;
-  /* mirrored so the stalks lean away from Kushboo */
-  transform: scaleX(-1);
-}
-.celeb-decor-right {
-  right: -30px;
-  width: 165px;
+.celeb-blurb {
+  max-width: 620px;
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--muted);
 }
 
 .celeb-grid {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  align-items: end;
-  column-gap: 8px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
 }
 
-.celeb-pair {
+/* ---------------------------------------------------------------- card */
+
+.celeb-card {
+  /* Defaults; each is-* tone below overrides all three. Declared here so a
+     card with an unrecognised tone still renders as a finished card rather
+     than a transparent box. */
+  --tint: #efe3cf;
+  --foot: #f8f0e2;
+  --accent: var(--gold-deep);
+
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-  align-items: center;
-  column-gap: 8px;
+  /* The photo panel keeps its proportion and the caption takes the rest.
+     Combined with the grid's default stretch, a quote that runs one line
+     longer grows every card rather than leaving one short. */
+  grid-template-rows: auto 1fr;
+  background: var(--foot);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 14px 34px rgba(90, 55, 20, 0.07);
 }
 
-.celeb-figure {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
+.celeb-card.is-rose {
+  --tint: #f0dada;
+  --foot: #f9eded;
+  --accent: #b86f74;
 }
-.celeb-figure img {
-  /* scale lifts the width cap too — a near-square portrait is limited by
-     the column width, not by max-height, so height alone does nothing */
-  max-height: calc(400px * var(--fig-scale, 1));
-  max-width: calc(100% * var(--fig-scale, 1));
-  width: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 20px 30px rgba(90, 50, 20, 0.25));
+.celeb-card.is-gold {
+  --tint: #f1e2c6;
+  --foot: #faf1e0;
+  --accent: #b08a3c;
+}
+.celeb-card.is-lilac {
+  --tint: #ded3e0;
+  --foot: #f1eaf2;
+  --accent: #8d7293;
+}
+.celeb-card.is-sand {
+  --tint: #eee0ca;
+  --foot: #f9f0e1;
+  --accent: #b08a3c;
 }
 
-.celeb-text {
-  text-align: left;
+/* ------------------------------------------------------ photo + name */
+
+.celeb-stage {
+  position: relative;
+  background: var(--tint);
+  aspect-ratio: 3 / 4;
+  /* Portraits are scaled to line the faces up, which can push a hem past
+     the panel; the crop is deliberate. */
+  overflow: hidden;
 }
 
 .celeb-name {
+  position: absolute;
+  top: 34px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  padding-inline: 12px;
+  text-align: center;
   font-family: var(--serif);
-  font-weight: 600;
-  font-size: 25px;
-  letter-spacing: 0.14em;
-  color: #5a3b16;
+  font-weight: 500;
+  font-size: clamp(17px, 1.35vw, 22px);
+  line-height: 1.25;
+  color: var(--heading);
+  text-wrap: balance;
+}
+
+.celeb-photo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  /* Both set per person from CELEBS in content.js. --drop pushes a
+     full-length shot below the panel so it is cropped at the hem rather
+     than beheaded, which is what keeps the four faces on one line. */
+  bottom: calc(0% - var(--drop, 0%));
+  height: var(--figure, 84%);
+  width: auto;
+  object-fit: contain;
+  object-position: bottom center;
+}
+
+/* ---------------------------------------------------------- caption */
+
+.celeb-foot {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 10px;
+  padding: 18px 18px 24px;
+  text-align: center;
+}
+
+.celeb-mark {
+  width: 26px;
+  height: 18px;
+  fill: var(--accent);
+  opacity: 0.75;
 }
 
 .celeb-rule {
-  width: 40px;
-  height: 2px;
-  background: var(--gold-deep);
-  margin-block: 12px;
+  width: 34px;
+  height: 1px;
+  background: var(--accent);
+  opacity: 0.45;
 }
 
 .celeb-quote {
-  font-size: 15px;
-  line-height: 1.8;
-  color: #6a5433;
-  max-width: 300px;
+  margin: 2px 0 4px;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: #5d4a3c;
+  text-wrap: pretty;
 }
 
-.celeb-sign {
-  font-family: var(--script);
-  font-size: 30px;
-  color: #8a6a25;
-  margin-top: 14px;
+.celeb-dash {
+  width: 22px;
+  height: 1px;
+  background: var(--accent);
+  opacity: 0.6;
 }
+
+.celeb-role {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  /* Cancels the trailing space letter-spacing adds, so the word stays
+     optically centred. */
+  text-indent: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* ------------------------------------------------------- responsive */
 
 @media (max-width: 1100px) {
   .celeb-decor {
@@ -110,19 +191,24 @@
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 980px) {
+  .celeb-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 520px) {
+  .celeb {
+    padding: 56px 0 66px;
+  }
   .celeb-grid {
     grid-template-columns: 1fr;
-    row-gap: 30px;
-    min-height: 0;
+    /* One card per row would leave a very tall column, so the panel is
+       squarer here and the portraits sit correspondingly lower. */
+    max-width: 340px;
   }
-  .celeb-figure img {
-    max-height: calc(300px * var(--fig-scale, 1));
-  }
-  .celeb-text {
-    padding-bottom: 30px;
-  }
-  .celeb-name {
-    font-size: 20px;
+  .celeb-blurb {
+    font-size: 15px;
   }
 }

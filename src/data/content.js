@@ -166,23 +166,65 @@ export const TESTIMONIALS = [
 export const CELEB_HEAD = {
   label: 'Brand Ambassadors',
   title: 'Trusted by the Best',
+  blurb:
+    'Our brand ambassadors share their trust in Chennai Rice — a promise of purity, quality and tradition in every grain.',
 }
 
+/**
+ * The four ambassador cards.
+ *
+ * `tone` selects a palette in celebrities.css rather than carrying hex
+ * values here: the card tint, the quote mark and the role label are one
+ * colour decision, and splitting it across two files is how they drift.
+ *
+ * `figure` is the portrait's height as a percentage of the card's photo
+ * panel, and `drop` is how far below the panel its feet fall. Both are
+ * per-person because the source crops are not comparable — Kushboo and
+ * Rangaraj are shot near full-length while Dhamu and Prabhu are waist-up,
+ * so a single height would put their heads at four different sizes.
+ *
+ * The full-length shots are therefore scaled past the panel and cropped at
+ * the hem, which is what lets all four faces sit at the same height. The
+ * PNGs in public/assets/celebs are trimmed to the subject — no transparent
+ * margin — so these numbers mean what they say; the untrimmed originals are
+ * kept in the repo-root assets/celebs folder.
+ */
 export const CELEBS = [
   {
-    name: 'KUSHBOO',
+    name: 'Kushboo',
+    role: 'Actress',
     quote: "I trust Chennai Rice for my family. It's pure, healthy and full of goodness.",
-    signature: 'Kushboo',
     image: '/assets/celebs/kushboo.png',
+    tone: 'rose',
+    figure: 128,
+    drop: 46,
   },
   {
-    name: 'CHEF DHAMU',
+    name: 'Chef Dhamu',
+    role: 'Celebrity Chef',
     quote: 'As a chef, I choose only the best. Chennai Rice brings out the best in every dish.',
-    signature: 'Chef Dhamu',
     image: '/assets/celebs/chef-dhamo.png',
-    // his shot is a half-body crop, so it needs more height to read
-    // at the same visual size as the others
-    scale: 1.18,
+    tone: 'gold',
+    figure: 82,
+    drop: 0,
+  },
+  {
+    name: 'Prabhu',
+    role: 'Actor',
+    quote: 'Good food begins with good rice. Chennai Rice has earned its place at our family table.',
+    image: '/assets/celebs/prabhu.png',
+    tone: 'lilac',
+    figure: 82,
+    drop: 0,
+  },
+  {
+    name: 'Madhampatty Rangaraj',
+    role: 'Celebrity Chef',
+    quote: 'A dish is only as good as its rice. Chennai Rice gives me that quality every time.',
+    image: '/assets/celebs/madhampatty-rangaraj.png',
+    tone: 'sand',
+    figure: 147,
+    drop: 65,
   },
 ]
 
