@@ -44,6 +44,10 @@
   --muted: #7d6a5b;
 
   --serif: 'Playfair Display', Georgia, serif;
+  /* Reserved for hero headlines only. DM Serif Display ships a single
+     weight (400) and is drawn for large sizes — its hairlines thin out and
+     close up below about 40px, which is why it is not the body serif. */
+  --display: 'DM Serif Display', Georgia, serif;
   --sans: 'Poppins', 'Segoe UI', sans-serif;
   --script: 'Great Vibes', cursive;
 }
