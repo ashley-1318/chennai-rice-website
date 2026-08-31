@@ -7,17 +7,25 @@ import { useRevealGroup } from "../hooks/useScrollFx.js";
 import usePageMeta from "../hooks/usePageMeta.js";
 
 const GLANCE_ICONS = {
-  Name: <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM5 20c1.2-3.6 4-5.5 7-5.5s5.8 1.9 7 5.5" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />,
-  Role: <path d="M6 20V5a1 1 0 0 1 1-1h9l-1.5 4L16 12H7" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />,
-  "Company since": <path d="M4 9h16M7 4v3M17 4v3M5 6h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />,
-  Heritage: (
+  "From Our Mill": <path d="M4 20V9l8-5 8 5v11M9 20v-6h6v6" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />,
+  "Hands-Free Processing": (
     <>
-      <path d="M12 21V10" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-      <path d="M12 10c0-3.5 2.6-6 6-6 0 3.5-2.6 6-6 6zm0 3c0-3-2.4-5.4-5.4-5.4C6.6 10.6 9 13 12 13z" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
+      <path d="M8 21v-6.5a3.5 3.5 0 0 1 7 0V21" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M11.5 11V4M8.5 6.5 11.5 4l3 2.5" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
     </>
   ),
-  Facility: <path d="M4 20V9l8-5 8 5v11M9 20v-6h6v6" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />,
-  Focus: <path d="M12 20s-7-4.3-7-9a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 4.7-7 9-7 9z" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
+  "Pure by Choice": (
+    <>
+      <rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" strokeWidth="1.7" />
+      <circle cx="12" cy="12" r="4" fill="currentColor" />
+    </>
+  ),
+  "Quality You Can Trust": (
+    <>
+      <path d="M12 3.5 19 6v6c0 4-3 7-7 8.5C8 19 5 16 5 12V6z" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
+      <path d="m9 12 2 2 4-4" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+    </>
+  )
 };
 
 function HeroStatFigure({ figure }) {
@@ -30,6 +38,47 @@ function HeroStatFigure({ figure }) {
       </p>
       <p className="fp-stat-unit">{figure.text}</p>
     </div>
+  );
+}
+
+/* Loose looping line-work behind the portrait. A few tall, elongated
+   ellipses leaning at slightly different angles — the sweeping
+   "drawn in one stroke" look, not a dense spirograph. */
+/* Each loop sits at its own centre, drifting down-left along a diagonal,
+   so the set reads as a hand looping continuously across the page rather
+   than as concentric rings. The open arcs are the tails that trail off. */
+const SCRIBBLE_LOOPS = [
+  { cx: 252, cy: 150, rx: 52, ry: 120, rotate: 40 },
+  { cx: 216, cy: 212, rx: 64, ry: 142, rotate: 44 },
+  { cx: 178, cy: 272, rx: 58, ry: 130, rotate: 36 },
+  { cx: 214, cy: 208, rx: 98, ry: 192, rotate: 48 }
+];
+
+const SCRIBBLE_TAILS = [
+  "M298 66C382 96 414 186 358 258",
+  "M244 372C338 392 400 338 404 268"
+];
+
+function ScribbleArt({ className }) {
+  return (
+    <svg className={className} viewBox="0 0 440 520" aria-hidden="true" focusable="false">
+      {SCRIBBLE_LOOPS.map((loop) => (
+        <ellipse
+          key={`${loop.cx}-${loop.rx}`}
+          cx={loop.cx}
+          cy={loop.cy}
+          rx={loop.rx}
+          ry={loop.ry}
+          transform={`rotate(${loop.rotate} ${loop.cx} ${loop.cy})`}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1"
+        />
+      ))}
+      {SCRIBBLE_TAILS.map((d) => (
+        <path key={d} d={d} fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+      ))}
+    </svg>
   );
 }
 
@@ -48,6 +97,12 @@ export default function FounderPage() {
     `${FOUNDER.name}, ${FOUNDER.title} of Chennai Rice Industries.`
   );
 
+  // same words as FOUNDER.heading, just split so the last word can carry
+  // its own weight — the wording itself never changes
+  const titleWords = FOUNDER.heading.trim().split(" ");
+  const titleLast = titleWords.pop();
+  const titleLead = titleWords.join(" ");
+
   return (
     <SiteLayout skipTo="founder-heading" skipLabel="Skip to content">
       <div className="founder-page" ref={pageRef}>
@@ -59,20 +114,38 @@ export default function FounderPage() {
 
         <section className="fp-hero fp-shell">
           <div className="fp-hero-grid">
-            <h1 id="founder-heading" className="fp-hero-title reveal">
-              {FOUNDER.heading}
-            </h1>
-
-            <div className="fp-hero-note reveal reveal--left">
-              {/* curly quotes are already in the copy, so the cursive
-                  treatment alone is enough to read as spoken */}
-              <p className="fp-intro">{FOUNDER.intro}</p>
+            {/* sits top-right above the portrait on desktop; falls back to
+                the top of the stack on narrow screens */}
+            <div className="fp-hero-vision reveal reveal--right">
+              <p className="fp-vision-eyebrow">{FOUNDER.eyebrow}</p>
+              <span className="fp-hero-rule" aria-hidden="true" />
             </div>
 
-            {/* no reveal class on the stage: its transform would create a
-                stacking context and trap the disc behind the headline */}
+            <div className="fp-hero-copy reveal reveal--left">
+              <h1 id="founder-heading" className="fp-hero-title">
+                <span className="fp-hero-title-lead">{titleLead}</span>
+                <span className="fp-hero-title-strong">{titleLast}</span>
+              </h1>
+
+              <blockquote className="fp-intro-block">
+                <span className="fp-intro-mark" aria-hidden="true">&ldquo;</span>
+                <p className="fp-intro">{FOUNDER.intro}</p>
+              </blockquote>
+
+              <div className="fp-hero-sign">
+                {/* the script is a flourish; the printed name carries it for
+                    anyone the script doesn't render legibly */}
+                <p className="fp-signature" aria-hidden="true">
+                  {FOUNDER.name}
+                </p>
+                <p className="fp-name">{FOUNDER.name}</p>
+                <p className="fp-title">{FOUNDER.title}</p>
+              </div>
+              <span className="fp-hero-rule" aria-hidden="true" />
+            </div>
+
             <div className="fp-hero-stage">
-              <span className="fp-disc" aria-hidden="true" />
+              <ScribbleArt className="fp-hero-scribble" />
               <div className={`fp-hero-photo${photoMissing ? " fp-hero-photo--empty" : ""}`}>
                 {photoMissing ? (
                   <span className="fp-hero-initial" aria-hidden="true">
@@ -83,26 +156,11 @@ export default function FounderPage() {
                 )}
               </div>
             </div>
-
-            <div className="fp-hero-sign reveal">
-              {/* the script is a flourish; the printed name carries it for
-                  anyone the script doesn't render legibly */}
-              <p className="fp-signature" aria-hidden="true">
-                {FOUNDER.name}
-              </p>
-              <p className="fp-name">{FOUNDER.name}</p>
-              <p className="fp-title">{FOUNDER.title}</p>
-            </div>
-
-            <div className="fp-hero-vision reveal reveal--right">
-              <p className="fp-vision-eyebrow">{FOUNDER.eyebrow}</p>
-            </div>
           </div>
         </section>
 
-        <section className="fp-stats fp-shell reveal" aria-label="The scale of his vision">
-          <p className="fp-stats-title">{FOUNDER.heroStatsEyebrow}</p>
-          <div className="fp-stats-grid">
+        <section className="fp-stats-strip reveal" aria-label="The scale of his vision">
+          <div className="fp-stats-strip-inner fp-shell">
             {FOUNDER.heroStats.map((figure) => (
               <HeroStatFigure key={figure.text} figure={figure} />
             ))}
@@ -114,13 +172,16 @@ export default function FounderPage() {
             <div className="fp-bio reveal">
               <p className="eyebrow">{FOUNDER.visionEyebrow}</p>
               <h2>{FOUNDER.visionHeading}</h2>
+              {FOUNDER.bioLead.map((line) => (
+                <p className="fp-bio-lead" key={line}>{line}</p>
+              ))}
               {FOUNDER.bio.map((paragraph) => (
                 <p key={paragraph.slice(0, 24)}>{paragraph}</p>
               ))}
+              <p className="fp-bio-closing">{FOUNDER.bioClosing}</p>
             </div>
 
-            <aside className="fp-glance reveal reveal--right" aria-label="Founder at a glance">
-              <p className="fp-glance-title">Founder at a glance</p>
+            <aside className="fp-glance reveal reveal--right" aria-label="What every pack carries">
               <dl>
                 {FOUNDER.glance.map((row) => (
                   <div className="fp-glance-row" key={row.label}>
@@ -138,12 +199,21 @@ export default function FounderPage() {
           </div>
         </section>
 
-        <section className="fp-quote reveal">
-          <span className="fp-quote-mark" aria-hidden="true">
-            &ldquo;
-          </span>
-          <p className="fp-quote-text">{FOUNDER.quote}</p>
-          <p className="fp-quote-attr">&mdash; {FOUNDER.quoteAttribution}</p>
+        <section className="fp-quote-banner fp-shell reveal">
+          <img
+            className="fp-quote-banner-media"
+            src="/assets/about/3dhand.png"
+            alt=""
+            aria-hidden="true"
+          />
+          <div className="fp-quote-banner-overlay" aria-hidden="true" />
+          <div className="fp-quote-banner-content">
+            <span className="fp-quote-mark" aria-hidden="true">
+              &ldquo;
+            </span>
+            <p className="fp-quote-text">{FOUNDER.quote}</p>
+            <p className="fp-quote-attr">&mdash; {FOUNDER.quoteAttribution}</p>
+          </div>
         </section>
       </div>
     </SiteLayout>

@@ -1282,130 +1282,94 @@ main {
 .fp-crumb [aria-current="page"] { color: var(--ink-700); }
 
 /* ============================================================
-   Founder hero — flat disc composition.
-   A single saturated circle, the portrait breaking past its base,
-   and a heavy display line overlapping the disc. Stacking order is
-   disc (0) -> headline (2) -> portrait (3); .fp-hero-stage must
-   never take a z-index or a transform, or it would trap its
-   children in their own context and the headline could no longer
-   slide between them.
+   Founder hero — copy left, portrait right, no frame or disc. The
+   portrait sits directly on the page ground with a loose line-art
+   flourish behind it, rather than overlapping the copy.
    ============================================================ */
 
-.fp-hero { padding-block: var(--s-8) var(--s-12); }
+/* no bottom padding at any width: the portrait meets the stats strip.
+   overflow clips the decorative curls at the section edge so they
+   can't bleed over the strip below. */
+.fp-hero { padding-block: var(--s-8) 0; overflow: hidden; }
 
 .fp-hero-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--s-6);
+  gap: var(--s-8);
   align-items: center;
-  padding-bottom: var(--s-6);
-  border-bottom: 1px solid rgba(168, 122, 34, 0.35);
 }
 
-.fp-hero-note { max-width: 26rem; }
-/* cursive, and sized well past body text — read as the founder's own
-   voice rather than a caption, so it needs the room a quote earns */
-.fp-intro {
-  margin: var(--s-4) 0 0;
-  font-family: "Great Vibes", cursive;
-  font-size: clamp(1.6rem, 3.2vw, 2.15rem);
-  line-height: 1.35;
-  color: var(--ink-900);
+.fp-hero-copy { max-width: 32rem; }
+
+/* a short gold rule used both under the eyebrow and beneath the
+   signature — the same small mark bookends the copy column */
+.fp-hero-rule {
+  display: block;
+  width: 3rem;
+  height: 2px;
+  margin: var(--s-3) 0 var(--s-6);
+  background: var(--gold-500);
 }
 
-.fp-eyebrow {
-  display: inline-block;
-  margin: 0;
-  padding: var(--s-2) var(--s-4);
-  font-size: var(--fs-tag);
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gold-700);
-  background: rgba(232, 199, 102, 0.22);
-  border: 1px solid rgba(168, 122, 34, 0.32);
-  border-radius: var(--radius-pill);
-}
-
-/* the eyebrow's moved up beside the portrait and needs to carry more
-   weight there, so it drops the small pill treatment for a bold line */
 .fp-vision-eyebrow {
   margin: 0;
   font-family: var(--font-body);
   font-weight: 800;
-  font-size: clamp(1.15rem, 2.6vw, 1.7rem);
-  line-height: 1.2;
-  letter-spacing: 0.01em;
+  font-size: var(--fs-small);
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--ink-900);
+  color: var(--gold-700);
 }
 
-/* The heavy grotesque voice the shop's closing lineup already uses —
-   deliberately not the page serif, so it reads as a statement. */
-.fp-hero-title {
-  margin: 0;
-  font-family: var(--font-body);
-  font-weight: 800;
-  font-size: clamp(2.5rem, 8vw, 5rem);
-  line-height: 0.94;
-  letter-spacing: -0.035em;
-  color: var(--ink-900);
-  text-wrap: balance;
-}
-.fp-hero-title::after { content: "."; color: var(--gold-500); }
-
-.fp-hero-stage {
-  position: relative;      /* no z-index, no transform — see note above */
-  width: 100%;
-  max-width: 24rem;
-  margin-inline: auto;
-}
-
-.fp-disc {
-  position: absolute;
-  z-index: 0;
-  top: 2%;
-  left: 50%;
-  translate: -50% 0;
-  width: 100%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: var(--gold-300);
-}
-
-.fp-hero-photo {
-  position: relative;
-  z-index: 3;              /* above the headline */
-  aspect-ratio: 4 / 5;
-  width: 100%;
-}
-.fp-hero-photo img {
+.fp-hero-title { margin: 0 0 var(--s-6); line-height: 0.98; text-wrap: balance; }
+.fp-hero-title-lead {
   display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center bottom;
-  filter: saturate(0.72) contrast(1.06) brightness(1.01)
-    drop-shadow(0 14px 18px rgba(43, 27, 22, 0.16));
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  color: var(--ink-900);
+}
+.fp-hero-title-strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.75rem, 8vw, 4.25rem);
+  letter-spacing: -0.01em;
+  color: var(--maroon-700);
+}
+.fp-hero-title-strong::after { content: "."; color: var(--gold-500); }
+
+/* a vertical rule instead of a pull-quote card — reads as an aside,
+   with the mark doing the "quoted" work rather than a cursive face */
+.fp-intro-block {
+  margin: 0 0 var(--s-6);
+  padding-left: var(--s-4);
+  border-left: 2px solid var(--gold-500);
+}
+.fp-intro-mark {
+  display: block;
+  margin-bottom: -0.15em;
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  line-height: 1;
+  color: var(--gold-500);
+}
+.fp-intro {
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  line-height: 1.55;
+  color: var(--ink-700);
 }
 
-/* fallback panel when the portrait is missing */
-.fp-hero-photo--empty {
-  display: grid;
-  place-items: center;
-  border-radius: var(--radius-md);
-  background: linear-gradient(150deg, var(--maroon-600), var(--maroon-700));
-  box-shadow: var(--shadow-lift);
-}
-.fp-hero-initial { font-family: var(--font-display); font-size: 6rem; color: var(--gold-300); }
-
-.fp-hero-sign { align-self: end; }
+.fp-hero-sign { margin-bottom: var(--s-2); }
 /* a signature-style script, deliberately not the quote's Great Vibes —
    the two cursive moments need to read as different hands */
 .fp-signature {
   margin: 0;
   font-family: "Mrs Saint Delafield", cursive;
-  font-size: 3.1rem;
+  font-size: 2.6rem;
   line-height: 1;
   color: var(--maroon-600);
 }
@@ -1418,44 +1382,119 @@ main {
 }
 .fp-title { margin: 0.15rem 0 0; font-size: var(--fs-tag); line-height: 1.6; color: var(--ink-500); }
 
-/* ---- desktop: three overlapping columns ---- */
+.fp-hero-stage { position: relative; width: 100%; max-width: 19rem; margin-inline: auto; }
+/* the curls sit wider than the portrait so they read as drawn around
+   him rather than boxed behind him; .fp-hero clips them so they never
+   spill into the stats strip below */
+.fp-hero-scribble {
+  position: absolute;
+  z-index: 0;
+  top: 48%;
+  left: 42%;
+  translate: -50% -50%;
+  width: 132%;
+  height: auto;
+  color: var(--gold-500);
+  opacity: 0.2;
+  pointer-events: none;
+}
+.fp-hero-photo { position: relative; z-index: 1; aspect-ratio: 4 / 5; width: 100%; }
+.fp-hero-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: saturate(0.85) contrast(1.05);
+}
+
+/* fallback panel when the portrait is missing */
+.fp-hero-photo--empty {
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-md);
+  background: linear-gradient(150deg, var(--maroon-600), var(--maroon-700));
+  box-shadow: var(--shadow-lift);
+}
+.fp-hero-initial { font-family: var(--font-display); font-size: 6rem; color: var(--gold-300); }
+
+/* ---- desktop: copy and portrait side by side. The stage aligns to the
+   bottom of the grid and the section carries no bottom padding, so the
+   portrait's feet land exactly on the stats strip below — no gap. ---- */
 @media (min-width: 900px) {
-  .fp-hero { padding-block: var(--s-8) var(--s-16); }
+  .fp-hero { padding-block: var(--s-12) 0; }
 
   .fp-hero-grid {
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: auto minmax(0, 1fr) auto;
-    column-gap: var(--s-4);
-    row-gap: var(--s-8);
-    min-height: 34rem;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    column-gap: var(--s-12);
+    row-gap: var(--s-6);
   }
 
-  .fp-hero-title { grid-column: 1 / 7; grid-row: 1; z-index: 2; align-self: start; }
-  .fp-hero-note  { grid-column: 1 / 7;  grid-row: 2; align-self: center; }
-  .fp-hero-stage { grid-column: 7 / 13; grid-row: 1 / 4; align-self: stretch; max-width: none; }
-  .fp-hero-sign  { grid-column: 1 / 7;  grid-row: 3; }
-  .fp-hero-vision { grid-column: 7 / 13; grid-row: 1; align-self: start; text-align: right; }
+  /* eyebrow pinned to the top of the portrait column, right-aligned */
+  .fp-hero-vision { grid-column: 2; grid-row: 1; align-self: start; text-align: right; }
+  .fp-hero-vision .fp-hero-rule { margin-inline: auto 0; }
 
-  /* the stage fills its rows, so the framed portrait sits on the floor
-     of the grid, flush against the right edge — so the founder's photo
-     lands in the page's rightmost corner */
-  .fp-hero-stage { display: flex; align-items: flex-end; justify-content: flex-end; }
-  .fp-hero-photo { max-width: 22rem; margin-inline: auto 0; }
-  .fp-disc { top: auto; left: auto; right: 6%; translate: 0 0; bottom: 18%; width: 26rem; max-width: 100%; }
+  .fp-hero-copy {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    align-self: center;
+    max-width: none;
+    padding-bottom: var(--s-12);
+  }
+
+  .fp-hero-stage {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: end;
+    max-width: 26rem;
+    height: 27rem;
+    margin-inline: auto 0;
+  }
+  .fp-hero-photo { height: 100%; aspect-ratio: auto; }
 }
 
-@media (max-width: 899px) {
-  .fp-hero-title { order: -1; }
-}
-
-.fp-vision { padding-block: var(--s-4) var(--s-16); }
+.fp-vision { padding-block: var(--s-16) var(--s-16); }
 .fp-vision-grid { display: grid; grid-template-columns: 1fr; gap: var(--s-8); align-items: start; }
 @media (min-width: 900px) {
   .fp-vision-grid { grid-template-columns: minmax(0, 1fr) 21rem; }
 }
-.fp-bio h2 { font-size: var(--fs-h2); margin: var(--s-2) 0 var(--s-4); }
+.fp-bio h2 {
+  position: relative;
+  font-size: var(--fs-h2);
+  margin: var(--s-2) 0 var(--s-4);
+  padding-bottom: var(--s-3);
+}
+.fp-bio h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 3rem;
+  height: 2px;
+  background: var(--gold-500);
+}
 .fp-bio p { margin: 0 0 var(--s-4); color: var(--ink-700); line-height: 1.75; }
 .fp-bio p:last-child { margin-bottom: 0; }
+
+/* a short couplet ahead of the prose — carries the "then vs now" framing
+   in two lines, so it earns more weight than the paragraphs below it */
+.fp-bio p.fp-bio-lead {
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--ink-900);
+  line-height: 1.4;
+}
+.fp-bio p.fp-bio-lead:last-of-type { margin-bottom: var(--s-4); }
+
+/* the closing line mirrors the lead — same weight, bookending the bio */
+.fp-bio p.fp-bio-closing {
+  margin: var(--s-2) 0 0;
+  font-weight: 800;
+  color: var(--maroon-600);
+}
 
 .fp-glance {
   padding: var(--s-6);
@@ -1464,12 +1503,6 @@ main {
   border-top: 3px solid var(--gold-500);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-rest);
-}
-.fp-glance-title {
-  margin: 0 0 var(--s-4);
-  font-family: var(--font-display);
-  font-size: var(--fs-h3);
-  color: var(--ink-900);
 }
 .fp-glance dl { margin: 0; }
 .fp-glance-row { padding: var(--s-3) 0; border-bottom: 1px solid var(--cream-300); }
@@ -1487,58 +1520,92 @@ main {
 .fp-glance-row dt svg { flex-shrink: 0; color: var(--maroon-600); }
 .fp-glance-row dd { margin: 0.3rem 0 0 1.65rem; font-size: var(--fs-body); color: var(--ink-700); }
 
-.fp-stats {
-  margin-top: var(--s-4);
-  padding: var(--s-8) var(--s-6);
-  background: var(--cream-50);
-  border: 1px solid var(--cream-300);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-rest);
+/* a plain divider strip rather than a bordered card — thin rules
+   between the figures do the separating instead of a box */
+/* butts directly against the hero — the portrait stands on this strip */
+.fp-stats-strip { background: var(--maroon-600); }
+.fp-stats-strip-inner {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-6) 0;
+  padding-block: var(--s-8);
   text-align: center;
 }
-.fp-stats-title {
-  margin: 0 0 var(--s-6);
-  font-size: var(--fs-tag);
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gold-700);
+@media (min-width: 700px) {
+  .fp-stats-strip-inner { grid-template-columns: repeat(4, 1fr); }
 }
-.fp-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: var(--s-6); }
+.fp-stats-strip-inner .fp-stat { position: relative; padding-inline: var(--s-4); }
+.fp-stats-strip-inner .fp-stat:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8%;
+  bottom: 8%;
+  width: 1px;
+  background: rgba(251, 246, 236, 0.28);
+}
 .fp-stat-value {
   margin: 0;
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 4vw, 2.4rem);
-  color: var(--maroon-600);
+  color: var(--cream-50);
   font-variant-numeric: tabular-nums;
 }
-/* 0.6em of the display size lands ~17px at normal weight — still "small
-   text" by WCAG, so it takes the AA-passing gold. */
-.fp-stat-value span { font-size: 0.6em; color: var(--gold-700); }
-.fp-stat-unit { margin: 0.2rem 0 0; font-size: var(--fs-small); font-weight: 700; color: var(--ink-700); }
-.fp-stat-label { margin: 0.1rem 0 0; font-size: var(--fs-tag); color: var(--ink-500); }
+/* gold reads as an accent against the maroon ground and clears AA at
+   this size */
+.fp-stat-value span { font-size: 0.6em; color: var(--gold-300); }
+.fp-stat-unit { margin: 0.2rem 0 0; font-size: var(--fs-small); font-weight: 700; color: var(--cream-100); }
 
-.fp-quote {
-  max-width: 46rem;
+/* the closing quote as a full-width photo banner — hands passing grain
+   at sunset, the same image already used for the value-chain story */
+.fp-quote-banner {
+  position: relative;
   margin: var(--s-16) auto;
-  padding-inline: var(--s-4);
-  text-align: center;
+  min-height: 20rem;
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-lift);
+}
+.fp-quote-banner-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 70% 55%;
+}
+.fp-quote-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(43, 16, 18, 0.92) 0%, rgba(43, 16, 18, 0.72) 38%, rgba(43, 16, 18, 0.25) 75%);
+}
+.fp-quote-banner-content {
+  position: relative;
+  z-index: 1;
+  max-width: 32rem;
+  padding: var(--s-12) var(--s-8);
 }
 .fp-quote-mark {
   display: block;
   font-family: var(--font-display);
-  font-size: 4.5rem;
+  font-size: 4rem;
   line-height: 1;
-  color: var(--gold-300);
+  color: var(--gold-500);
 }
 .fp-quote-text {
   margin: 0;
   font-family: var(--font-display);
   font-size: clamp(1.35rem, 3vw, 1.9rem);
   line-height: 1.4;
-  color: var(--ink-900);
+  color: var(--cream-50);
 }
-.fp-quote-attr { margin-top: var(--s-4); font-size: var(--fs-small); font-weight: 700; letter-spacing: 0.03em; color: var(--maroon-600); }
+.fp-quote-attr { margin-top: var(--s-4); font-size: var(--fs-small); font-weight: 700; letter-spacing: 0.03em; color: var(--gold-300); }
+
+@media (max-width: 640px) {
+  .fp-quote-banner-content { padding: var(--s-8) var(--s-6); }
+}
 
 /* ---------- Empty state & footer ---------- */
 

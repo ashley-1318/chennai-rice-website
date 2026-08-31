@@ -145,7 +145,7 @@
 .curve-fill--forest-deep { fill: #142619; }
 
 /* the curve eats into the section, so its content needs headroom */
-.ab-scale, .ab-cta { padding-block: clamp(6rem, 13vw, 10rem); }
+.ab-scale { padding-block: clamp(6rem, 13vw, 10rem); }
 
 /* ---- heritage band: intro + timeline ---- */
 
@@ -172,21 +172,46 @@
   .ab-heritage-intro { grid-template-columns: minmax(0, 0.6fr) minmax(0, 1.4fr); }
 }
 
+/* explicit width (not just max-width) so the box doesn't collapse to 0
+   while the lazy-loaded photo is still downloading — otherwise the
+   badge and pills, positioned relative to it, render at 0,0 until it
+   loads */
 .ab-heritage-photo {
-  margin: 0;
+  position: relative;
+  width: 100%;
+  margin: 0 0 1.75rem;
+  max-width: 400px;
+  padding: 0.6rem;
+  background: var(--rice);
+  border: 1px solid var(--cream-deep);
+  border-radius: 1.75rem;
+  box-shadow: 0 20px 45px rgba(20, 38, 25, 0.16);
   overflow: hidden;
-  max-width: 320px;
   justify-self: start;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.ab-heritage-photo:hover,
+.ab-heritage-photo:focus-within {
+  transform: translateY(-6px);
+  box-shadow: 0 28px 56px rgba(20, 38, 25, 0.26);
 }
 .ab-heritage-photo img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* the source photo is itself a tall 2:3 portrait, so this keeps it
-     uncropped-looking beside a text column of a similar height */
-  aspect-ratio: 2 / 3;
+  border-radius: 1.3rem;
+  transition: transform 0.5s ease;
+  /* matches the three-generations composite's own 1122x1402 ratio, so
+     cover crops nothing off the outer portraits */
+  aspect-ratio: 4 / 5;
 }
+.ab-heritage-photo:hover img,
+.ab-heritage-photo:focus-within img {
+  transform: scale(1.03);
+}
+
+.ab-heritage-rule { display: block; width: 2.75rem; height: 2px; margin: -0.4rem 0 1.1rem; background: var(--gold); }
 
 .ab-heritage-kicker {
   margin: 0 0 0.6rem;
@@ -349,21 +374,59 @@
   z-index: 2;
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(1.75rem, 4vw, 3rem);
+  gap: clamp(1.75rem, 4vw, 3.25rem);
   align-items: center;
-  padding-block: clamp(3rem, 6vw, 4.5rem) clamp(5rem, 9vw, 7rem);
+  /* the deep bottom padding here used to clear a SectionCurve; that curve is
+     gone, so the band only needs ordinary breathing room now */
+  padding-block: clamp(3rem, 6vw, 4.5rem) clamp(2.5rem, 5vw, 3.5rem);
+  /* lets the watermark run off the right edge without opening a scrollbar */
+  overflow: hidden;
 }
 @media (min-width: 880px) {
-  /* photo takes the larger share — it is the evidence, the card is the caption */
-  .ab-storage { grid-template-columns: 1.15fr 0.85fr; }
+  .ab-storage { grid-template-columns: 0.95fr 1fr; }
 }
-.ab-storage .sc { max-width: none; }
 
+/* hairline farm engraving, pinned to the right edge behind the copy */
+.ab-storage-decor {
+  position: absolute;
+  right: -2.5rem;
+  top: 50%;
+  translate: 0 -50%;
+  width: 15rem;
+  height: auto;
+  color: var(--gold);
+  opacity: 0.22;
+  pointer-events: none;
+  z-index: 0;
+}
+@media (max-width: 879px) {
+  .ab-storage-decor { display: none; }
+}
+
+/* offset hairline frame, drawn just outside the picture.
+   Stacked, the picture is capped and centred: run full-width at this
+   upright ratio and it towers over a tablet viewport, pushing the copy
+   off-screen. It only earns the tall crop once the copy sits beside it. */
 .ab-storage-photo {
+  position: relative;
   margin: 0;
+  z-index: 1;
+  width: 100%;
+  max-width: 30rem;
+  justify-self: center;
+}
+.ab-storage-photo::before {
+  content: "";
+  position: absolute;
+  inset: clamp(-0.75rem, -1vw, -0.5rem);
+  border: 1px solid var(--gold);
+  border-radius: clamp(1.75rem, 3vw, 2.75rem);
+  opacity: 0.5;
+  pointer-events: none;
+}
+.ab-storage-photo-frame {
   overflow: hidden;
-  border-radius: 12px;
-  border: 1px solid var(--cream-deep);
+  border-radius: clamp(1.25rem, 2.4vw, 2.25rem);
   box-shadow: 0 30px 60px -32px rgba(20, 38, 25, 0.6);
 }
 .ab-storage-photo img {
@@ -371,10 +434,116 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 4 / 3;
   transition: transform 1.2s var(--ease);
 }
 .ab-storage-photo:hover img { transform: scale(1.04); }
+
+/* must come after the base rules above, not beside the grid media query
+   further up: a media query adds no specificity, so an earlier block would
+   lose to these same-specificity defaults */
+@media (min-width: 880px) {
+  /* alongside the copy it takes the reference's upright crop, left-aligned */
+  .ab-storage-photo { max-width: 27rem; justify-self: start; }
+  .ab-storage-photo img { aspect-ratio: 9 / 10; }
+}
+
+.ab-storage-copy { position: relative; z-index: 1; }
+
+/* qualified with the element: bare `.about-page p` is (0,1,1) and would
+   otherwise win the colour (see the cascade-guard note further down) */
+.about-page p.ab-storage-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin: 0 0 1.4rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--maroon-600);
+}
+.ab-storage-badge {
+  display: grid;
+  place-items: center;
+  width: 3.1rem;
+  height: 3.1rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--maroon-600);
+  color: var(--cream);
+}
+
+.about-page h2.ab-storage-title {
+  margin: 0 0 1.6rem;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: var(--maroon-600);
+}
+
+/* rule with a bead on its end, as in the reference */
+.ab-storage-rule {
+  display: block;
+  position: relative;
+  width: 7.5rem;
+  height: 1px;
+  margin: 0 0 1.5rem;
+  background: var(--gold);
+}
+.ab-storage-rule::after {
+  content: "";
+  position: absolute;
+  right: -0.55rem;
+  top: 50%;
+  translate: 0 -50%;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+}
+
+.about-page p.ab-storage-lead {
+  margin: 0 0 1rem;
+  font-size: clamp(1.02rem, 1.6vw, 1.2rem);
+  font-weight: 700;
+  color: var(--maroon-600);
+}
+/* the lighter step of the same brand red, so the supporting copy still
+   sits below the claim in the hierarchy instead of flattening against it */
+.about-page p.ab-storage-body {
+  margin: 0 0 2rem;
+  max-width: 30rem;
+  font-size: clamp(0.9rem, 1.3vw, 1rem);
+  line-height: 1.75;
+  color: var(--maroon-500);
+}
+
+.ab-storage-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.95rem 1.75rem;
+  border-radius: var(--radius-pill, 999px);
+  /* the label is knocked out of the red rather than set in it — red on the
+     dark fill would be unreadable */
+  background: var(--maroon-600);
+  color: var(--cream);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.ab-storage-cta span { transition: translate 0.3s var(--ease); }
+.ab-storage-cta:hover,
+.ab-storage-cta:focus-visible {
+  background: var(--maroon-500);
+  transform: translateY(-2px);
+}
+.ab-storage-cta:hover span,
+.ab-storage-cta:focus-visible span { translate: 0.25rem 0; }
 
 /* ---- statement cards ---- */
 
@@ -398,12 +567,45 @@
   z-index: 2;
   max-width: 74rem;
   margin-inline: auto;
-  padding: clamp(3.5rem, 8vw, 6rem) clamp(1.25rem, 5vw, 3.5rem) clamp(6rem, 11vw, 9rem);
+  padding: clamp(1.25rem, 2.5vw, 2rem) clamp(1.25rem, 5vw, 3.5rem) clamp(1.5rem, 3vw, 2.5rem);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 1.4rem;
 }
+/* paddy ears flanking the card, mirrored about its centre */
+.ab-founder-sprig {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  width: 7rem;
+  height: auto;
+  color: var(--gold);
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
+.ab-founder-sprig--left { left: clamp(0.5rem, 2vw, 2rem); }
+.ab-founder-sprig--right { right: clamp(0.5rem, 2vw, 2rem); scale: -1 1; }
+/* stacked, the card fills the band and there is no clear margin to sit in */
+@media (max-width: 899px) {
+  .ab-founder-sprig { display: none; }
+}
+
+/* centred, so the gold accent moves off the left edge onto the top where it
+   reads symmetrically, and the card is a touch smaller than the default */
+.ab-founder-card .sc {
+  position: relative;
+  z-index: 1;
+  max-width: 32rem;
+  text-align: center;
+  border-left: 1px solid var(--cream-deep);
+  border-top: 4px solid var(--gold);
+}
+.about-page .ab-founder-card .sc-text { font-size: clamp(0.98rem, 1.6vw, 1.3rem); }
+/* a sideways slide would fight a centred card — fade it straight up instead */
+.about-page .ab-founder-card .reveal--left { transform: translateY(22px); }
+.about-page .ab-founder-card .reveal--left.in { transform: none; }
 .ab-founder-link {
   display: inline-flex;
   align-items: center;
@@ -563,52 +765,78 @@
 
 /* ---------------------------- 08 final CTA ----------------------------- */
 
+/* The picture sits clear of the words — never behind them — so no part of
+   the copy is ever read through a silhouette. */
 .ab-cta {
   position: relative;
-  min-height: min(74vh, 620px);
-  display: grid;
-  place-items: center;
-  text-align: center;
+  background: var(--rice);
+  padding-block: clamp(2rem, 4vw, 2.75rem) 0;
   overflow: hidden;
-  background: var(--forest-deep);
 }
-.ab-cta-media { position: absolute; inset: -8% 0; z-index: 0; will-change: transform; }
-.ab-cta-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.ab-cta::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  /* black fade over the team photo — darkest at the edges so the white type
-     stays legible over faces and busy field texture wherever it lands */
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.86) 0%, rgba(0, 0, 0, 0.6) 35%, rgba(0, 0, 0, 0.72) 100%);
+.ab-cta-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.25rem, 3vw, 2rem);
+  align-items: center;
 }
-.ab-cta-inner { position: relative; z-index: 2; padding: 5rem 1.5rem; max-width: 62rem; }
+.ab-cta-inner { text-align: left; }
 .ab-cta h2 {
-  color: var(--rice);
-  font-size: clamp(1.7rem, 4vw, 3.1rem);
-  line-height: 1.05;
-  margin-bottom: 2.2rem;
+  color: var(--ink);
+  font-size: clamp(1.3rem, 3.2vw, 1.9rem);
+  line-height: 1.08;
+  margin-bottom: 1.2rem;
 }
 
 /* the workforce close: a bold two-line claim, then the supporting copy in a
-   clear, high-contrast sans so it reads easily over the photo */
-.ab-people-copy {
-  display: grid;
-  gap: 1.1rem;
-  max-width: 42rem;
-  margin-inline: auto;
-  text-align: left;
-}
+   clear, high-contrast sans */
+.ab-people-copy { display: grid; gap: 0.9rem; max-width: 34rem; text-align: left; }
 .about-page .ab-people-copy p {
   margin: 0;
   font-family: var(--sans);
-  font-size: clamp(1rem, 1.6vw, 1.15rem);
-  line-height: 1.75;
-  color: var(--rice);
+  font-size: clamp(0.88rem, 1.2vw, 0.96rem);
+  line-height: 1.7;
+  color: var(--ink);
 }
-.about-page .ab-people-copy p:last-child {
-  font-weight: 800;
-  color: var(--gold-light);
+.about-page .ab-people-copy p:last-child { font-weight: 800; }
+
+/* No frame: the picture's pale ground is dissolved into the section with a
+   mask so it ends on a gradient instead of a cut edge. Mobile runs it
+   full-bleed at the foot of the section, fading in from the top. */
+.ab-cta-media {
+  margin: 0 calc(-1 * clamp(1.25rem, 5vw, 3.5rem));
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 22%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 22%);
+}
+.ab-cta-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: contrast(1.08) saturate(1.12);
+}
+
+@media (min-width: 900px) {
+  /* anchored into the bottom-right corner, bleeding off both of those
+     edges; the top and left dissolve into the cream instead of cutting */
+  /* only as tall as the bottom-anchored picture needs at its widest
+     (36rem / 1.182 ≈ 30.5rem tall, less the section's top padding), so the
+     copy isn't padded out to fill a taller block than the art requires */
+  .ab-cta-grid { min-height: 29rem; }
+  .ab-cta-inner { max-width: min(36rem, 54%); }
+  .ab-cta-media {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: min(40%, 36rem);
+    margin: 0;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0, #000 28%),
+      linear-gradient(to bottom, transparent 0, #000 24%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to right, transparent 0, #000 28%),
+      linear-gradient(to bottom, transparent 0, #000 24%);
+    mask-composite: intersect;
+  }
 }
 
 /* ===================== bold display type + layout 2/4 ==================== */
@@ -743,8 +971,7 @@
 
 /* ---- layout 4: promise + close ---- */
 
-.ab-cta-title .ab-line { color: var(--rice); }
-.ab-cta-title .ab-line:nth-child(2) { color: var(--gold-light); }
+.ab-cta-title .ab-line { color: var(--ink); }
 
 /* --------------------- cascade guard: specific text colours -------------
    `.about-page p` is (0,1,1) and silently beat every single-class rule below

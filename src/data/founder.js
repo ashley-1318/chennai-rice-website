@@ -21,21 +21,23 @@ export const FOUNDER = {
     { to: 1000, suffix: "+", text: "People Behind the Journey" }
   ],
 
-  visionEyebrow: "About our founder",
-  visionHeading: "A Vision Rooted in Heritage",
-  bio: [
-    "Mr. M. S. Tamilselvan grew up around three generations of his family's rice trade in Tamil Nadu, watching paddy move from field to warehouse long before Chennai Rice Industries carried a name.",
-    "In 2013, that inheritance became a company under his leadership — and has since grown into three production units running day and night, built on modern infrastructure without losing sight of where it started.",
-    "Today, Chennai Rice Industries mills its Special Rajabhogam Kitchidi Ponni Rice at its own facility in Erode, stores paddy across six warehouses in Tamil Nadu, and sources through a five-state procurement network, with distribution reaching further across the country every year."
+  visionHeading: "Where Tradition Meets Ambition",
+  bioLead: [
+    "Three generations built the foundation.",
+    "The next generation chose to take it further."
   ],
+  bio: [
+    "For Mr. M. S. Tamilselvan, rice has always been more than a business. It is a legacy shaped by generations, nurtured through relationships, and grounded in the trust of people who have been part of the journey.",
+    "In 2013, he transformed that legacy into a larger vision with the founding of Chennai Rice Industries. What began with a deep understanding of the rice trade evolved into a modern, integrated operation combining advanced processing facilities, large-scale paddy storage, and a procurement network spanning five states.",
+    "Today, Chennai Rice Industries stands on a larger stage, with greater capabilities, wider reach, and bigger ambitions. Yet, at its heart, the principles remain the same — quality in every process, trust in every relationship, and purpose in every step forward."
+  ],
+  bioClosing: "The scale has changed. The values have not.",
 
   glance: [
-    { label: "Name", value: "M. S. Tamilselvan" },
-    { label: "Role", value: "Founder & Chairman" },
-    { label: "Company since", value: "2013" },
-    { label: "Heritage", value: "Three generations in the rice trade" },
-    { label: "Facility", value: "Own mill, Erode, Tamil Nadu" },
-    { label: "Focus", value: "Quality grain, farmer trust, pan-India reach" }
+    { label: "From Our Mill", value: "Processed at our own facility in Erode" },
+    { label: "Hands-Free Processing", value: "Modern processing designed for hygienic handling" },
+    { label: "Pure by Choice", value: "100% vegetarian rice, clearly marked" },
+    { label: "Quality You Can Trust", value: "Consistent quality from paddy to pack" }
   ],
 
   quote: "Build capabilities today that create scale for tomorrow.",
