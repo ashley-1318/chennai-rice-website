@@ -107,13 +107,40 @@ export default function RiceCursor() {
        move, which would otherwise read as the page responding to a click.
        See src/services/interactions.js. */
     <div className="rice-cursor" ref={layerRef} aria-hidden="true" data-analytics-ignore="">
+      {/* One shared gradient definition, referenced by every grain below —
+          not one per grain, which would repeat the same id and be invalid
+          HTML the moment TRAIL_GRAINS is raised above 0. */}
+      <svg width="0" height="0" style={{ position: 'absolute' }}>
+        <defs>
+          <linearGradient id="rice-grain-fill" x1="35%" y1="0%" x2="65%" y2="100%">
+            <stop offset="0%" stopColor="#ecdfb6" />
+            <stop offset="48%" stopColor="#c69a3f" />
+            <stop offset="100%" stopColor="#8a6a25" />
+          </linearGradient>
+        </defs>
+      </svg>
+
       {Array.from({ length: TRAIL_GRAINS + 1 }, (_, i) => (
-        <span
-          className="rice-grain"
+        <svg
+          // rice-grain-lead (not :first-child) picks up the hot-hover halo
+          // in ricecursor.css — the shared-gradient <svg> above is also a
+          // sibling, so :first-child would no longer point at grain 0.
+          className={`rice-grain${i === 0 ? ' rice-grain-lead' : ''}`}
           key={i}
           ref={el => (grainsRef.current[i] = el)}
           style={{ opacity: 1 - i * 0.14 }}
-        />
+          viewBox="0 0 32 18"
+        >
+          {/* A soft, tapered grain — narrower at each end than an ellipse
+              would be, but rounded rather than pointed: the curve into and
+              out of each tip (30,4)-(30,9)-(30,14) shares the same vertical
+              tangent, so it closes smoothly instead of meeting as a
+              corner. */}
+          <path
+            d="M2,9 C2,4 8,2 16,2 C24,2 30,4 30,9 C30,14 24,16 16,16 C8,16 2,14 2,9 Z"
+            fill="url(#rice-grain-fill)"
+          />
+        </svg>
       ))}
     </div>
   )

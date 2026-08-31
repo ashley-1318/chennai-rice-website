@@ -25,25 +25,21 @@ html.has-rice-cursor select {
   position: fixed;
   top: 0;
   left: 0;
-  width: 17px;
-  height: 8px;
-  border-radius: 50%;
-  background: linear-gradient(170deg, #fffdf7 0%, #f6ecd8 48%, #e0cca3 100%);
-  box-shadow:
-    0 1px 4px rgba(50, 25, 8, 0.4),
-    inset 0 1px 1px rgba(255, 255, 255, 0.85);
+  display: block;
+  width: 19px;
+  height: 10.7px;
+  overflow: visible;
+  filter: drop-shadow(0 1px 3px rgba(50, 25, 8, 0.4));
   will-change: transform;
 }
 
 /* lead grain picks up a gold halo over links and buttons */
-.rice-grain:first-child {
-  transition: box-shadow 0.25s ease;
+.rice-grain-lead {
+  transition: filter 0.25s ease;
 }
-.rice-cursor.is-hot .rice-grain:first-child {
-  box-shadow:
-    0 0 0 4px rgba(198, 154, 63, 0.34),
-    0 1px 5px rgba(50, 25, 8, 0.45),
-    inset 0 1px 1px rgba(255, 255, 255, 0.85);
+.rice-cursor.is-hot .rice-grain-lead {
+  filter: drop-shadow(0 0 3px rgba(198, 154, 63, 0.85))
+    drop-shadow(0 1px 4px rgba(50, 25, 8, 0.45));
 }
 
 /* coarse pointers keep the normal cursor */
