@@ -106,9 +106,10 @@ export default function FeatureStrip() {
           ))}
         </div>
 
-        {/* bottom cut is filled with the colour of the section that follows */}
+        {/* bottom cut is filled with the colour of the section that follows
+            (Celebrities' --cream-soft, #faf5e9) — keep these in sync. */}
         <svg className="feat-cut feat-cut-bottom" viewBox="0 0 1440 46" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M0,46 L0,36 C420,-6 1080,-6 1440,36 L1440,46 Z" fill="#f2e3c2" />
+          <path d="M0,46 L0,36 C420,-6 1080,-6 1440,36 L1440,46 Z" fill="#faf5e9" />
           <path
             d="M0,36 C420,-6 1080,-6 1440,36"
             fill="none"
