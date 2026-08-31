@@ -19,7 +19,10 @@
 }
 .testi-decor-right {
   right: -70px;
-  bottom: -50px;
+  /* .testi clips at its own edge (overflow: hidden) — the bowl is a solid
+     round shape, so unlike the wispy wheat stalks on the left, even a
+     small negative offset here reads as a flat, visible cut through it. */
+  bottom: 6px;
   width: 300px;
 }
 
