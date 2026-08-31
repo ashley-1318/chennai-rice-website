@@ -2,7 +2,7 @@
 // (rather than inline JSX) so the legal text can be updated without
 // touching the page's layout code — mirrors src/data/privacyPolicy.js.
 
-export const TERMS_LAST_UPDATED = '27 August 2026'
+export const TERMS_LAST_UPDATED = '31 August 2026'
 
 export const TERMS_INTRO = [
   'Welcome to the Chennai Rice Industries India Private Limited website. Please read these Terms and Conditions carefully before using this website. By accessing or using this website in any way, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, please discontinue use of this website immediately.',
@@ -70,13 +70,31 @@ export const TERMS_SECTIONS = [
     ],
   },
   {
-    title: '8. Facility Visits',
+    title: '8. Product Quality and Authenticity',
+    paragraphs: [
+      'We are committed to delivering high-quality rice. Customers should report any quality issues immediately with evidence for review.',
+    ],
+  },
+  {
+    title: '9. Pricing & Availability',
+    paragraphs: [
+      'All prices are in INR and may change without notice. If an item is unavailable or mispriced, we may cancel the order and issue a full refund.',
+    ],
+  },
+  {
+    title: '10. Customer Responsibilities',
+    paragraphs: [
+      'Customers must provide accurate contact and delivery details. Orders shipped to incorrect or incomplete addresses provided by the customer are considered successfully delivered.',
+    ],
+  },
+  {
+    title: '11. Facility Visits',
     paragraphs: [
       "Any visit to Chennai Rice Industries India Private Limited's manufacturing, processing, or business facilities is subject to prior approval, scheduling availability, and compliance with all applicable safety and health protocols in force at the time of the visit.",
     ],
   },
   {
-    title: '9. Regulatory Compliance',
+    title: '12. Regulatory Compliance',
     paragraphs: [
       'Chennai Rice Industries India Private Limited operates in compliance with applicable Indian food safety and business regulations, including:',
     ],
@@ -91,25 +109,32 @@ export const TERMS_SECTIONS = [
     ],
   },
   {
-    title: '10. Export and International Trade',
+    title: '13. Export and International Trade',
     paragraphs: [
       'Chennai Rice Industries India Private Limited supplies products both within India and to international markets. All export orders are subject to applicable Indian export regulations, licensing requirements, and the import laws of the destination country. Product specifications, packaging, and labelling for export shipments may differ from those intended for domestic sale to comply with the destination market’s requirements. It is the responsibility of the buyer/importer to ensure compliance with all applicable import regulations, customs duties, and documentation in their respective country.',
     ],
   },
   {
-    title: '11. Limitation of Liability',
+    title: '14. Limitation of Liability',
     paragraphs: [
       'To the fullest extent permitted by law, Chennai Rice Industries India Private Limited shall not be liable for any direct, indirect, incidental, or consequential damages arising out of your access to, or use of, this website, including but not limited to loss of data, business interruption, or reliance on information provided herein.',
+      'Chennai Rice Industries India Private Limited is not responsible for courier delays, losses, or damages, or for any indirect or consequential losses due to delivery delays or misuse after delivery.',
     ],
   },
   {
-    title: '12. Governing Law',
+    title: '15. Governing Law & Jurisdiction',
     paragraphs: [
-      'These Terms and Conditions shall be governed by and construed in accordance with the laws of India, and any disputes arising in connection with this website shall be subject to the exclusive jurisdiction of the courts in Chennai, Tamil Nadu.',
+      'These terms are governed by the laws of India. Any disputes shall fall under the jurisdiction of the courts in Tamil Nadu, India.',
     ],
   },
   {
-    title: '13. Updates to These Terms',
+    title: '16. Feedback & Service Improvement',
+    paragraphs: [
+      'We welcome customer feedback via our website or social media to help improve our products and service. Chennai Rice Industries India Private Limited reserves the right to update these policies anytime, with changes posted on our website.',
+    ],
+  },
+  {
+    title: '17. Updates to These Terms',
     paragraphs: [
       'Chennai Rice Industries India Private Limited reserves the right to revise and update these Terms and Conditions at any time without prior notice. We encourage you to review this page periodically to stay informed of any changes. Continued use of the website after changes are posted constitutes your acceptance of the revised terms.',
     ],
@@ -117,7 +142,7 @@ export const TERMS_SECTIONS = [
 ]
 
 export const TERMS_CONTACT = {
-  heading: '14. Contact Us',
+  heading: '18. Contact Us',
   intro: 'For any questions or concerns regarding these Terms and Conditions, please contact us at:',
   companyName: 'Chennai Rice Industries India Private Limited',
   email: 'social@chennairiceindustries.com',
