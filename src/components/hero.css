@@ -41,6 +41,21 @@
   z-index: 2;
   text-align: center;
   padding: 21vh 6vw 0;
+  /* Duration is mirrored by FADE_SECONDS in Hero.jsx — change both. */
+  transition: opacity 0.7s ease;
+}
+
+/* The film ends on a white card carrying the logo. Faded rather than
+   hidden: opacity leaves the h1 in the accessibility tree, so the page
+   never loses its heading to a video frame. */
+.hero-content.is-outro {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-content {
+    transition: none;
+  }
 }
 
 /* The headline runs three deliberate lines — each titleLine is its own
