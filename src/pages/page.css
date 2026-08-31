@@ -13,23 +13,6 @@
   min-height: 82vh;
 }
 
-.page-decor {
-  position: absolute;
-  bottom: 30px;
-  width: 130px;
-  opacity: 0.85;
-  z-index: 0;
-  pointer-events: none;
-  user-select: none;
-}
-.page-decor-left {
-  left: -10px;
-  transform: scaleX(-1);
-}
-.page-decor-right {
-  right: -10px;
-}
-
 .page-inner {
   position: relative;
   z-index: 1;
@@ -172,8 +155,5 @@
   }
   .contact-grid {
     grid-template-columns: 1fr;
-  }
-  .page-decor {
-    display: none;
   }
 }

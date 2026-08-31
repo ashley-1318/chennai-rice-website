@@ -1,7 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import Img from '../../components/Img.jsx'
-import { ASSETS } from '../../data/content.js'
 import { renderMarkdown } from '../../lib/markdown.jsx'
 import { fetchPostBySlug, formatPostDate } from '../../services/blog.service.js'
 import '../page.css'
@@ -81,8 +79,6 @@ export default function BlogPostPage() {
 
   return (
     <main className="page">
-      <Img className="page-decor page-decor-right" src={ASSETS.grainsWhite} alt="" aria-hidden="true" />
-
       <div className="container page-inner page-inner--wide">
         {post.status !== 'published' && (
           <p className="blog-draft-note">

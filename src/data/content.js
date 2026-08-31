@@ -12,7 +12,6 @@ export const ASSETS = {
   wheatRight: '/assets/decor/wheat-right.png',
   riceBowl: '/assets/decor/rice-bowl.png',
   grainsGold: '/assets/decor/grains-gold.png',
-  grainsWhite: '/assets/decor/grains-white.png',
   paddySpray: '/assets/decor/paddy-spray.png',
   grainsFlying: '/assets/decor/grains-flying.png',
 }

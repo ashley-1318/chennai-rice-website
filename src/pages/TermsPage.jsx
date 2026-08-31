@@ -1,6 +1,4 @@
 import Ornament from '../components/Ornament.jsx'
-import Img from '../components/Img.jsx'
-import { ASSETS } from '../data/content.js'
 import { TERMS_LAST_UPDATED, TERMS_INTRO, TERMS_SECTIONS, TERMS_CONTACT } from '../data/termsConditions.js'
 import './page.css'
 import './legal.css'
@@ -8,8 +6,6 @@ import './legal.css'
 export default function TermsPage() {
   return (
     <main className="page">
-      <Img className="page-decor page-decor-right" src={ASSETS.grainsWhite} alt="" aria-hidden="true" />
-
       <div className="container page-inner page-inner--wide">
         <div className="section-label">
           <Ornament />

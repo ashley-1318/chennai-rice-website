@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Ornament from '../../components/Ornament.jsx'
-import Img from '../../components/Img.jsx'
-import { ASSETS } from '../../data/content.js'
 import { fetchPublishedPosts, formatPostDate } from '../../services/blog.service.js'
 import '../page.css'
 import './blog.css'
@@ -42,9 +40,6 @@ export default function BlogListPage() {
 
   return (
     <main className="page">
-      <Img className="page-decor page-decor-left" src={ASSETS.grainsWhite} alt="" aria-hidden="true" />
-      <Img className="page-decor page-decor-right" src={ASSETS.grainsWhite} alt="" aria-hidden="true" />
-
       <div className="container page-inner page-inner--wide">
         <div className="section-label">
           <Ornament />

@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import Ornament from '../components/Ornament.jsx'
-import Img from '../components/Img.jsx'
-import { ASSETS, FOOTER } from '../data/content.js'
+import { FOOTER } from '../data/content.js'
 import './page.css'
 import './bulkorder.css'
 
@@ -127,8 +126,6 @@ export default function BulkOrderPage() {
 
   return (
     <main className="page">
-      <Img className="page-decor page-decor-right" src={ASSETS.grainsWhite} alt="" aria-hidden="true" />
-
       <div className="container page-inner page-inner--wide">
         <div className="section-label">
           <Ornament />

@@ -1,6 +1,4 @@
 import Ornament from '../components/Ornament.jsx'
-import Img from '../components/Img.jsx'
-import { ASSETS } from '../data/content.js'
 import { POLICY_LAST_UPDATED, POLICY_INTRO, POLICY_SECTIONS, POLICY_CONTACT } from '../data/privacyPolicy.js'
 import './page.css'
 import './legal.css'
@@ -8,8 +6,6 @@ import './legal.css'
 export default function PrivacyPolicyPage() {
   return (
     <main className="page">
-      <Img className="page-decor page-decor-right" src={ASSETS.grainsWhite} alt="" aria-hidden="true" />
-
       <div className="container page-inner page-inner--wide">
         <div className="section-label">
           <Ornament />

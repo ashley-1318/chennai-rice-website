@@ -1,15 +1,10 @@
 import { Link } from 'react-router-dom'
 import Ornament from '../components/Ornament.jsx'
-import Img from '../components/Img.jsx'
-import { ASSETS } from '../data/content.js'
 import './page.css'
 
 export default function ComingSoonPage({ title, blurb }) {
   return (
     <main className="page page-center">
-      <Img className="page-decor page-decor-left" src={ASSETS.grainsWhite} alt="" aria-hidden="true" />
-      <Img className="page-decor page-decor-right" src={ASSETS.grainsWhite} alt="" aria-hidden="true" />
-
       <div className="container page-inner">
         <div className="section-label">
           <Ornament />
