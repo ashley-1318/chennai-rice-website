@@ -86,14 +86,6 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="hero-scroll">
-        <svg width="24" height="38" viewBox="0 0 24 38" fill="none" aria-hidden="true">
-          <rect x="1" y="1" width="22" height="36" rx="11" stroke="#cdb37c" strokeWidth="1.5" />
-          <circle className="hero-scroll-dot" cx="12" cy="11" r="2.5" fill="#cdb37c" />
-        </svg>
-        <span>Scroll</span>
-      </div>
-
       <svg className="hero-curve" viewBox="0 0 1440 150" preserveAspectRatio="none" aria-hidden="true">
         <path
           d="M0,88 C240,34 520,18 810,34 C1080,49 1290,84 1440,64 L1440,150 L0,150 Z"
