@@ -711,6 +711,7 @@
   font-weight: 700;
   font-size: var(--fs-small);
   letter-spacing: 0.02em;
+  text-align: center;
   color: var(--maroon-600);
   text-decoration: none;
   background: transparent;
