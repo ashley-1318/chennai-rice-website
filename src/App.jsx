@@ -22,6 +22,7 @@ import TermsPage from './pages/TermsPage.jsx'
 import ProductsPage from './shop/pages/ProductsPage.jsx'
 import ProductDetailPage from './shop/pages/ProductDetailPage.jsx'
 import AboutPage from './shop/pages/AboutPage.jsx'
+import FounderPage from './shop/pages/FounderPage.jsx'
 import CartPage from './shop/pages/CartPage.jsx'
 import WishlistPage from './shop/pages/WishlistPage.jsx'
 import InfrastructurePage from './pages/infrastructure/InfrastructurePage.jsx'
@@ -40,7 +41,6 @@ const BlogPostPage = lazy(() => import('./pages/blog/BlogPostPage.jsx'))
 /* Routes that exist in the navigation and footer but whose copy is still
    being written. Listed here so no link in the footer ever 404s. */
 const PLACEHOLDER_PAGES = [
-  { path: '/founder', title: 'Our Founder', blurb: 'The story of M. S. Tamilselvan and the seven decades behind Chennai Rice Industries is being written up for this page.' },
   { path: '/our-team', title: 'Our Team', blurb: 'Profiles of the people who run the mill are being put together and will appear here shortly.' },
   { path: '/careers', title: 'Careers', blurb: 'Open roles across our mills, logistics and sales will be listed here. Write to us in the meantime and we will keep your details on file.' },
   { path: '/quality', title: 'Quality', blurb: 'Our sorting, grading and testing process is being documented and will be published here shortly.' },
@@ -113,6 +113,7 @@ export default function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/bulk-order" element={<BulkOrderPage />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/founder" element={<FounderPage />} />
         <Route path="/infrastructure" element={<InfrastructurePage />} />
         <Route path="/privacy" element={<PrivacyPolicyPage />} />
 

@@ -17,6 +17,7 @@
   --maroon-700: #5E1418;        /* emblem ring */
   --maroon-600: #6E1B22;        /* primary */
   --maroon-500: #8A2A31;
+  --gold-700:   #8A6218;        /* 5.08:1 on cream — AA for small labels; used on the Founder page */
   --gold-600:   #A87A22;        /* secondary, AA on cream for large text */
   --gold-500:   #C08A2D;
   --gold-300:   #E8C766;
@@ -1642,4 +1643,359 @@
     width: calc(100vw - 32px);
     bottom: 16px;
   }
+}
+
+/* ---------- Founder page ---------- */
+
+.shop-scope .founder-page { background: var(--cream-100); }
+
+.shop-scope .founder-page .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 700ms ease, transform 700ms ease;
+}
+.shop-scope .founder-page .reveal.in { opacity: 1; transform: none; }
+.shop-scope .founder-page .reveal--left { transform: translateX(-40px); }
+.shop-scope .founder-page .reveal--left.in { transform: none; }
+.shop-scope .founder-page .reveal--right { transform: translateX(40px); }
+.shop-scope .founder-page .reveal--right.in { transform: none; }
+
+.shop-scope .fp-shell { max-width: 72rem; margin-inline: auto; padding-inline: var(--s-4); }
+
+.shop-scope .fp-crumb {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding-top: var(--s-6);
+  font-size: var(--fs-small);
+  color: var(--ink-500);
+}
+.shop-scope .fp-crumb a { color: var(--maroon-600); font-weight: 700; text-decoration: none; }
+.shop-scope .fp-crumb a:hover { text-decoration: underline; }
+.shop-scope .fp-crumb [aria-current="page"] { color: var(--ink-700); }
+
+/* ============================================================
+   Founder hero — copy left, portrait right, no frame or disc. The
+   portrait sits directly on the page ground with a loose line-art
+   flourish behind it, rather than overlapping the copy.
+   ============================================================ */
+
+/* no bottom padding at any width: the portrait meets the stats strip.
+   overflow clips the decorative curls at the section edge so they
+   can't bleed over the strip below. */
+.shop-scope .fp-hero { padding-block: var(--s-8) 0; overflow: hidden; }
+
+.shop-scope .fp-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-8);
+  align-items: center;
+}
+
+.shop-scope .fp-hero-copy { max-width: 32rem; }
+
+/* a short gold rule used both under the eyebrow and beneath the
+   signature — the same small mark bookends the copy column */
+.shop-scope .fp-hero-rule {
+  display: block;
+  width: 3rem;
+  height: 2px;
+  margin: var(--s-3) 0 var(--s-6);
+  background: var(--gold-500);
+}
+
+.shop-scope .fp-vision-eyebrow {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: var(--fs-small);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-700);
+}
+
+.shop-scope .fp-hero-title { margin: 0 0 var(--s-6); line-height: 0.98; text-wrap: balance; }
+.shop-scope .fp-hero-title-lead {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  color: var(--ink-900);
+}
+.shop-scope .fp-hero-title-strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.75rem, 8vw, 4.25rem);
+  letter-spacing: -0.01em;
+  color: var(--maroon-700);
+}
+.shop-scope .fp-hero-title-strong::after { content: "."; color: var(--gold-500); }
+
+/* a vertical rule instead of a pull-quote card — reads as an aside,
+   with the mark doing the "quoted" work rather than a cursive face */
+.shop-scope .fp-intro-block {
+  margin: 0 0 var(--s-6);
+  padding-left: var(--s-4);
+  border-left: 2px solid var(--gold-500);
+}
+.shop-scope .fp-intro-mark {
+  display: block;
+  margin-bottom: -0.15em;
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  line-height: 1;
+  color: var(--gold-500);
+}
+.shop-scope .fp-intro {
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  line-height: 1.55;
+  color: var(--ink-700);
+}
+
+.shop-scope .fp-hero-sign { margin-bottom: var(--s-2); }
+/* a signature-style script, deliberately not the quote's Great Vibes —
+   the two cursive moments need to read as different hands */
+.shop-scope .fp-signature {
+  margin: 0;
+  font-family: "Mrs Saint Delafield", cursive;
+  font-size: 2.6rem;
+  line-height: 1;
+  color: var(--maroon-600);
+}
+.shop-scope .fp-name {
+  margin: var(--s-2) 0 0;
+  font-weight: 800;
+  font-size: var(--fs-small);
+  letter-spacing: 0.02em;
+  color: var(--ink-900);
+}
+.shop-scope .fp-title { margin: 0.15rem 0 0; font-size: var(--fs-tag); line-height: 1.6; color: var(--ink-500); }
+
+.shop-scope .fp-hero-stage { position: relative; width: 100%; max-width: 19rem; margin-inline: auto; }
+/* the curls sit wider than the portrait so they read as drawn around
+   him rather than boxed behind him; .fp-hero clips them so they never
+   spill into the stats strip below */
+.shop-scope .fp-hero-scribble {
+  position: absolute;
+  z-index: 0;
+  top: 48%;
+  left: 42%;
+  translate: -50% -50%;
+  width: 132%;
+  height: auto;
+  color: var(--gold-500);
+  opacity: 0.2;
+  pointer-events: none;
+}
+.shop-scope .fp-hero-photo { position: relative; z-index: 1; aspect-ratio: 4 / 5; width: 100%; }
+.shop-scope .fp-hero-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: saturate(0.85) contrast(1.05);
+}
+
+/* fallback panel when the portrait is missing */
+.shop-scope .fp-hero-photo--empty {
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-md);
+  background: linear-gradient(150deg, var(--maroon-600), var(--maroon-700));
+  box-shadow: var(--shadow-lift);
+}
+.shop-scope .fp-hero-initial { font-family: var(--font-display); font-size: 6rem; color: var(--gold-300); }
+
+/* ---- desktop: copy and portrait side by side. The stage aligns to the
+   bottom of the grid and the section carries no bottom padding, so the
+   portrait's feet land exactly on the stats strip below — no gap. ---- */
+@media (min-width: 900px) {
+  .shop-scope .fp-hero { padding-block: var(--s-12) 0; }
+
+  .shop-scope .fp-hero-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    column-gap: var(--s-12);
+    row-gap: var(--s-6);
+  }
+
+  /* eyebrow pinned to the top of the portrait column, right-aligned */
+  .shop-scope .fp-hero-vision { grid-column: 2; grid-row: 1; align-self: start; text-align: right; }
+  .shop-scope .fp-hero-vision .fp-hero-rule { margin-inline: auto 0; }
+
+  .shop-scope .fp-hero-copy {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    align-self: center;
+    max-width: none;
+    padding-bottom: var(--s-12);
+  }
+
+  .shop-scope .fp-hero-stage {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: end;
+    max-width: 26rem;
+    height: 27rem;
+    margin-inline: auto 0;
+  }
+  .shop-scope .fp-hero-photo { height: 100%; aspect-ratio: auto; }
+}
+
+.shop-scope .fp-vision { padding-block: var(--s-16) var(--s-16); }
+.shop-scope .fp-vision-grid { display: grid; grid-template-columns: 1fr; gap: var(--s-8); align-items: start; }
+@media (min-width: 900px) {
+  .shop-scope .fp-vision-grid { grid-template-columns: minmax(0, 1fr) 21rem; }
+}
+.shop-scope .fp-bio h2 {
+  position: relative;
+  font-size: var(--fs-h2);
+  margin: var(--s-2) 0 var(--s-4);
+  padding-bottom: var(--s-3);
+}
+.shop-scope .fp-bio h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 3rem;
+  height: 2px;
+  background: var(--gold-500);
+}
+.shop-scope .fp-bio p { margin: 0 0 var(--s-4); color: var(--ink-700); line-height: 1.75; }
+.shop-scope .fp-bio p:last-child { margin-bottom: 0; }
+
+/* a short couplet ahead of the prose — carries the "then vs now" framing
+   in two lines, so it earns more weight than the paragraphs below it */
+.shop-scope .fp-bio p.fp-bio-lead {
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--ink-900);
+  line-height: 1.4;
+}
+.shop-scope .fp-bio p.fp-bio-lead:last-of-type { margin-bottom: var(--s-4); }
+
+/* the closing line mirrors the lead — same weight, bookending the bio */
+.shop-scope .fp-bio p.fp-bio-closing {
+  margin: var(--s-2) 0 0;
+  font-weight: 800;
+  color: var(--maroon-600);
+}
+
+.shop-scope .fp-glance {
+  padding: var(--s-6);
+  background: var(--cream-50);
+  border: 1px solid var(--cream-300);
+  border-top: 3px solid var(--gold-500);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-rest);
+}
+.shop-scope .fp-glance dl { margin: 0; }
+.shop-scope .fp-glance-row { padding: var(--s-3) 0; border-bottom: 1px solid var(--cream-300); }
+.shop-scope .fp-glance-row:last-child { border-bottom: none; padding-bottom: 0; }
+.shop-scope .fp-glance-row dt {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--fs-tag);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold-700);
+}
+.shop-scope .fp-glance-row dt svg { flex-shrink: 0; color: var(--maroon-600); }
+.shop-scope .fp-glance-row dd { margin: 0.3rem 0 0 1.65rem; font-size: var(--fs-body); color: var(--ink-700); }
+
+/* a plain divider strip rather than a bordered card — thin rules
+   between the figures do the separating instead of a box */
+/* butts directly against the hero — the portrait stands on this strip */
+.shop-scope .fp-stats-strip { background: var(--maroon-600); }
+.shop-scope .fp-stats-strip-inner {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-6) 0;
+  padding-block: var(--s-8);
+  text-align: center;
+}
+@media (min-width: 700px) {
+  .shop-scope .fp-stats-strip-inner { grid-template-columns: repeat(4, 1fr); }
+}
+.shop-scope .fp-stats-strip-inner .fp-stat { position: relative; padding-inline: var(--s-4); }
+.shop-scope .fp-stats-strip-inner .fp-stat:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8%;
+  bottom: 8%;
+  width: 1px;
+  background: rgba(251, 246, 236, 0.28);
+}
+.shop-scope .fp-stat-value {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 2.4rem);
+  color: var(--cream-50);
+  font-variant-numeric: tabular-nums;
+}
+/* gold reads as an accent against the maroon ground and clears AA at
+   this size */
+.shop-scope .fp-stat-value span { font-size: 0.6em; color: var(--gold-300); }
+.shop-scope .fp-stat-unit { margin: 0.2rem 0 0; font-size: var(--fs-small); font-weight: 700; color: var(--cream-100); }
+
+/* the closing quote as a full-width photo banner — hands passing grain
+   at sunset, the same image already used for the value-chain story */
+.shop-scope .fp-quote-banner {
+  position: relative;
+  margin: var(--s-16) auto;
+  min-height: 20rem;
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-lift);
+}
+.shop-scope .fp-quote-banner-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 70% 55%;
+}
+.shop-scope .fp-quote-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(43, 16, 18, 0.92) 0%, rgba(43, 16, 18, 0.72) 38%, rgba(43, 16, 18, 0.25) 75%);
+}
+.shop-scope .fp-quote-banner-content {
+  position: relative;
+  z-index: 1;
+  max-width: 32rem;
+  padding: var(--s-12) var(--s-8);
+}
+.shop-scope .fp-quote-mark {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 4rem;
+  line-height: 1;
+  color: var(--gold-500);
+}
+.shop-scope .fp-quote-text {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 3vw, 1.9rem);
+  line-height: 1.4;
+  color: var(--cream-50);
+}
+.shop-scope .fp-quote-attr { margin-top: var(--s-4); font-size: var(--fs-small); font-weight: 700; letter-spacing: 0.03em; color: var(--gold-300); }
+
+@media (max-width: 640px) {
+  .shop-scope .fp-quote-banner-content { padding: var(--s-8) var(--s-6); }
 }
