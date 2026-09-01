@@ -29,6 +29,16 @@
   background: var(--rice);
   color: var(--ink);
   font-family: var(--sans);
+
+  /* .shop-scope adds 84px (70px on tablet/mobile) of top padding so
+     ordinary shop pages clear the fixed navbar. This page opens on a
+     full-bleed photo section instead, so pull it back up flush under
+     the nav rather than leaving a cream gap above it. */
+  margin-top: -84px;
+}
+
+@media (max-width: 900px) {
+  .about-page { margin-top: -70px; }
 }
 
 /* Sections reveal as they enter the viewport. `.reveal` is the resting
