@@ -41,47 +41,6 @@ function HeroStatFigure({ figure }) {
   );
 }
 
-/* Loose looping line-work behind the portrait. A few tall, elongated
-   ellipses leaning at slightly different angles — the sweeping
-   "drawn in one stroke" look, not a dense spirograph. */
-/* Each loop sits at its own centre, drifting down-left along a diagonal,
-   so the set reads as a hand looping continuously across the page rather
-   than as concentric rings. The open arcs are the tails that trail off. */
-const SCRIBBLE_LOOPS = [
-  { cx: 252, cy: 150, rx: 52, ry: 120, rotate: 40 },
-  { cx: 216, cy: 212, rx: 64, ry: 142, rotate: 44 },
-  { cx: 178, cy: 272, rx: 58, ry: 130, rotate: 36 },
-  { cx: 214, cy: 208, rx: 98, ry: 192, rotate: 48 }
-];
-
-const SCRIBBLE_TAILS = [
-  "M298 66C382 96 414 186 358 258",
-  "M244 372C338 392 400 338 404 268"
-];
-
-function ScribbleArt({ className }) {
-  return (
-    <svg className={className} viewBox="0 0 440 520" aria-hidden="true" focusable="false">
-      {SCRIBBLE_LOOPS.map((loop) => (
-        <ellipse
-          key={`${loop.cx}-${loop.rx}`}
-          cx={loop.cx}
-          cy={loop.cy}
-          rx={loop.rx}
-          ry={loop.ry}
-          transform={`rotate(${loop.rotate} ${loop.cx} ${loop.cy})`}
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1"
-        />
-      ))}
-      {SCRIBBLE_TAILS.map((d) => (
-        <path key={d} d={d} fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
-      ))}
-    </svg>
-  );
-}
-
 /**
  * A dedicated page for the founder, linked from the About page's founder
  * card. Every figure and fact here is pulled from FOUNDER (src/data/founder.js)
@@ -145,7 +104,6 @@ export default function FounderPage() {
             </div>
 
             <div className="fp-hero-stage">
-              <ScribbleArt className="fp-hero-scribble" />
               <div className={`fp-hero-photo${photoMissing ? " fp-hero-photo--empty" : ""}`}>
                 {photoMissing ? (
                   <span className="fp-hero-initial" aria-hidden="true">

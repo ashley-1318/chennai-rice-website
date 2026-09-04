@@ -1735,21 +1735,6 @@
 .shop-scope .fp-title { margin: 0.15rem 0 0; font-size: var(--fs-tag); line-height: 1.6; color: var(--ink-500); }
 
 .shop-scope .fp-hero-stage { position: relative; width: 100%; max-width: 19rem; margin-inline: auto; }
-/* the curls sit wider than the portrait so they read as drawn around
-   him rather than boxed behind him; .fp-hero clips them so they never
-   spill into the stats strip below */
-.shop-scope .fp-hero-scribble {
-  position: absolute;
-  z-index: 0;
-  top: 48%;
-  left: 42%;
-  translate: -50% -50%;
-  width: 132%;
-  height: auto;
-  color: var(--gold-500);
-  opacity: 0.2;
-  pointer-events: none;
-}
 .shop-scope .fp-hero-photo { position: relative; z-index: 1; aspect-ratio: 4 / 5; width: 100%; }
 .shop-scope .fp-hero-photo img {
   display: block;
