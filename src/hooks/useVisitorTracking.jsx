@@ -85,7 +85,26 @@ export function useVisitorTracking() {
   const { pathname } = useLocation()
 
   const sessionRef = useRef({ started: false, sessionId: null, totalSeconds: 0, pageCount: 0 })
-  const pageRef = useRef({ path: null, enteredAt: null })
+  const pageRef = useRef({ path: null, enteredAt: null, sent: false })
+
+  // Sends the page currently open, exactly once. A page can be flushed by
+  // whichever of the three triggers below fires first — the route changing,
+  // the tab being backgrounded, or the tab actually closing — and `sent`
+  // makes every trigger after the first a no-op, so switching away and then
+  // later closing the tab never records the same view twice.
+  const flushCurrentPage = () => {
+    const page = pageRef.current
+    if (!page.path || page.sent || !sessionRef.current.sessionId) return
+    page.sent = true
+    const seconds = Math.round((Date.now() - page.enteredAt) / 1000)
+    post('/api/track/pageview', {
+      sessionId: sessionRef.current.sessionId,
+      path: page.path,
+      secondsOnPage: seconds,
+      maxScrollPercent: readScrollDepth(),
+    })
+    flushInteractions()
+  }
 
   // Start the session exactly once, the first time analytics is allowed.
   useEffect(() => {
@@ -135,38 +154,45 @@ export function useVisitorTracking() {
   useEffect(() => {
     if (!allowAnalytics || !sessionRef.current.sessionId) return
 
-    const prev = pageRef.current
-    if (prev.path) {
-      const seconds = Math.round((Date.now() - prev.enteredAt) / 1000)
-      post('/api/track/pageview', {
-        sessionId: sessionRef.current.sessionId,
-        path: prev.path,
-        secondsOnPage: seconds,
-        // Read before beginPage() below resets it for the new page.
-        maxScrollPercent: readScrollDepth(),
-      })
-      // Send the clicks captured on the page being left along with it,
-      // rather than waiting for the batch timer that may never fire if the
-      // visitor leaves the site from here.
-      flushInteractions()
-    }
+    flushCurrentPage()
 
-    pageRef.current = { path: pathname, enteredAt: Date.now() }
+    pageRef.current = { path: pathname, enteredAt: Date.now(), sent: false }
     sessionRef.current.pageCount += 1
     beginPage(pathname)
   }, [allowAnalytics, pathname])
 
-  // Flush the final page's time when the tab actually closes.
+  // Send the open page as soon as its tab is backgrounded — switched away
+  // from, minimized, or (on a phone) the screen locked — rather than only
+  // on pagehide. A tab left open in the background can sit for minutes
+  // before it's actually closed, or on mobile Safari may be killed by the
+  // OS without ever firing pagehide at all; visibilitychange is the signal
+  // that actually fires when the visitor is done looking at the page.
+  useEffect(() => {
+    if (!allowAnalytics) return undefined
+
+    const onVisibility = () => {
+      if (document.visibilityState === 'hidden') flushCurrentPage()
+    }
+
+    document.addEventListener('visibilitychange', onVisibility)
+    return () => document.removeEventListener('visibilitychange', onVisibility)
+  }, [allowAnalytics])
+
+  // Flush the final page's time when the tab actually closes. A no-op if
+  // visibilitychange already sent this page (the common case — most closes
+  // are backgrounded first), so this only fires for a page that goes
+  // straight from open to closed without ever losing focus.
   useEffect(() => {
     if (!allowAnalytics) return
 
     const onUnload = () => {
-      const prev = pageRef.current
-      if (!prev.path || !sessionRef.current.sessionId) return
-      const seconds = Math.round((Date.now() - prev.enteredAt) / 1000)
+      const page = pageRef.current
+      if (!page.path || page.sent || !sessionRef.current.sessionId) return
+      page.sent = true
+      const seconds = Math.round((Date.now() - page.enteredAt) / 1000)
       const body = JSON.stringify({
         sessionId: sessionRef.current.sessionId,
-        path: prev.path,
+        path: page.path,
         secondsOnPage: seconds,
         maxScrollPercent: readScrollDepth(),
       })
