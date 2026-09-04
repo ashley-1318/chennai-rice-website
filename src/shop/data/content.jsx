@@ -45,16 +45,3 @@ export const FEATURES = [
     )
   }
 ];
-
-export const VARIETIES = [
-  {
-    name: "Ponni",
-    copy:
-      "Short, plump grains that cook soft and hold a little stickiness — the South Indian everyday rice for sadam, curd rice, and pongal. Three of our packs are Ponni."
-  },
-  {
-    name: "Kolam",
-    copy:
-      "Finer and more slender, cooking up light and separate. Reach for Vada Kolam when you want grains that stay distinct, as in pulao, fried rice, or lemon rice."
-  }
-];

@@ -383,47 +383,6 @@
   color: var(--ink-900);
 }
 
-/* ---------- Varieties band ---------- */
-
-.shop-scope .varieties {
-  max-width: 72rem;
-  margin-inline: auto;
-  padding: 0 var(--s-4) var(--s-16);
-}
-
-/* A single millet sprig behind the variety cards, only where there is room
-   for it to sit clear of the text. */
-@media (min-width: 1000px) {
-  .varieties {
-    background:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='320'%3E%3Cdefs%3E%3Cpattern id='m3' width='14' height='14' patternUnits='userSpaceOnUse'%3E%3Ccircle cx='7' cy='7' r='4.4' fill='%23A87A22' fill-opacity='0.22'/%3E%3C/pattern%3E%3C/defs%3E%3Cpath d='M75 190 C71 244 69 286 75 318' fill='none' stroke='%23A87A22' stroke-opacity='0.16' stroke-width='5' stroke-linecap='round'/%3E%3Cellipse cx='75' cy='98' rx='36' ry='92' fill='url(%23m3)'/%3E%3C/svg%3E")
-        right -22px top 8px / 150px auto no-repeat;
-  }
-}
-.shop-scope .varieties h2 {
-  font-size: var(--fs-h2);
-  margin-bottom: var(--s-6);
-}
-
-.shop-scope .variety-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-  gap: var(--s-6);
-}
-
-.shop-scope .variety {
-  padding: var(--s-6);
-  background: var(--cream-50);
-  border: 1px solid var(--cream-300);
-  border-left: 3px solid var(--gold-500);
-  border-radius: var(--radius-md);
-}
-.shop-scope .variety h3 {
-  font-size: var(--fs-h3);
-  margin-bottom: var(--s-2);
-}
-.shop-scope .variety p { margin: 0; font-size: var(--fs-small); color: var(--ink-500); }
-
 /* ---------- Product grid ---------- */
 
 /* Scattered rice-grain silhouettes drift behind the listing; the opaque

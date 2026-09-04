@@ -3,7 +3,6 @@ import SiteLayout from "../layouts/SiteLayout.jsx";
 import Hero from "../sections/Hero.jsx";
 import FeatureStrip from "../sections/FeatureStrip.jsx";
 import ProductGrid from "../sections/ProductGrid.jsx";
-import Varieties from "../sections/Varieties.jsx";
 import Lineup from "../sections/Lineup.jsx";
 import SearchBar from "../components/SearchBar.jsx";
 import CheckoutBar from "../components/CheckoutBar.jsx";
@@ -31,7 +30,6 @@ export default function ProductsPage() {
       </div>
       <FeatureStrip />
       <ProductGrid search={search} activeFilter={activeFilter} onFilterChange={setActiveFilter} />
-      <Varieties />
       <Lineup />
       <CheckoutBar />
     </SiteLayout>
