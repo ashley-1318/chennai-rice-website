@@ -62,7 +62,7 @@ export function LoadingRegion({ label = 'Loading' }) {
  * than a fabricated "+100%", because a rise from zero has no meaningful
  * percentage and reads as a real trend when it isn't one.
  */
-export function MetricCard({ label, value, change, icon, spark }) {
+export function MetricCard({ label, value, change, icon, tone = 'visitors', spark }) {
   // Three states, deliberately distinct:
   //   undefined -> this metric has no comparison at all (a live count, a
   //                fixed setting). No footer is drawn.
@@ -75,7 +75,7 @@ export function MetricCard({ label, value, change, icon, spark }) {
     <div className="ad-metric">
       <div className="ad-metric-top">
         <span className="ad-metric-label">{label}</span>
-        {icon && <span className="ad-metric-icon" aria-hidden="true">{icon}</span>}
+        {icon && <span className={`ad-metric-icon ad-metric-icon--${tone}`} aria-hidden="true">{icon}</span>}
       </div>
       <span className="ad-metric-value">{value}</span>
       {comparable && (

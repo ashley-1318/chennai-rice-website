@@ -63,10 +63,10 @@ export function OverviewView({ report, onOpenJourney }) {
   return (
     <>
       <div className="ad-kpis">
-        <MetricCard label="Visitors" value={report.kpis.visitors.value} change={report.kpis.visitors.change} icon={icons.visitors} />
-        <MetricCard label="Sessions" value={report.kpis.sessions.value} change={report.kpis.sessions.change} icon={icons.sessions} />
-        <MetricCard label="Page views" value={report.kpis.pageviews.value} change={report.kpis.pageviews.change} icon={icons.views} />
-        <MetricCard label="Avg. session" value={formatDuration(report.kpis.avgSession.value)} change={report.kpis.avgSession.change} icon={icons.time} />
+        <MetricCard label="Visitors" value={report.kpis.visitors.value} change={report.kpis.visitors.change} icon={icons.visitors} tone="visitors" />
+        <MetricCard label="Sessions" value={report.kpis.sessions.value} change={report.kpis.sessions.change} icon={icons.sessions} tone="sessions" />
+        <MetricCard label="Page views" value={report.kpis.pageviews.value} change={report.kpis.pageviews.change} icon={icons.views} tone="views" />
+        <MetricCard label="Avg. session" value={formatDuration(report.kpis.avgSession.value)} change={report.kpis.avgSession.change} icon={icons.time} tone="time" />
       </div>
 
       <div className="ad-grid ad-grid-2">
@@ -160,10 +160,10 @@ export function VisitorsView({ report, onOpenJourney }) {
   return (
     <>
       <div className="ad-kpis">
-        <MetricCard label="Visitors" value={report.audience.total} change={report.kpis.visitors.change} icon={icons.visitors} />
+        <MetricCard label="Visitors" value={report.audience.total} change={report.kpis.visitors.change} icon={icons.visitors} tone="visitors" />
         <MetricCard label="New" value={report.audience.fresh} />
         <MetricCard label="Returning" value={report.audience.returning} />
-        <MetricCard label="Avg. session" value={formatDuration(report.kpis.avgSession.value)} change={report.kpis.avgSession.change} icon={icons.time} />
+        <MetricCard label="Avg. session" value={formatDuration(report.kpis.avgSession.value)} change={report.kpis.avgSession.change} icon={icons.time} tone="time" />
       </div>
 
       <Card
@@ -187,8 +187,8 @@ export function ProductsView({ report }) {
     <>
       <div className="ad-kpis">
         <MetricCard label="Products viewed" value={report.products.length} />
-        <MetricCard label="Product page views" value={totalViews} icon={icons.views} />
-        <MetricCard label="Avg. time on product" value={formatDuration(report.pageTime.productAvgSeconds)} icon={icons.time} />
+        <MetricCard label="Product page views" value={totalViews} icon={icons.views} tone="views" />
+        <MetricCard label="Avg. time on product" value={formatDuration(report.pageTime.productAvgSeconds)} icon={icons.time} tone="time" />
         <MetricCard label="Added to cart" value={totalCarts} />
       </div>
 
@@ -359,10 +359,10 @@ export function RealtimeView({ realtime }) {
   return (
     <>
       <div className="ad-kpis">
-        <MetricCard label="Active visitors" value={realtime.activeVisitors} icon={icons.visitors} />
-        <MetricCard label="Active sessions" value={realtime.activeSessions} icon={icons.sessions} />
-        <MetricCard label="Pages in view" value={realtime.topPages.length} icon={icons.views} />
-        <MetricCard label="Window" value={`${REALTIME_WINDOW_MINUTES} min`} icon={icons.time} />
+        <MetricCard label="Active visitors" value={realtime.activeVisitors} icon={icons.visitors} tone="visitors" />
+        <MetricCard label="Active sessions" value={realtime.activeSessions} icon={icons.sessions} tone="sessions" />
+        <MetricCard label="Pages in view" value={realtime.topPages.length} icon={icons.views} tone="views" />
+        <MetricCard label="Window" value={`${REALTIME_WINDOW_MINUTES} min`} icon={icons.time} tone="time" />
       </div>
 
       <div className="ad-grid ad-grid-2">
@@ -507,13 +507,14 @@ export function BehaviourView({ behaviour, error }) {
   return (
     <>
       <div className="ad-kpis">
-        <MetricCard label="Clicks recorded" value={totals.clicks} icon={icons.click} />
-        <MetricCard label="Rage clicks" value={rageClickTotal} icon={icons.rage} />
-        <MetricCard label="Dead clicks" value={totals.deadClicks} icon={icons.dead} />
+        <MetricCard label="Clicks recorded" value={totals.clicks} icon={icons.click} tone="visitors" />
+        <MetricCard label="Rage clicks" value={rageClickTotal} icon={icons.rage} tone="down" />
+        <MetricCard label="Dead clicks" value={totals.deadClicks} icon={icons.dead} tone="warn" />
         <MetricCard
           label="Dead click rate"
           value={deadRate == null ? '—' : formatPercent(deadRate)}
           icon={icons.views}
+          tone="views"
         />
       </div>
 

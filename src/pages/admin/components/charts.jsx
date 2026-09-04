@@ -52,7 +52,16 @@ export function TrendChart({ data, metric = 'visitors' }) {
     return <EmptyState title="No activity in this period" note="Pick a wider date range, or wait for visitors to arrive." />
   }
 
-  const accent = token('--ad-accent', '#6E1B22')
+  // Same slot as the metric's KPI tile and its Devices/Overview siblings,
+  // so switching the segmented control moves the line to the color that
+  // already means "Sessions" or "Page views" everywhere else on the page.
+  const accentTokens = {
+    visitors: ['--ad-cat-1', '#9C2430'],
+    sessions: ['--ad-cat-2', '#A97416'],
+    pageviews: ['--ad-cat-3', '#2F7D4F'],
+  }
+  const [accentVar, accentFallback] = accentTokens[metric] ?? accentTokens.visitors
+  const accent = token(accentVar, accentFallback)
   const grid = token('--ad-line', '#E7E1DA')
   const axis = token('--ad-muted', '#6B6560')
 
@@ -101,15 +110,19 @@ export function TrendChart({ data, metric = 'visitors' }) {
   )
 }
 
-/** Device split. Tones are shades of the brand, not arbitrary colours. */
+/**
+ * Device split. Each slice takes the dashboard's categorical set — the same
+ * four colours as the KPI tiles — rather than fading shades of one hue, so
+ * "desktop" reads as a distinct identity instead of "accent but paler".
+ */
 export function DeviceChart({ devices }) {
   if (!devices.length) return <EmptyState title="No device data yet" />
 
   const shades = [
-    token('--ad-accent', '#6E1B22'),
-    token('--ad-accent-soft', '#A8555C'),
-    token('--ad-accent-faint', '#D9A9AE'),
-    token('--ad-line-strong', '#CFC6BB'),
+    token('--ad-cat-1', '#9C2430'),
+    token('--ad-cat-2', '#A97416'),
+    token('--ad-cat-3', '#2F7D4F'),
+    token('--ad-cat-4', '#3D63B8'),
   ]
 
   return (
@@ -189,7 +202,16 @@ export function FunnelChart({ funnel, compact = false }) {
             </div>
 
             <div className="ad-stage-track">
-              <div className="ad-stage-fill" style={{ width: `${width}%` }} />
+              <div
+                className="ad-stage-fill"
+                style={{
+                  width: `${width}%`,
+                  // One hue, light to dark — an ordinal ramp for depth into
+                  // the funnel, not a fourth "series" colour. The untracked
+                  // stage keeps its grey from the .is-untracked CSS rule.
+                  ...(untracked ? {} : { background: `var(--ad-funnel-${Math.min(i + 1, 4)})` }),
+                }}
+              />
             </div>
 
             {i > 0 && (

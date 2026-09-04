@@ -31,6 +31,28 @@
   --ad-down:          #A33A2A;
   --ad-down-bg:       #FBEDEA;
 
+  /* Categorical set for the four core metrics (visitors/sessions/page views/
+     avg. session) and anything that shares their identity — the device
+     donut, the trend line, the funnel. Same slot everywhere a metric
+     appears, on every tab, so "gold" always means Sessions. Validated with
+     the dataviz palette checks (lightness band, chroma floor, CVD
+     adjacency) rather than picked by eye. */
+  --ad-cat-1:      #9C2430; /* visitors — brand maroon, lightened for fills */
+  --ad-cat-1-wash: #FBF1F2;
+  --ad-cat-2:      #A97416; /* sessions — gold */
+  --ad-cat-2-wash: #FAF2E0;
+  --ad-cat-3:      #2F7D4F; /* page views — green */
+  --ad-cat-3-wash: #E9F4EC;
+  --ad-cat-4:      #3D63B8; /* avg. session — blue */
+  --ad-cat-4-wash: #EAF0FB;
+
+  /* Funnel stages are ordinal, not categorical — one hue, light to dark,
+     so the ramp itself reads as progress deeper into the funnel. */
+  --ad-funnel-1: #D89CA1;
+  --ad-funnel-2: #C2727A;
+  --ad-funnel-3: #AC4750;
+  --ad-funnel-4: #9C2430;
+
   --ad-radius:        11px;
   --ad-radius-sm:     8px;
   --ad-shadow:        0 1px 2px rgba(29,27,25,.04), 0 4px 16px rgba(29,27,25,.05);
@@ -348,6 +370,16 @@
   color: var(--ad-accent);
 }
 .ad-metric-icon svg { width: 16px; height: 16px; }
+
+/* One slot per metric identity, reused everywhere that metric appears. Rage
+   and dead clicks wear the same status colours as their table flag chips
+   below, rather than a fifth and sixth "series" colour. */
+.ad-metric-icon--visitors { background: var(--ad-cat-1-wash); color: var(--ad-cat-1); }
+.ad-metric-icon--sessions { background: var(--ad-cat-2-wash); color: var(--ad-cat-2); }
+.ad-metric-icon--views    { background: var(--ad-cat-3-wash); color: var(--ad-cat-3); }
+.ad-metric-icon--time     { background: var(--ad-cat-4-wash); color: var(--ad-cat-4); }
+.ad-metric-icon--down     { background: var(--ad-down-bg);    color: var(--ad-down); }
+.ad-metric-icon--warn     { background: var(--ad-warn-bg);    color: var(--ad-warn); }
 .ad-metric-value {
   font-size: 27px;
   font-weight: 660;
